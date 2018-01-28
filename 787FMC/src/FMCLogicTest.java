@@ -15,7 +15,8 @@ public class FMCLogicTest {
   public static void main(String[]args){
     System.out.println("Working Directory = " +System.getProperty("user.dir"));
     FMCLogicTest obj1=new FMCLogicTest();
-    obj1.getAirports();
+    obj1.setAirportDep("CYYZ");
+    obj1.getSIDS(obj1.getAirportDep());
     
   }
   
@@ -61,23 +62,52 @@ public boolean checkAirport(String x){
 }
 
 
-public String[] getSIDS(){
+public void getSIDS(String icao){
  String[] sids;
- String depSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+airportChosenDep+".txt";
+ String depSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
  
  
 
  
  try{
 
-  LineNumberReader sidScanner=new LineNumberReader(new FileReader(depSelected));
- int data=sidScanner.read();
+  BufferedReader buf = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
+List<Integer> listSidFound = new ArrayList<Integer>();
+ int line=0;
+ String buff;
+ while((buff=buf.readLine()) != null){
+     line++;
+     if(buff.contains("SID,")){
+      listSidFound.add(line);   
+     }
+ }
+
+ System.out.println(listSidFound);
+ int listSize=listSidFound.size();
+ int line2=0;
+ String ph="";
+ String[] Sidident=new String[listSize];
+ BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
+ int i=0;
+ while((ph=br.readLine())!=null){
+  line2++;
+   
+   if(ph.contains("SID,")){
+    Sidident[i]=ph; 
+     i++;
+   }
+   
+ }
  
+ for(int j=0;j<Sidident.length;j++){
+  System.out.println(Sidident[j]); 
+   
+ }
  
  }catch(IOException ex){
   ex.printStackTrace();
  }
- return sids;
+ 
     
 }
     
