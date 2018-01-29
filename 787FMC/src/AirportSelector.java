@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.*;
 public class AirportSelector extends javax.swing.JFrame {
 FMCLogicTest validator=new FMCLogicTest();
+WeatherInformation getWeather=new WeatherInformation();
     /**
      * Creates new form AirportSelector
      */
@@ -36,10 +37,16 @@ FMCLogicTest validator=new FMCLogicTest();
         jLabel1 = new javax.swing.JLabel();
         list1 = new java.awt.List();
         list2 = new java.awt.List();
+        list5 = new java.awt.List();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
         list3 = new java.awt.List();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        list4 = new java.awt.List();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -47,7 +54,7 @@ FMCLogicTest validator=new FMCLogicTest();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Enter Departure Airport");
+        jButton1.setText("Get Departure Info");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton1MousePressed(evt);
@@ -68,6 +75,17 @@ FMCLogicTest validator=new FMCLogicTest();
 
         list1.setName("SIDS Available"); // NOI18N
 
+        list5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                list5ActionPerformed(evt);
+            }
+        });
+
+        jTextArea3.setEditable(false);
+        jTextArea3.setColumns(20);
+        jTextArea3.setRows(5);
+        jScrollPane3.setViewportView(jTextArea3);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -84,7 +102,11 @@ FMCLogicTest validator=new FMCLogicTest();
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(list5, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,8 +117,10 @@ FMCLogicTest validator=new FMCLogicTest();
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(list5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -114,12 +138,16 @@ FMCLogicTest validator=new FMCLogicTest();
             }
         });
 
-        jButton2.setText("Enter Arrival Airport");
+        jButton2.setText("Get Arrival Data");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton2MousePressed(evt);
             }
         });
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane2.setViewportView(jTextArea2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,14 +161,21 @@ FMCLogicTest validator=new FMCLogicTest();
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 70, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(list4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -154,11 +189,14 @@ FMCLogicTest validator=new FMCLogicTest();
                     .addComponent(jButton2))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(list4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(list3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
 
@@ -166,19 +204,21 @@ FMCLogicTest validator=new FMCLogicTest();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+      jTextArea3.setText("");
 list1.clear();
 list2.clear();
+list5.clear();
     String icao=jTextField1.getText();
     boolean found=false;
     found=validator.checkAirport(icao);
     validator.setAirportDep(icao);
 if(found==true){
-        jLabel1.setText("Airport Found");
+        jLabel1.setText("Airport Found: "+icao);
         
         
     }else{
             
-           jLabel1.setText("Airport invalid"); 
+           jLabel1.setText("Airport invalid: "+icao); 
             }
         // TODO add your handling code here:
     
@@ -192,29 +232,59 @@ if(found==true){
     for(int i=0;i<stars.length;i++){
        list2.add(stars[i]);
     }
+    list5.add("Runways Available:");
     
+    String[]runways=validator.getRunways(icao);
+    
+    for(int i=0; i<runways.length;i++){
+        
+        list5.add(runways[i]);
+    }
+    
+    String [] weather=getWeather.getMetar(icao);
+    jTextArea3.setText("Weather Forecast: \n");
+    jTextArea3.setText(jTextArea3.getText()+"ICAO: "+weather[0]+"\n");
+    jTextArea3.setText(jTextArea3.getText()+"Time Taken: "+weather[1]+"\n");
+    jTextArea3.setText(jTextArea3.getText()+"Metar: "+weather[2]+"\n");
+    jTextArea3.setText(jTextArea3.getText()+weather[3]);
     }//GEN-LAST:event_jButton1MousePressed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-String icao=jTextField2.getText();
+jTextArea2.setText("");
+      String icao=jTextField2.getText();
         boolean found=false;
     found=validator.checkAirport(icao);
-        
+        list4.clear();
         list3.clear();
         if(found==true){
-        jLabel2.setText("Airport Found");    
+        jLabel2.setText("Airport Found: "+icao);    
         
         }else if(found == false){
-         jLabel2.setText("Aiport Not Found");   
+         jLabel2.setText("Aiport Not Found: "+icao);   
         }
         
 String [] arrival=validator.getStars(icao);
-list3.add("Arrivals Available:");
+list3.add("Arrivals Available: "+icao);
+list4.add("Runways Available: "+icao);
 for(int i=0;i<arrival.length;i++){
     list3.add(arrival[i]);
 }
-
-        // TODO add your handling code here:
+String[]runways=validator.getRunways(icao);
+    
+    for(int i=0; i<runways.length;i++){
+        
+        list4.add(runways[i]);
+    }
+    String [] weather=getWeather.getMetar(icao);
+    
+    jTextArea2.setText("Weather Forecast: \n");   
+    jTextArea2.setText(jTextArea2.getText()+"ICAO: "+weather[0]+"\n");
+    jTextArea2.setText(jTextArea2.getText()+"Time Taken: "+weather[1]+"\n");
+    jTextArea2.setText(jTextArea2.getText()+"Metar: "+weather[2]+"\n");
+    jTextArea2.setText(jTextArea2.getText()+weather[3]);
+    
+    
+    // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MousePressed
 
     private void jTextField1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MousePressed
@@ -256,6 +326,10 @@ Thread t=new Thread(new Runnable(){
        );
        t.start();  // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1FocusLost
+
+    private void list5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_list5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,11 +373,17 @@ Thread t=new Thread(new Runnable(){
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private java.awt.List list1;
     private java.awt.List list2;
     private java.awt.List list3;
+    private java.awt.List list4;
+    private java.awt.List list5;
     // End of variables declaration//GEN-END:variables
 }

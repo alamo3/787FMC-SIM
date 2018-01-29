@@ -5,20 +5,14 @@
  */
 import java.io.*;
 import java.util.*;
-
+import java.lang.*;
 /**
  *
  * @author omer
  */
 public class FMCLogicTest {
   
-  public static void main(String[]args){
-    System.out.println("Working Directory = " +System.getProperty("user.dir"));
-    FMCLogicTest obj1=new FMCLogicTest();
-    obj1.setAirportDep("CYYZ");
-    obj1.getSIDS(obj1.getAirportDep());
-    
-  }
+  
   
    public String filepath=System.getProperty("user.dir") ;
         File fileScanner=new File(filepath+"/navdata/navdata/PROC");
@@ -43,6 +37,94 @@ public String[] getAirports(){
  
          return airports;
 }
+
+public String[] getRunways(String x){
+ String icao=x;
+ String [] runways;
+  String[] sids;
+ String depSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+ 
+ 
+List<Integer> listSidFound = new ArrayList<Integer>();
+ int line=0;
+ String buff;
+ int listSize;
+ int line2;
+  String ph;
+  List<String> Sids=new ArrayList<String>();
+ 
+ Set<String> duplicates=new HashSet<>();
+ String[] Sidident;
+ List<String> StringSplits=new ArrayList<String>();
+ try{
+
+  BufferedReader buf = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
+
+ while((buff=buf.readLine()) != null){
+     line++;
+     if(buff.contains("SID,")&&buff.length()<25){
+      listSidFound.add(line);   
+     }
+ }
+
+ 
+ listSize=listSidFound.size();
+  line2=0;
+ph="";
+ Sidident=new String[listSize];
+ BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
+ int i=0;
+ while((ph=br.readLine())!=null){
+  line2++;
+   
+   if(ph.contains("SID,")&&ph.length()<25){
+    Sidident[i]=ph; 
+     i++;
+   }
+   
+ }
+ for(int k=0; k<Sidident.length; k++){
+   
+   
+   String[] split=Sidident[k].split(",");
+    String temp=split[2];
+    
+    if(Character.isDigit(temp.charAt(0))==true&&Character.isDigit(temp.charAt(1))==true){
+  StringSplits.add(temp); 
+    }
+   
+ }
+ }catch(IOException ex){
+   
+ }
+ 
+   
+  
+ Set<String> duplicates2=new HashSet<>();
+ 
+ duplicates2.addAll(StringSplits);
+ StringSplits.clear();
+ StringSplits.addAll(duplicates2);
+ Collections.sort(StringSplits);
+ System.out.println(StringSplits); 
+ 
+ runways=new String[StringSplits.size()];
+
+ for(int j=0; j<runways.length;j++){
+  runways[j]=StringSplits.get(j); 
+   
+ }
+ 
+ 
+ return runways;
+ 
+ }
+  
+  
+  
+
+
+
 
 public boolean checkAirport(String x){
    String icao=x;

@@ -1,0 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author newlife network
+ */
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+public class WeatherInformation {
+    public static void main(String[]args){
+        WeatherInformation obj1=new WeatherInformation();
+        
+        System.out.println(obj1.getMetar("VHHH"));
+    }
+    
+    
+    
+    public String getMetar(String x){
+        String Metar;
+    String icao=x;
+        String html = "<p>An <a href='https://www.aviationweather.gov/adds/metars/?station_ids="+icao+"&std_trans=standard&chk_metars=on&hoursStr=most+recent+only&chk_tafs=on'><b>example</b></a> link.</p>";
+Document doc = Jsoup.parse(html); 
+Metar = doc.body().text(); // "An example link"
+return Metar;
+    }
+}
