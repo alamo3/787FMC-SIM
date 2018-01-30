@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20160913-225446">
+  <project autorefresh="false" build="buildDataPuller/" manifest="" root="" work="">
+    <createjar file="AirportSidViewer.jar" flags="14"/>
+    <source>
+      <file active="true" name="FMCLogicTest.java" package="" timestamp="30-Jan-2018 01:45:37">
+        <select from="2028" to="2028"/>
+        <scroll column="1113" row="0"/>
+      </file>
+      <file name="SidDataLoader.java" package="" timestamp="30-Jan-2018 05:31:47">
+        <select from="2028" to="2028"/>
+        <scroll column="1113" row="0"/>
+      </file>
+      <file name="navdata/navdata/Proc/CYYZ.txt" package="" timestamp="26-Dec-2017 18:57:09">
+        <select from="2028" to="2028"/>
+        <scroll column="1113" row="0"/>
+      </file>
+      <file name="WaypoimtAccess.java" package="" timestamp="30-Jan-2018 05:11:35">
+        <select from="2028" to="2028"/>
+        <scroll column="1113" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath/>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+    <preferences/>
+  </project>
+</drjava>

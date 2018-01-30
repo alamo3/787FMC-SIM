@@ -106,7 +106,7 @@ ph="";
  StringSplits.clear();
  StringSplits.addAll(duplicates2);
  Collections.sort(StringSplits);
- System.out.println(StringSplits); 
+
  
  runways=new String[StringSplits.size()];
 

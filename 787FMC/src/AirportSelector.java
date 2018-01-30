@@ -13,6 +13,7 @@ import java.util.*;
 public class AirportSelector extends javax.swing.JFrame {
 FMCLogicTest validator=new FMCLogicTest();
 WeatherInformation getWeather=new WeatherInformation();
+PropertiesChecker retrieveProperty=new PropertiesChecker();
     /**
      * Creates new form AirportSelector
      */
@@ -40,6 +41,8 @@ WeatherInformation getWeather=new WeatherInformation();
         list5 = new java.awt.List();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         list3 = new java.awt.List();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
@@ -86,14 +89,26 @@ WeatherInformation getWeather=new WeatherInformation();
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
 
+        jLabel3.setText("Select SID and Runway");
+
+        jButton3.setText("Get WPT for SID and Runway");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -105,7 +120,9 @@ WeatherInformation getWeather=new WeatherInformation();
                 .addGap(29, 29, 29)
                 .addComponent(list5, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -122,8 +139,15 @@ WeatherInformation getWeather=new WeatherInformation();
                     .addComponent(list2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(37, 37, 37))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(24, 24, 24))))
         );
 
         jTextField2.setText("Enter Arrival ICAO");
@@ -202,13 +226,14 @@ WeatherInformation getWeather=new WeatherInformation();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+String ICAODep="";
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
       jTextArea3.setText("");
 list1.clear();
 list2.clear();
 list5.clear();
     String icao=jTextField1.getText();
+    ICAODep=icao;
     boolean found=false;
     found=validator.checkAirport(icao);
     validator.setAirportDep(icao);
@@ -331,6 +356,17 @@ Thread t=new Thread(new Runnable(){
         // TODO add your handling code here:
     }//GEN-LAST:event_list5ActionPerformed
 
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
+       retrieveProperty.writeICAO(ICAODep);
+       retrieveProperty.writeSID(list1.getSelectedItem());
+       retrieveProperty.writeRwy(list5.getSelectedItem());
+       try{
+       Process proc = Runtime.getRuntime().exec("java -jar AirportSidViewer.jar");
+       
+       }catch(IOException e){}
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -369,8 +405,10 @@ Thread t=new Thread(new Runnable(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

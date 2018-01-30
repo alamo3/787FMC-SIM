@@ -23,16 +23,54 @@ public class PropertiesChecker {
     
     
     }
-    public String retrievePanelState(){
-         String panelState="";
+        public void writeICAO(String icao){ 
+        try{
+        panel.setProperty("ICAO", icao);
+        panel.store(new FileOutputStream("panelPage.properties"), null);
+        }catch(IOException e){
+            
+            
+        }
+    
+    
+    }
+        
+         public void writeSID(String Sid){ 
+        try{
+        panel.setProperty("SID", Sid);
+        panel.store(new FileOutputStream("panelPage.properties"), null);
+        }catch(IOException e){
+            
+            
+        }
+    
+    
+    }
+         
+         
+          public void writeRwy(String rwy){ 
+        try{
+        panel.setProperty("Runway", rwy);
+        panel.store(new FileOutputStream("panelPage.properties"), null);
+        }catch(IOException e){
+            
+            
+        }
+    
+    
+    }
+        
+    public String retrieveProperty(String x){
+         String property=x;
+         String propertyDef="";
         try{
             panel.load(new FileInputStream("panelpage.properties"));
-             panelState=panel.getProperty("panelstate");
+             propertyDef=panel.getProperty(property);
             
         }catch(IOException ex){
             
         }
-        return panelState;
+        return propertyDef;
     }
 
 }
