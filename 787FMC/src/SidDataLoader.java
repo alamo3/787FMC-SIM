@@ -169,33 +169,40 @@ public double c(Double d){
 }
 
 public double distanceNM(double lat1, double lat2, double lon1, double lon2) {
+ 
+  // function nd_calc_dist2(req_lat, req_lon, req_lat2, req_lon2)
+ 
+ double nd_lat = Math.toRadians(lat1);
+ double nd_lat2 = Math.toRadians(lat2);
+ 
+ double nd_dlat = Math.toRadians(lat2-lat1);
+ double nd_dlon = Math.toRadians(lon2-lon1);
+ 
+ double nd_a = Math.sin(nd_dlat/2)*Math.sin(nd_dlat/2)+Math.cos(nd_lat)*Math.cos(nd_lat2)*Math.sin(nd_dlon/2)*Math.sin(nd_dlon/2);
+ double nd_b = 2 * Math.atan2(Math.sqrt(nd_a), Math.sqrt(1-nd_a));
+ double nd_dis = nd_b * 3440.064795 ;
+ 
+ return nd_dis;
 
-    final int R = 6371; // Radius of the earth
 
-    double latDistance = Math.toRadians(lat2 - lat1);
-    double lonDistance = Math.toRadians(lon2 - lon1);
-    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    double distance = R * c ; // convert to meters
-
-
-    
-    return (Math.sqrt(distance))*0.53996;
 }
 
 public void calculateIRS(){
     String sid=obj1.retrieveProperty("SID");
         String rwy=obj1.retrieveProperty("Runway");
         String icao=obj1.retrieveProperty("ICAO");
- List<String> waypoints=sidpull.getSIDWptLatLong("CYYZ","ANCOL3","05");   
+ List<String> waypoints=new ArrayList<String>();
+ 
+ 
+ 
+ waypoints.addAll(sidpull.getSIDWptLatLong(icao,sid,rwy));
+
  List<String> distmag=new ArrayList<String>();
  System.out.println("I'm here");
- /*for(int i=0;i<waypoints.size();i++){
+ for(int i=0;i<waypoints.size();i++){
      System.out.println(waypoints.get(i));
      
- }*/
+ }
  List <String> LatLong=new ArrayList<String>();
     String []temp;
     for(int i=0; i<waypoints.size();i++){
@@ -204,6 +211,12 @@ public void calculateIRS(){
      LatLong.add(temp[3]);
       
     }
+    
+    List<String> test = sidpull.runwayData(icao,rwy);
+    
+    LatLong.add(0,test.get(0));
+    LatLong.add(1,test.get(1));
+    
     for(int i=0;i<LatLong.size();i++){
       System.out.print((i)+": "+LatLong.get(i));
      System.out.println();
