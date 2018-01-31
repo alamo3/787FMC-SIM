@@ -18,6 +18,7 @@ public class SidDataLoader extends javax.swing.JFrame {
     public SidDataLoader() {
         initComponents();
         setList(); 
+        calculateIRS();
     }
 
     /**
@@ -155,12 +156,28 @@ public void setList(){
         List<String> waypoints=sidpull.getSIDWpt(icao, sid, rwy);
         
           
-  System.out.println("I'm here");
+ 
     for(int i=0;i<waypoints.size();i++){
      list1.add(waypoints.get(i));  
      
     }
 }
+
+public void calculateIRS(){
+    String sid=obj1.retrieveProperty("SID");
+        String rwy=obj1.retrieveProperty("Runway");
+        String icao=obj1.retrieveProperty("ICAO");
+ List<String> waypoints=sidpull.getSIDWptLatLong(icao,sid,rwy);   
+ List<String> distmag=new ArrayList<String>();
+ System.out.println("I'm here");
+ for(int i=0;i<waypoints.size();i++){
+     System.out.println(waypoints.get(i));
+     
+ }
+ 
+    
+}
+
 public void setText(String x, String y, String z){
  label1.setText("Waypoints for SID: "+y+" Runway: "+z+" At ICAO: "+x);   
 }
