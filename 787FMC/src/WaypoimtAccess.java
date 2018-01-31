@@ -73,7 +73,7 @@ public class WaypoimtAccess {
           Waypoints.add(temp1[i]);
           }
         }
-        
+        System.out.println("exiting now :)");
         
         return Waypoints;
         }
@@ -178,6 +178,7 @@ public class WaypoimtAccess {
       Waypoints.add(temp[i]);
       }
     }
+        // System.out.println("exiting now :)");
         return Waypoints;
     }
     

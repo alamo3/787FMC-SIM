@@ -6,8 +6,9 @@
  import java.io.*;
 import java.util.*;
 import java.lang.*;
-/**
- *
+import java.lang.Object;
+import java.util.OptionalInt;
+ /*
  * @author omer
  */
 public class SidDataLoader extends javax.swing.JFrame {
@@ -162,21 +163,126 @@ public void setList(){
      
     }
 }
+public double c(Double d){
+ double temp=Math.cos(d);
+ return temp;
+}
+
+public double distanceNM(double lat1, double lat2, double lon1, double lon2) {
+
+    final int R = 6371; // Radius of the earth
+
+    double latDistance = Math.toRadians(lat2 - lat1);
+    double lonDistance = Math.toRadians(lon2 - lon1);
+    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    double distance = R * c ; // convert to meters
+
+
+    
+    return (Math.sqrt(distance))*0.53996;
+}
 
 public void calculateIRS(){
     String sid=obj1.retrieveProperty("SID");
         String rwy=obj1.retrieveProperty("Runway");
         String icao=obj1.retrieveProperty("ICAO");
- List<String> waypoints=sidpull.getSIDWptLatLong(icao,sid,rwy);   
+ List<String> waypoints=sidpull.getSIDWptLatLong("CYYZ","ANCOL3","05");   
  List<String> distmag=new ArrayList<String>();
  System.out.println("I'm here");
- for(int i=0;i<waypoints.size();i++){
+ /*for(int i=0;i<waypoints.size();i++){
      System.out.println(waypoints.get(i));
      
+ }*/
+ List <String> LatLong=new ArrayList<String>();
+    String []temp;
+    for(int i=0; i<waypoints.size();i++){
+ temp=waypoints.get(i).split(",");
+     LatLong.add(temp[2]);
+     LatLong.add(temp[3]);
+      
+    }
+    for(int i=0;i<LatLong.size();i++){
+      System.out.print((i)+": "+LatLong.get(i));
+     System.out.println();
+     
  }
- 
+    List<String> distance=new ArrayList<String>();
     
-}
+    for(int i=0; i<LatLong.size()-2;i+=2){
+    int radius=6371;
+    
+    /*double Lat1=Math.toRadians(Double.parseDouble(LatLong.get(i)));
+      double Lat2=Math.toRadians(Double.parseDouble(LatLong.get(i+2)));
+      
+      double Lat1D=Math.toRadians((Double.parseDouble(LatLong.get(i))-Double.parseDouble(LatLong.get(i+2))));
+      double Lat2D=Math.toRadians(Double.parseDouble(LatLong.get(i+1))-Double.parseDouble(LatLong.get(i+3)));
+      
+      double a= Math.sin(Lat1D/2)*Math.sin(Lat1D/2)+Math.cos(Lat1)*Math.cos(Lat2)+Math.sin(Lat2D/2)*Math.sin(Lat2D/2);
+      
+      double c=2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      
+      double d= radius*c;
+      
+      double distance1=d*0.53996;
+      String addition=Double.toString(distance1) + " nm";
+      distance.add(addition);*/
+    /*if(i>=2){
+      System.out.printf("Calculating distance between Lat: %s Long: %s and Lat: %s Long; %s \n",LatLong.get(i),LatLong.get(i+1),LatLong.get(i-2),LatLong.get(i-1));
+   /* double Lat1D=Double.parseDouble(LatLong.get(i+1));
+      double Lat2D=Double.parseDouble(LatLong.get(i-1));
+    double lat1=Double.parseDouble(LatLong.get(i));
+      double lat2=Double.parseDouble(LatLong.get(i-2));
+     double p = 0.017453292519943295;    // Math.PI / 180
+  
+  double a = 0.5 - c((lat2 - lat1) * p)/2 + 
+          c(lat1 * p) * c(lat2 * p) * 
+          (1 - c((Lat1D - Lat2D) * p))/2;
+
+  String addition=Double.toString( Math.round((12742 * Math.asin(Math.sqrt(a)))*100)/100.0);
+      distance.add(addition);
+      */
+ /*     double Lat1D=Double.parseDouble(LatLong.get(i+1));
+      double Lat2D=Double.parseDouble(LatLong.get(i-1));
+    double lat1=Double.parseDouble(LatLong.get(i));
+      double lat2=Double.parseDouble(LatLong.get(i-2));*/
+       double Lat1D=Double.parseDouble(LatLong.get(i+1));
+      double Lat2D=Double.parseDouble(LatLong.get(i+3));
+    double lat1=Double.parseDouble(LatLong.get(i));
+      double lat2=Double.parseDouble(LatLong.get(i+2));
+       distance.add(Double.toString(distanceNM(lat1,lat2,Lat1D,Lat2D)));
+    
+   /* if(i<2){
+      
+       System.out.printf("Calculating distance between Lat: %s Long: %s and Lat: %s Long; %s \n",LatLong.get(i),LatLong.get(i+1),LatLong.get(i+2),LatLong.get(i+3));
+      /*double Lat1D=Double.parseDouble(LatLong.get(i+1));
+      double Lat2D=Double.parseDouble(LatLong.get(i+3));
+    double lat1=Double.parseDouble(LatLong.get(i));
+      double lat2=Double.parseDouble(LatLong.get(i+1));
+     double p = 0.017453292519943295;    // Math.PI / 180
+  
+  double a = 0.5 - c((lat2 - lat1) * p)/2 + 
+          c(lat1 * p) * c(lat2 * p) * 
+          (1 - c((Lat1D - Lat2D) * p))/2;
+
+  String addition=Double.toString( (Math.round((12742 * Math.asin(Math.sqrt(a)))*100)/100.0)*0.53996);
+  
+      double Lat1D=Double.parseDouble(LatLong.get(i+1));
+      double Lat2D=Double.parseDouble(LatLong.get(i+3));
+    double lat1=Double.parseDouble(LatLong.get(i));
+      double lat2=Double.parseDouble(LatLong.get(i+2));
+      distance.add(Double.toString(distanceNM(lat1,lat2,Lat1D,Lat2D)));
+    }
+    */
+    }
+     System.out.println(distance);
+    }
+   
+    
+    
+
 
 public void setText(String x, String y, String z){
  label1.setText("Waypoints for SID: "+y+" Runway: "+z+" At ICAO: "+x);   
