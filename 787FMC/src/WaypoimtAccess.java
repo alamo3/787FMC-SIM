@@ -19,6 +19,20 @@ public class WaypoimtAccess {
     
     FMCLogicTest wpt=new FMCLogicTest();
     
+    public List<String> returnWaypoints(String x, String y)
+    {
+    List<String> waypoints=new ArrayList<String>();
+    String airway=x;
+    String exitAirway=y;
+    
+    
+    
+    
+    
+    
+    
+    return waypoints;
+    }
     public List<String> runwayData(String x, String y){
     String runwayData="";
     
@@ -190,7 +204,7 @@ public class WaypoimtAccess {
            System.out.println(temp1[i]); 
             
           }
-        System.out.println("At WP0");
+       // System.out.println("At WP0");
         boolean takeChar=false;
           String[] temp=new String[temp1.length];
           
@@ -222,14 +236,14 @@ public class WaypoimtAccess {
         }
         
         
-        System.out.println("At WP1");
+      //  System.out.println("At WP1");
         
         for(int i=0;i<temp.length;i++){
          System.out.println(temp[i]); 
         }
         Waypoints.clear();
         
-         System.out.println("At WP2");
+       //  System.out.println("At WP2");
          for(int i=0;i<temp.length;i++){
            System.out.println(temp[i].isEmpty());
       if(temp[i].isEmpty()==false){ 

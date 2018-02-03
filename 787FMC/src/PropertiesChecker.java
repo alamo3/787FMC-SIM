@@ -12,6 +12,15 @@ import java.io.*;
 public class PropertiesChecker {
     public Properties panel=new Properties();
     
+    public void writeProperty(String propertyName, String propertyValue){
+        try{
+        panel.setProperty(propertyName, propertyValue);
+        panel.store(new FileOutputStream("panelpage.properties"),null);
+        }catch(IOException e){}
+        
+        }
+    
+    
     public void writePanelState(String panelState){ 
         try{
         panel.setProperty("panelstate", panelState);

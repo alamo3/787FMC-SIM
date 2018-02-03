@@ -8,11 +8,19 @@
  *
  * @author newlife network
  */
+import java.io.*;
+import java.util.*;
+import java.lang.*;
 public class MainApp extends javax.swing.JFrame {
 PropertiesChecker panelSelector;
+FMCLogicTest accessLogic=new FMCLogicTest();
     /**
      * Creates new form MainApp
      */
+
+WaypoimtAccess navDataPull=new WaypoimtAccess();
+
+findGpsPosition getLocation=new findGpsPosition();
     public MainApp() {
         initComponents();
     panelSelector=new PropertiesChecker();
@@ -76,32 +84,21 @@ PropertiesChecker panelSelector;
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
-        jLabel62 = new javax.swing.JLabel();
-        jLabel63 = new javax.swing.JLabel();
-        jLabel64 = new javax.swing.JLabel();
-        jLabel65 = new javax.swing.JLabel();
-        jLabel66 = new javax.swing.JLabel();
-        jLabel67 = new javax.swing.JLabel();
-        jLabel68 = new javax.swing.JLabel();
-        jLabel69 = new javax.swing.JLabel();
-        jLabel70 = new javax.swing.JLabel();
-        jLabel71 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
-        jLabel73 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
-        jLabel75 = new javax.swing.JLabel();
-        jLabel76 = new javax.swing.JLabel();
-        jLabel77 = new javax.swing.JLabel();
-        jLabel79 = new javax.swing.JLabel();
-        jLabel81 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
-        jLabel78 = new javax.swing.JLabel();
-        jLabel85 = new javax.swing.JLabel();
-        jLabel86 = new javax.swing.JLabel();
-        jLabel87 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        LSKL4 = new javax.swing.JLabel();
+        LSKL3 = new javax.swing.JLabel();
+        LSKL2 = new javax.swing.JLabel();
+        LSKL1 = new javax.swing.JLabel();
+        LSKL5 = new javax.swing.JLabel();
+        LSKL6 = new javax.swing.JLabel();
+        LSKR6 = new javax.swing.JLabel();
+        LSKR5 = new javax.swing.JLabel();
+        LSKR4 = new javax.swing.JLabel();
+        LSKR3 = new javax.swing.JLabel();
+        LSKR2 = new javax.swing.JLabel();
+        LSKR1 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
@@ -114,28 +111,43 @@ PropertiesChecker panelSelector;
         jLabel57 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
         jLabel61 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        jLabel65 = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
+        jLabel67 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        jLabel70 = new javax.swing.JLabel();
+        nextpage = new javax.swing.JLabel();
+        InitRef = new javax.swing.JLabel();
+        rte1 = new javax.swing.JLabel();
+        deparr1 = new javax.swing.JLabel();
+        alternate1 = new javax.swing.JLabel();
+        vnav1 = new javax.swing.JLabel();
+        fix1 = new javax.swing.JLabel();
+        legs1 = new javax.swing.JLabel();
+        hold1 = new javax.swing.JLabel();
+        fmccomm = new javax.swing.JLabel();
+        prog1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        navrad = new javax.swing.JLabel();
+        prevpage = new javax.swing.JLabel();
+        pagenumber = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.gray);
         setName("Main CDU"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(new java.awt.Dimension(1200, 900));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setToolTipText("");
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -150,6 +162,15 @@ PropertiesChecker panelSelector;
                 jLabel2MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(56, 8, 0, 0);
+        jPanel1.add(jLabel2, gridBagConstraints);
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -164,6 +185,14 @@ PropertiesChecker panelSelector;
                 jLabel3MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(56, 20, 0, 0);
+        jPanel1.add(jLabel3, gridBagConstraints);
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -178,6 +207,15 @@ PropertiesChecker panelSelector;
                 jLabel4MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(56, 8, 0, 0);
+        jPanel1.add(jLabel4, gridBagConstraints);
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -192,6 +230,14 @@ PropertiesChecker panelSelector;
                 jLabel5MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 20, 0, 0);
+        jPanel1.add(jLabel5, gridBagConstraints);
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));
         jLabel6.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -206,6 +252,15 @@ PropertiesChecker panelSelector;
                 jLabel6MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 1, 0, 0);
+        jPanel1.add(jLabel6, gridBagConstraints);
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -220,6 +275,15 @@ PropertiesChecker panelSelector;
                 jLabel7MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 17;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
+        jPanel1.add(jLabel7, gridBagConstraints);
 
         jLabel8.setBackground(new java.awt.Color(0, 0, 0));
         jLabel8.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -234,6 +298,14 @@ PropertiesChecker panelSelector;
                 jLabel8MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 20, 0, 0);
+        jPanel1.add(jLabel8, gridBagConstraints);
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
         jLabel9.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -248,6 +320,15 @@ PropertiesChecker panelSelector;
                 jLabel9MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 1, 0, 0);
+        jPanel1.add(jLabel9, gridBagConstraints);
 
         jLabel10.setBackground(new java.awt.Color(0, 0, 0));
         jLabel10.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -262,6 +343,15 @@ PropertiesChecker panelSelector;
                 jLabel10MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 17;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
+        jPanel1.add(jLabel10, gridBagConstraints);
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 0));
         jLabel11.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -276,6 +366,14 @@ PropertiesChecker panelSelector;
                 jLabel11MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 6;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 20, 0, 0);
+        jPanel1.add(jLabel11, gridBagConstraints);
 
         jLabel12.setBackground(new java.awt.Color(0, 0, 0));
         jLabel12.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -290,6 +388,15 @@ PropertiesChecker panelSelector;
                 jLabel12MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 1, 0, 0);
+        jPanel1.add(jLabel12, gridBagConstraints);
 
         jLabel13.setBackground(new java.awt.Color(0, 0, 0));
         jLabel13.setFont(new java.awt.Font("Futura LtCn BT", 0, 12)); // NOI18N
@@ -303,6 +410,15 @@ PropertiesChecker panelSelector;
                 jLabel13MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 17;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
+        jPanel1.add(jLabel13, gridBagConstraints);
 
         jLabel14.setBackground(new java.awt.Color(0, 0, 0));
         jLabel14.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -312,6 +428,14 @@ PropertiesChecker panelSelector;
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel14.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel14.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 23;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(65, 10, 0, 0);
+        jPanel1.add(jLabel14, gridBagConstraints);
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -326,6 +450,15 @@ PropertiesChecker panelSelector;
                 jLabel15MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(46, 20, 0, 0);
+        jPanel1.add(jLabel15, gridBagConstraints);
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 0));
         jLabel16.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -340,6 +473,15 @@ PropertiesChecker panelSelector;
                 jLabel16MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(46, 10, 0, 0);
+        jPanel1.add(jLabel16, gridBagConstraints);
 
         jLabel17.setBackground(new java.awt.Color(0, 0, 0));
         jLabel17.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -354,6 +496,15 @@ PropertiesChecker panelSelector;
                 jLabel17MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(46, 9, 0, 0);
+        jPanel1.add(jLabel17, gridBagConstraints);
 
         jLabel18.setBackground(new java.awt.Color(0, 0, 0));
         jLabel18.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -368,6 +519,15 @@ PropertiesChecker panelSelector;
                 jLabel18MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(46, 10, 0, 0);
+        jPanel1.add(jLabel18, gridBagConstraints);
 
         jLabel19.setBackground(new java.awt.Color(0, 0, 0));
         jLabel19.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -382,6 +542,15 @@ PropertiesChecker panelSelector;
                 jLabel19MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 62;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(46, 6, 0, 0);
+        jPanel1.add(jLabel19, gridBagConstraints);
 
         jLabel20.setBackground(new java.awt.Color(0, 0, 0));
         jLabel20.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -396,6 +565,15 @@ PropertiesChecker panelSelector;
                 jLabel20MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 20, 0, 0);
+        jPanel1.add(jLabel20, gridBagConstraints);
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -410,6 +588,15 @@ PropertiesChecker panelSelector;
                 jLabel21MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
+        jPanel1.add(jLabel21, gridBagConstraints);
 
         jLabel22.setBackground(new java.awt.Color(0, 0, 0));
         jLabel22.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -424,6 +611,15 @@ PropertiesChecker panelSelector;
                 jLabel22MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 9, 0, 0);
+        jPanel1.add(jLabel22, gridBagConstraints);
 
         jLabel23.setBackground(new java.awt.Color(0, 0, 0));
         jLabel23.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -438,6 +634,14 @@ PropertiesChecker panelSelector;
                 jLabel23MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 9, 0, 0);
+        jPanel1.add(jLabel23, gridBagConstraints);
 
         jLabel24.setBackground(new java.awt.Color(0, 0, 0));
         jLabel24.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -452,6 +656,15 @@ PropertiesChecker panelSelector;
                 jLabel24MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 42;
+        gridBagConstraints.ipadx = 14;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 5, 0, 0);
+        jPanel1.add(jLabel24, gridBagConstraints);
 
         jLabel25.setBackground(new java.awt.Color(0, 0, 0));
         jLabel25.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -466,6 +679,15 @@ PropertiesChecker panelSelector;
                 jLabel25MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 20, 0, 0);
+        jPanel1.add(jLabel25, gridBagConstraints);
 
         jLabel26.setBackground(new java.awt.Color(0, 0, 0));
         jLabel26.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -480,6 +702,15 @@ PropertiesChecker panelSelector;
                 jLabel26MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 13;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
+        jPanel1.add(jLabel26, gridBagConstraints);
 
         jLabel27.setBackground(new java.awt.Color(0, 0, 0));
         jLabel27.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -494,6 +725,15 @@ PropertiesChecker panelSelector;
                 jLabel27MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 9, 0, 0);
+        jPanel1.add(jLabel27, gridBagConstraints);
 
         jLabel28.setBackground(new java.awt.Color(0, 0, 0));
         jLabel28.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -508,6 +748,14 @@ PropertiesChecker panelSelector;
                 jLabel28MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 9, 0, 0);
+        jPanel1.add(jLabel28, gridBagConstraints);
 
         jLabel29.setBackground(new java.awt.Color(0, 0, 0));
         jLabel29.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -522,6 +770,15 @@ PropertiesChecker panelSelector;
                 jLabel29MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 42;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(11, 5, 0, 0);
+        jPanel1.add(jLabel29, gridBagConstraints);
 
         jLabel30.setBackground(new java.awt.Color(0, 0, 0));
         jLabel30.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -536,6 +793,15 @@ PropertiesChecker panelSelector;
                 jLabel30MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
+        jPanel1.add(jLabel30, gridBagConstraints);
 
         jLabel31.setBackground(new java.awt.Color(0, 0, 0));
         jLabel31.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -550,6 +816,15 @@ PropertiesChecker panelSelector;
                 jLabel31MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 10, 0, 0);
+        jPanel1.add(jLabel31, gridBagConstraints);
 
         jLabel32.setBackground(new java.awt.Color(0, 0, 0));
         jLabel32.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -564,6 +839,15 @@ PropertiesChecker panelSelector;
                 jLabel32MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        jPanel1.add(jLabel32, gridBagConstraints);
 
         jLabel33.setBackground(new java.awt.Color(0, 0, 0));
         jLabel33.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -578,6 +862,14 @@ PropertiesChecker panelSelector;
                 jLabel33MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        jPanel1.add(jLabel33, gridBagConstraints);
 
         jLabel34.setBackground(new java.awt.Color(0, 0, 0));
         jLabel34.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -592,6 +884,15 @@ PropertiesChecker panelSelector;
                 jLabel34MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 42;
+        gridBagConstraints.ipadx = 13;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
+        jPanel1.add(jLabel34, gridBagConstraints);
 
         jLabel35.setBackground(new java.awt.Color(0, 0, 0));
         jLabel35.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -606,6 +907,15 @@ PropertiesChecker panelSelector;
                 jLabel35MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
+        jPanel1.add(jLabel35, gridBagConstraints);
 
         jLabel36.setBackground(new java.awt.Color(0, 0, 0));
         jLabel36.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -620,6 +930,15 @@ PropertiesChecker panelSelector;
                 jLabel36MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 10, 0, 0);
+        jPanel1.add(jLabel36, gridBagConstraints);
 
         jLabel37.setBackground(new java.awt.Color(0, 0, 0));
         jLabel37.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -634,6 +953,15 @@ PropertiesChecker panelSelector;
                 jLabel37MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipadx = 6;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        jPanel1.add(jLabel37, gridBagConstraints);
 
         jLabel38.setBackground(new java.awt.Color(0, 0, 0));
         jLabel38.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -648,6 +976,14 @@ PropertiesChecker panelSelector;
                 jLabel38MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        jPanel1.add(jLabel38, gridBagConstraints);
 
         jLabel39.setBackground(new java.awt.Color(0, 0, 0));
         jLabel39.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -662,6 +998,15 @@ PropertiesChecker panelSelector;
                 jLabel39MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 42;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
+        jPanel1.add(jLabel39, gridBagConstraints);
 
         jLabel40.setBackground(new java.awt.Color(0, 0, 0));
         jLabel40.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -676,6 +1021,15 @@ PropertiesChecker panelSelector;
                 jLabel40MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 13;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
+        jPanel1.add(jLabel40, gridBagConstraints);
 
         jLabel41.setBackground(new java.awt.Color(0, 0, 0));
         jLabel41.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -690,6 +1044,15 @@ PropertiesChecker panelSelector;
                 jLabel41MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 10, 0, 0);
+        jPanel1.add(jLabel41, gridBagConstraints);
 
         jLabel42.setBackground(new java.awt.Color(0, 0, 0));
         jLabel42.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -704,6 +1067,14 @@ PropertiesChecker panelSelector;
                 jLabel42MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        jPanel1.add(jLabel42, gridBagConstraints);
 
         jLabel43.setBackground(new java.awt.Color(0, 0, 0));
         jLabel43.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -718,6 +1089,14 @@ PropertiesChecker panelSelector;
                 jLabel43MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.ipadx = 13;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 0);
+        jPanel1.add(jLabel43, gridBagConstraints);
 
         jLabel44.setBackground(new java.awt.Color(0, 0, 0));
         jLabel44.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -732,6 +1111,15 @@ PropertiesChecker panelSelector;
                 jLabel44MousePressed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 42;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
+        jPanel1.add(jLabel44, gridBagConstraints);
 
         jLabel45.setBackground(new java.awt.Color(0, 0, 0));
         jLabel45.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -741,6 +1129,15 @@ PropertiesChecker panelSelector;
         jLabel45.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel45.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel45.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 10, 0, 0);
+        jPanel1.add(jLabel45, gridBagConstraints);
 
         jLabel46.setBackground(new java.awt.Color(0, 0, 0));
         jLabel46.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -750,6 +1147,15 @@ PropertiesChecker panelSelector;
         jLabel46.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel46.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel46.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.ipadx = 6;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 6, 0, 0);
+        jPanel1.add(jLabel46, gridBagConstraints);
 
         jLabel47.setBackground(new java.awt.Color(0, 0, 0));
         jLabel47.setFont(new java.awt.Font("Futura LtCn BT", 0, 24)); // NOI18N
@@ -758,588 +1164,970 @@ PropertiesChecker panelSelector;
         jLabel47.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel47.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel47.setOpaque(true);
-
-        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("IDENT");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 11, -1, -1));
-
-        jLabel62.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel62.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel62.setText("MODEL");
-        jPanel3.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 182, -1));
-
-        jLabel63.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel63.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel63.setText("CYCLE: 1801");
-        jPanel3.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 228, -1));
-
-        jLabel64.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel64.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel64.setText("NAVDATA");
-        jPanel3.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 169, -1));
-
-        jLabel65.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel65.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel65.setText("787-9");
-        jPanel3.add(jLabel65, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 218, -1));
-
-        jLabel66.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel66.setForeground(new java.awt.Color(153, 153, 153));
-        jPanel3.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 228, 24));
-
-        jLabel67.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel67.setForeground(new java.awt.Color(153, 153, 153));
-        jPanel3.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 169, 16));
-
-        jLabel68.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel68.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel68.setText("PS402017");
-        jPanel3.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 228, -1));
-
-        jLabel69.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel69.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel69.setText("OP PROGRAM");
-        jPanel3.add(jLabel69, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 169, 16));
-
-        jLabel70.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel70.setForeground(new java.awt.Color(153, 153, 153));
-        jPanel3.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 228, 24));
-
-        jLabel71.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel71.setForeground(new java.awt.Color(153, 153, 153));
-        jPanel3.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 169, 16));
-
-        jLabel72.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel72.setText("------------------------------------------------------------------------------------------------------------------------------------");
-        jPanel3.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 355, 530, -1));
-
-        jLabel73.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel73.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel73.setText("POS INIT >");
-        jLabel73.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel73MousePressed(evt);
-            }
-        });
-        jPanel3.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 370, 84, 23));
-
-        jLabel74.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel74.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel74.setText("< INDEX");
-        jPanel3.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 84, -1));
-
-        jLabel75.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel75.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel75.setText("                                        ENG RATING");
-        jLabel75.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 171, -1));
-
-        jLabel76.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel76.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel76.setText("                                                         GENX-1B64");
-        jLabel76.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jPanel3.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 240, -1));
-
-        jLabel77.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel77.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel77.setText("                                        ACTIVE");
-        jLabel77.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 171, -1));
-
-        jLabel79.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel79.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel79.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 236, 16));
-
-        jLabel81.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel81.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel81.setText("                                        ");
-        jLabel81.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 171, -1));
-
-        jLabel84.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
-        jLabel84.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel84.setText("                                        DRAG/FF");
-        jLabel84.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 171, -1));
-
-        jLabel78.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel78.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel78.setText("                                                        JAN1FEB1/18");
-        jLabel78.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
-
-        jLabel85.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel85.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel85.setText("                                                        ");
-        jLabel85.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 240, -1));
-
-        jLabel86.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel86.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel86.setText("                                                        ");
-        jLabel86.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        jPanel3.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 240, 30));
-
-        jLabel87.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel87.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel87.setText("                                             +0.0/+0.0");
-        jLabel87.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jPanel3.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 210, -1));
-
-        jLabel48.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel48.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel49.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel49.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel50.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel50.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel51.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel51.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel52.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel52.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel53.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel53.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel53.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel53MousePressed(evt);
-            }
-        });
-
-        jLabel54.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel54.setFont(new java.awt.Font("Futura LtCn BT", 0, 18)); // NOI18N
-        jLabel54.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel54.setOpaque(true);
-
-        jLabel55.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel55.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel56.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel56.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel57.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel57.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel58.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel58.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel59.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel59.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel61.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255), 5));
-        jLabel61.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel61.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel61MousePressed(evt);
-            }
-        });
-
-        jButton1.setText("RTE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("INIT REF");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("ALTN");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("DEP/ARR");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("VNAV");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("PROG");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
-        jButton7.setText("FMC COMM");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setText("HOLD");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
-        jButton9.setText("LEGS");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setText("FIX");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        jButton11.setText("NAVRAD");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel61, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel61, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35)
-                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(321, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(9, 9, 9)
-                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(29, 29, 29)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel14)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(20, 20, 20)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(933, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel14)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(56, 56, 56)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(872, Short.MAX_VALUE)))
-        );
-
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 11;
-        gridBagConstraints.ipady = 62;
+        gridBagConstraints.gridx = 55;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 63;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 28;
+        gridBagConstraints.ipady = 24;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 0);
-        getContentPane().add(jPanel1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(18, 10, 0, 0);
+        jPanel1.add(jLabel47, gridBagConstraints);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 290, 630));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/787FFMCDisplay.PNG"))); // NOI18N
+        jLabel1.setOpaque(true);
+        jLayeredPane1.add(jLabel1);
+        jLabel1.setBounds(30, 0, 460, 780);
+
+        jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTextField1.setPreferredSize(new java.awt.Dimension(6, 24));
+        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jTextField1);
+        jTextField1.setBounds(100, 376, 340, 32);
+
+        LSKL4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKL4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKL4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKL4MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKL4, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKL4);
+        LSKL4.setBounds(46, 226, 30, 60);
+
+        LSKL3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKL3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKL3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKL3MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKL3, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKL3);
+        LSKL3.setBounds(47, 175, 30, 60);
+
+        LSKL2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKL2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKL2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKL2MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKL2, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKL2);
+        LSKL2.setBounds(48, 125, 30, 60);
+
+        LSKL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKL1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKL1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKL1MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKL1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKL1);
+        LSKL1.setBounds(48, 71, 30, 60);
+
+        LSKL5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKL5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKL5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKL5MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKL5, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKL5);
+        LSKL5.setBounds(46, 276, 30, 60);
+
+        LSKL6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKL6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKL6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKL6MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKL6, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKL6);
+        LSKL6.setBounds(46, 328, 30, 60);
+
+        LSKR6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKR6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKR6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKR6MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKR6, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKR6);
+        LSKR6.setBounds(452, 328, 30, 60);
+
+        LSKR5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKR5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKR5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKR5MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKR5, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKR5);
+        LSKR5.setBounds(452, 276, 30, 60);
+
+        LSKR4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKR4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKR4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKR4MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKR4, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKR4);
+        LSKR4.setBounds(452, 226, 30, 60);
+
+        LSKR3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKR3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKR3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKR3MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKR3, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKR3);
+        LSKR3.setBounds(452, 175, 30, 60);
+
+        LSKR2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKR2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKR2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKR2MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKR2, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKR2);
+        LSKR2.setBounds(452, 122, 30, 60);
+
+        LSKR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttons/FMCSelect.png"))); // NOI18N
+        LSKR1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LSKR1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LSKR1MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(LSKR1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(LSKR1);
+        LSKR1.setBounds(453, 70, 30, 60);
+
+        jLabel48.setFont(new java.awt.Font("Futura Lt BT", 0, 18)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel48.setText("IDENT");
+        jLayeredPane1.setLayer(jLabel48, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel48);
+        jLabel48.setBounds(180, 50, 180, 30);
+
+        jLabel49.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel49.setText("Model");
+        jLayeredPane1.setLayer(jLabel49, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel49);
+        jLabel49.setBounds(90, 130, 130, 20);
+
+        jLabel50.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel50.setText("787-9");
+        jLayeredPane1.setLayer(jLabel50, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel50);
+        jLabel50.setBounds(90, 150, 350, 30);
+
+        jLabel51.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel51.setText("Model");
+        jLayeredPane1.setLayer(jLabel51, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel51);
+        jLabel51.setBounds(90, 70, 130, 20);
+
+        jLabel52.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel52.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel52.setText("787-9");
+        jLayeredPane1.setLayer(jLabel52, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel52);
+        jLabel52.setBounds(90, 90, 350, 30);
+
+        jLabel53.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel53.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel53.setText("787-9");
+        jLayeredPane1.setLayer(jLabel53, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel53);
+        jLabel53.setBounds(90, 200, 350, 30);
+
+        jLabel54.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel54.setText("Model");
+        jLayeredPane1.setLayer(jLabel54, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel54);
+        jLabel54.setBounds(90, 180, 130, 20);
+
+        jLabel55.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel55.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel55.setText("Model");
+        jLayeredPane1.setLayer(jLabel55, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel55);
+        jLabel55.setBounds(90, 230, 130, 20);
+
+        jLabel56.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel56.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel56.setText("787-9");
+        jLayeredPane1.setLayer(jLabel56, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel56);
+        jLabel56.setBounds(90, 250, 170, 30);
+
+        jLabel57.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
+        jLabel57.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel57.setText("                                      POS INIT  >");
+        jLabel57.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel57.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jLayeredPane1.setLayer(jLabel57, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel57);
+        jLabel57.setBounds(270, 340, 170, 30);
+
+        jLabel58.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel58.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel58.setText("Model");
+        jLayeredPane1.setLayer(jLabel58, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel58);
+        jLabel58.setBounds(90, 280, 130, 20);
+
+        jLabel59.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel59.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel59.setText("787-9");
+        jLayeredPane1.setLayer(jLabel59, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel59);
+        jLabel59.setBounds(90, 300, 170, 30);
+
+        jLabel60.setFont(new java.awt.Font("Futura LtCn BT", 0, 14)); // NOI18N
+        jLabel60.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel60.setText("< INDEX");
+        jLayeredPane1.setLayer(jLabel60, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel60);
+        jLabel60.setBounds(90, 340, 170, 30);
+
+        jLabel61.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel61.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel61.setText("Model");
+        jLabel61.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel61, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel61);
+        jLabel61.setBounds(310, 70, 130, 20);
+
+        jLabel62.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel62.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel62.setText("787-9");
+        jLabel62.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel62, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel62);
+        jLabel62.setBounds(270, 90, 170, 30);
+
+        jLabel63.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel63.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel63.setText("Model");
+        jLabel63.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel63, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel63);
+        jLabel63.setBounds(310, 130, 130, 20);
+
+        jLabel64.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel64.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel64.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel64.setText("787-9");
+        jLabel64.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel64, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel64);
+        jLabel64.setBounds(270, 150, 170, 30);
+
+        jLabel65.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel65.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel65.setText("Model");
+        jLabel65.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel65, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel65);
+        jLabel65.setBounds(310, 180, 130, 20);
+
+        jLabel66.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel66.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel66.setText("787-9");
+        jLabel66.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel66, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel66);
+        jLabel66.setBounds(270, 200, 170, 30);
+
+        jLabel67.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel67.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel67.setText("Model");
+        jLabel67.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel67, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel67);
+        jLabel67.setBounds(310, 230, 130, 20);
+
+        jLabel68.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel68.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel68.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel68.setText("787-9");
+        jLabel68.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel68, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel68);
+        jLabel68.setBounds(270, 250, 170, 30);
+
+        jLabel69.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
+        jLabel69.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel69.setText("Model");
+        jLabel69.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel69, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel69);
+        jLabel69.setBounds(310, 280, 130, 20);
+
+        jLabel70.setFont(new java.awt.Font("Futura LtCn BT", 0, 22)); // NOI18N
+        jLabel70.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel70.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel70.setText("787-9");
+        jLabel70.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLayeredPane1.setLayer(jLabel70, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(jLabel70);
+        jLabel70.setBounds(270, 300, 170, 30);
+
+        nextpage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nextpage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                nextpageMousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(nextpage, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(nextpage);
+        nextpage.setBounds(430, 500, 60, 40);
+
+        InitRef.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(InitRef, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(InitRef);
+        InitRef.setBounds(40, 410, 50, 40);
+
+        rte1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rte1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                rte1MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(rte1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(rte1);
+        rte1.setBounds(90, 410, 60, 40);
+
+        deparr1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deparr1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                deparr1MousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(deparr1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(deparr1);
+        deparr1.setBounds(150, 410, 50, 40);
+
+        alternate1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(alternate1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(alternate1);
+        alternate1.setBounds(210, 410, 50, 40);
+
+        vnav1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(vnav1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(vnav1);
+        vnav1.setBounds(260, 410, 60, 40);
+
+        fix1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(fix1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(fix1);
+        fix1.setBounds(30, 460, 60, 40);
+
+        legs1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(legs1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(legs1);
+        legs1.setBounds(90, 460, 60, 40);
+
+        hold1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(hold1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(hold1);
+        hold1.setBounds(150, 460, 50, 40);
+
+        fmccomm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(fmccomm, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(fmccomm);
+        fmccomm.setBounds(205, 458, 53, 40);
+
+        prog1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(prog1, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(prog1);
+        prog1.setBounds(262, 460, 53, 40);
+
+        jButton1.setText("Exit");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
+        jLayeredPane1.add(jButton1);
+        jButton1.setBounds(400, 810, 51, 23);
+
+        navrad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLayeredPane1.setLayer(navrad, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(navrad);
+        navrad.setBounds(30, 500, 60, 40);
+
+        prevpage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        prevpage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                prevpageMousePressed(evt);
+            }
+        });
+        jLayeredPane1.setLayer(prevpage, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(prevpage);
+        prevpage.setBounds(370, 500, 60, 40);
+
+        pagenumber.setForeground(new java.awt.Color(204, 204, 204));
+        pagenumber.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        pagenumber.setText("PAGE 1/1");
+        jLayeredPane1.setLayer(pagenumber, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.add(pagenumber);
+        pagenumber.setBounds(368, 50, 70, 14);
+
+        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 30, 490, 860));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public void panelSelector(){
+int clicked=0;
+    private void jLabel44MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel44MousePressed
+        String currentText=jTextField1.getText();
+        clicked++;
+        
+        
+        //clicked++;
+       if(clicked<3){
+            jTextField1.setText(currentText.substring(0,currentText.length()-1));        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel44MousePressed
+       else if(clicked>=3){
+ jTextField1.setText("");
+ clicked=0;
+ }
+    }
+    private void jLabel43MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel43MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"/");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel43MousePressed
+
+    private void jLabel42MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel42MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText("DELETE");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel42MousePressed
+
+    private void jLabel41MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel41MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+" ");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel41MousePressed
+
+    private void jLabel40MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel40MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"Z");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel40MousePressed
+
+    private void jLabel39MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel39MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"Y");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel39MousePressed
+
+    private void jLabel38MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel38MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"X");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel38MousePressed
+
+    private void jLabel37MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"W");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel37MousePressed
+
+    private void jLabel36MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel36MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"V");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel36MousePressed
+
+    private void jLabel35MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"U");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel35MousePressed
+
+    private void jLabel34MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel34MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"T");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel34MousePressed
+
+    private void jLabel33MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"S");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel33MousePressed
+
+    private void jLabel32MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"R");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel32MousePressed
+
+    private void jLabel31MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"Q");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel31MousePressed
+
+    private void jLabel30MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"P");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel30MousePressed
+
+    private void jLabel29MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"O");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel29MousePressed
+
+    private void jLabel28MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"N");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel28MousePressed
+
+    private void jLabel27MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"M");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel27MousePressed
+
+    private void jLabel26MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"L");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel26MousePressed
+
+    private void jLabel25MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"K");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel25MousePressed
+
+    private void jLabel24MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"J");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel24MousePressed
+
+    private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"I");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel23MousePressed
+
+    private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"H");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel22MousePressed
+
+    private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"G");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel21MousePressed
+
+    private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"F");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel20MousePressed
+
+    private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"E");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel19MousePressed
+
+    private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"D");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel18MousePressed
+
+    private void jLabel17MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"C");   // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel17MousePressed
+
+    private void jLabel16MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"B");   // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel16MousePressed
+
+    private void jLabel15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"A");       // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel15MousePressed
+
+    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
+
+        if(jTextField1.getText().equals("")){
+            jTextField1.setText("+");
+
+        }else{
+            String currentText=jTextField1.getText();
+            int length=currentText.length();
+            if(currentText.charAt(length-1)=='-'){
+                currentText=jTextField1.getText();
+                currentText=currentText.substring(0,currentText.length()-1)+"+";
+                jTextField1.setText(currentText);        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MousePressed
+        else if(currentText.charAt(length-1)=='+'){
+    currentText=jTextField1.getText();
+    currentText=currentText.substring(0,currentText.length()-1)+"-";
+    jTextField1.setText(currentText);        // TODO add your handling code here:
+
+}else{
+    jLabel54.setText(currentText+"+");  
+}
+        }
+     
+        
+        }
+    
+
+   
+ String [] temp;
+public void performAction(String x, String y, String z){
+    String button=x;
+    String text=y;
+    String state=z;
+    
+    if(text!=null||text!=""){
+    
+        switch(button){
+         case "Left1": if(state.equals("posinit")){
+             if(Arrays.asList(temp=accessLogic.getAirports()).contains(text)==true){
+             
+             String [] temp=accessLogic.getAirportLatLong(text);
+             String finalData = text +"     "+ temp[0] +"      " +temp[1]+"     "+temp[2];
+             jLabel52.setFont(new java.awt.Font("Futura LtCn BT", 0, 14));
+             panelSelector.writeProperty("refairport", finalData);jTextField1.setText("");
+             }else{
+                 jTextField1.setText("Entry Invalid - Airport Not Found");
+             }
+         
+         }
+         if(state.equals("deparr")){
+             sidAndRunwayDisplayer();
+             
+         }
+         if(state.equals("perfinit")){panelSelector.writeProperty("groundweight", text);jTextField1.setText("");}
+          if(state.equals("rte")){panelSelector.writeProperty("origin", text);jTextField1.setText("");}
+            if(state.equals("index")){panelSelector.writeProperty("panelstate", "ident");jTextField1.setText("");}
+            break;
+             case "Left2": if(state.equals("posinit")){panelSelector.writeProperty("gate", text);jTextField1.setText("");}
+             if(state.equals("perfinit")){panelSelector.writeProperty("fuel", text);jTextField1.setText("");}
+          if(state.equals("rte")){panelSelector.writeProperty("runwaydep", text);jTextField1.setText("");}
+            if(state.equals("index")){panelSelector.writeProperty("panelstate", "posinit");}
+            break;
+            case "Left3": if(state.equals("posinit")){}
+          if(state.equals("rte")){}
+            if(state.equals("index")){panelSelector.writeProperty("panelstate", "perfinit");}
+            if(state.equals("perfinit")){panelSelector.writeProperty("zfw", text);jTextField1.setText("");}
+            break;
+            case "Left4": if(state.equals("posinit")){}
+          if(state.equals("rte")){}
+            if(state.equals("index")){panelSelector.writeProperty("panelstate", "takeoffinit");}
+            if(state.equals("perfinit")){panelSelector.writeProperty("reserves", text);jTextField1.setText("");}
+            break;
+            case "Left5": if(state.equals("posinit")){}
+          if(state.equals("rte")){}
+            if(state.equals("index")){panelSelector.writeProperty("panelstate", "approachinit");}
+            if(state.equals("perfinit")){}
+            break;
+            
+            case "Right1": if(state.equals("posinit")){}
+          if(state.equals("rte")){panelSelector.writeProperty("dest",text);jTextField1.setText("");}
+            if(state.equals("index")){panelSelector.writeProperty("panelstate", "navdata");}
+            if(state.equals("perfinit")){panelSelector.writeProperty("crzalt", text);jTextField1.setText("");}
+            break;
+            case "Right2": if(state.equals("posinit")){}
+          if(state.equals("rte")){panelSelector.writeProperty("fltno", text);jTextField1.setText("");}
+            if(state.equals("index")){}
+            if(state.equals("perfinit")){panelSelector.writeProperty("costindex", text);jTextField1.setText("");}
+            break;
+             case "Right3": if(state.equals("posinit")){}
+          if(state.equals("rte")){panelSelector.writeProperty("coroute", "Not Implemented Yet");}
+            if(state.equals("index")){}
+            if(state.equals("perfinit")){}
+            break;
+            
+            case "Right4": if(state.equals("posinit")){}
+          if(state.equals("rte")){}
+            if(state.equals("index")){}
+            if(state.equals("perfinit")){panelSelector.writeProperty("crzcg", text);jTextField1.setText("");}
+            break;
+            case "Right5": if(state.equals("posinit")){panelSelector.writeProperty("irspos", text);jTextField1.setText("");}
+          if(state.equals("rte")){}
+            if(state.equals("index")){}
+            break;
+        }
+        
+        
+    }
+}
+
+
+    
+    private void jLabel12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"0");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel12MousePressed
+
+    private void jLabel11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+".");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MousePressed
+
+    private void jLabel10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"9");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MousePressed
+
+    private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"8");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MousePressed
+
+    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"7");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MousePressed
+
+    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"6");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MousePressed
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"5");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"4");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel5MousePressed
+
+    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"2");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel4MousePressed
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"1");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+        String currentText=jTextField1.getText();
+        jTextField1.setText(currentText+"3");        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MousePressed
+
+    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MousePressed
+
+    private void LSKR6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR6MousePressed
+       if(jLabel57.getText().equals("POS INIT >")){
+         panelSelector.writePanelState("posinit");  
+           
+       }
+       
+         if(jLabel57.getText().equals("RTE >")){
+         panelSelector.writePanelState("rte");  
+           
+       }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKR6MousePressed
+
+    private void LSKL6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL6MousePressed
+if(jLabel60.getText().equals("< INDEX")){
+         panelSelector.writePanelState("index");  
+           
+       }
+       
+             
+        
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_LSKL6MousePressed
+
+    private void rte1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rte1MousePressed
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rte1MousePressed
+
+    private void LSKL1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL1MousePressed
+    performAction("Left1",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKL1MousePressed
+
+    private void LSKL2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL2MousePressed
+    performAction("Left2",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));       
+    // TODO add your handling code here:
+    }//GEN-LAST:event_LSKL2MousePressed
+
+    private void LSKL3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL3MousePressed
+ performAction("Left3",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));  
+ 
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_LSKL3MousePressed
+
+    private void LSKL4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL4MousePressed
+ performAction("Left4",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKL4MousePressed
+
+    private void LSKL5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL5MousePressed
+ performAction("Left1",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKL5MousePressed
+
+    private void LSKR1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR1MousePressed
+ performAction("Right1",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKR1MousePressed
+
+    private void LSKR2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR2MousePressed
+ performAction("Right2",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKR2MousePressed
+
+    private void LSKR3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR3MousePressed
+ performAction("Right3",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));         // TODO add your handling code here:
+    }//GEN-LAST:event_LSKR3MousePressed
+
+    private void LSKR4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR4MousePressed
+ performAction("Right4",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));         // TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKR4MousePressed
+
+    private void LSKR5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR5MousePressed
+ performAction("Right5",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));         // TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LSKR5MousePressed
+
+    private void prevpageMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prevpageMousePressed
+if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
+    panelSelector.writeProperty("panelstate", "posinit");
+    
+}
+if(panelSelector.retrieveProperty("panelstate").equals("posref")){
+ panelSelector.writeProperty("panelstate", "posinit");   
+    
+}
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prevpageMousePressed
+
+    private void nextpageMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextpageMousePressed
+if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
+    panelSelector.writeProperty("panelstate", "posref");
+    
+}       
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_nextpageMousePressed
+
+    private void deparr1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deparr1MousePressed
+    
+        if(panelSelector.retrieveProperty("origin").equals("----")==false  &&panelSelector.retrieveProperty("dest").equals("----")==false){
+        panelSelector.writePanelState("deparr");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deparr1MousePressed
+
+     String [] location = getLocation.getLatLongIP();
+    int x=0;
+    
+   List<String> sids;
+   List <String> runways;
+   
+    public void sidAndRunwayDisplayer(){
+        sids=Arrays.asList(accessLogic.getSIDS(panelSelector.retrieveProperty("origin")));
+        runways=Arrays.asList(accessLogic.getRunways(panelSelector.retrieveProperty("origin")));
+        int sidsPage=sids.size()/5;
+        int runwaysPage=runways.size()/5;
+        int maxPage=0;
+        if(sidsPage>runwaysPage){
+        maxPage=sidsPage;
+        }else if(runwaysPage>sidsPage){
+        maxPage=runwaysPage;
+        }
+        if(sids.size()<=5||sids.size()>=5){    
+        panelSelector.writeProperty("panelstate","rtepagedep1");
+        jLabel48.setText("DEPARTURES");
+             jLabel51.setText("");
+             jLabel52.setText(sids.get(0));
+             jLabel49.setText("");
+             jLabel50.setText(sids.get(1));
+             jLabel54.setText("");
+             jLabel53.setText(sids.get(2));
+             jLabel55.setText("");
+             jLabel56.setText(sids.get(3));
+             jLabel58.setText("");
+             jLabel59.setText(sids.get(4));
+             jLabel61.setText("");
+             jLabel62.setText("");
+             jLabel63.setText("");
+             jLabel64.setText("");
+             jLabel65.setText("");
+             jLabel66.setText("");
+             jLabel67.setText("");
+             jLabel68.setText("");
+             jLabel69.setText("");
+             jLabel70.setText("");
+             jLabel57.setText("");
+        }
+        if(runways.size()<=5){    
+        panelSelector.writeProperty("panelstate","rtepagedep1");
+        
+             
+             
+             jLabel61.setText("");
+             jLabel62.setText(runways.get(0));
+             jLabel63.setText("");
+             jLabel64.setText(runways.get(1));
+             jLabel65.setText("");
+             jLabel66.setText(runways.get(2));
+             jLabel67.setText("");
+             jLabel68.setText(runways.get(3));
+             jLabel69.setText("");
+             jLabel70.setText(runways.get(4));
+             jLabel57.setText("");
+        }
+        }
+    /* Thread sidsLoader=new Thread(new Runnable(){
+         
+         public void run(){
+         while (x==0){
+             
+             
+             
+         }
+         }        
+        
+        
+    });*/
+    
+    
+    public void panelSelector(){
     //panelstate=ident opens ident page
     //panelstate=index opens index page
     //panelstate=posinit opens POS INIT page
@@ -1348,56 +2136,199 @@ public void panelSelector(){
     Thread panelVerifier = new Thread(new Runnable(){
         public void run()
         {
-         int x=0;
+         
          while(x==0){
-             if(panel.retrievePanelState().equals("ident")){
-             jLabel1.setText("IDENT");
-             jLabel62.setText("MODEL");
-             jLabel65.setText("787-9");
-             jLabel64.setText("NAVDATA");
-             jLabel63.setText("NAVIGRAPH 1801");
-             jLabel67.setText("");
+           
+             if(panel.retrieveProperty("panelstate").equals("ident")){
+                 pagenumber.setText("");
+             jLabel48.setText("IDENT");
+             jLabel51.setText("MODEL");
+             jLabel52.setText("787-9");
+             jLabel49.setText("NAVDATA");
+             jLabel50.setText("NAVIGRAPH 1801");
+             jLabel54.setText("");
+             jLabel53.setText("");
+             jLabel55.setText("OP PROGRAM");
+             jLabel56.setText("OP042017");
+             jLabel58.setText("");
+             jLabel59.setText("");
+             jLabel61.setText("ENG RATING");
+             jLabel62.setText("GENX-1B64");
+             jLabel63.setText("ACTIVE");
+             jLabel64.setText("JAN01FEB01/18");
+             jLabel65.setText("");
              jLabel66.setText("");
-             jLabel69.setText("OP PROGRAM");
-             jLabel68.setText("OP042017");
-             jLabel71.setText("");
-             jLabel70.setText("");
-             jLabel75.setText("ENG RATING");
-             jLabel76.setText("GENX-1B64");
-             jLabel77.setText("ACTIVE");
-             jLabel78.setText("JAN01FEB01/18");
-             jLabel79.setText("");
-             jLabel85.setText("");
-             jLabel81.setText("");
-             jLabel86.setText("");
-             jLabel84.setText("DRAG/FF");
-             jLabel87.setText("+0.0/+0.0");
-             jLabel73.setText("POS INIT >");
-         }
-             else if(panel.retrievePanelState().equals("posinit")){
-                 jLabel1.setText("POS INIT");
-             jLabel62.setText("REF AIRPORT");
-             jLabel65.setText("----");
-             jLabel64.setText("GATE");
-             jLabel63.setText("_____");
-             jLabel67.setText("UTC");
-             jLabel66.setText("placeholder");
-             jLabel69.setText("");
+             jLabel67.setText("");
              jLabel68.setText("");
-             jLabel71.setText("");
-             jLabel70.setText("");
-             jLabel75.setText("LAST POS");
-             jLabel76.setText("place holder");
-             jLabel77.setText("");
-             jLabel78.setText("");
-             jLabel79.setText("");
-             jLabel85.setText("");
-             jLabel81.setText("");
-             jLabel86.setText("");
-             jLabel84.setText("SET INERTIAL POSITION");
-             jLabel87.setText("");
-                 jLabel73.setText("RTE >");
+             jLabel69.setText("DRAG/FF");
+             jLabel70.setText("+0.0/+0.0");
+             jLabel57.setText("POS INIT >");
+         }
+             else if(panel.retrieveProperty("panelstate").equals("posinit")){
+                  pagenumber.setText("PAGE 1/2");
+                 jLabel48.setText("POS INIT");
+             jLabel51.setText("REF AIRPORT");
+             jLabel52.setText(panelSelector.retrieveProperty("refairport"));
+             jLabel49.setText("GATE");
+             jLabel50.setText(panelSelector.retrieveProperty("gate"));
+             jLabel54.setText("UTC");
+             jLabel53.setText("placeholder");
+             jLabel55.setText("");
+             jLabel56.setText("");
+             jLabel58.setText("");
+             jLabel59.setText("");
+             jLabel61.setText("LAST POS");
+             jLabel62.setText("place holder");
+             jLabel63.setText("");
+             jLabel64.setText("");
+             jLabel65.setText("");
+             jLabel66.setText("");
+             jLabel67.setText("");
+             jLabel68.setText("");
+             jLabel69.setText("SET INERTIAL POSITION");
+             jLabel70.setText(panelSelector.retrieveProperty("irspos"));
+                 jLabel57.setText("RTE >");
                  }
+             
+             
+             else if(panel.retrieveProperty("panelstate").equals("index")){
+                  jLabel48.setText("INIT/REF INDEX");
+             jLabel51.setText("");
+             jLabel52.setText("< IDENT");
+             jLabel49.setText("");
+             jLabel50.setText("< POS");
+             jLabel54.setText("");
+             jLabel53.setText("< PERF");
+             jLabel55.setText("");
+             jLabel56.setText("< TAKEOFF");
+             jLabel58.setText("");
+             jLabel59.setText("< APPROACH");
+             jLabel61.setText("");
+             jLabel62.setText("NAVDATA >");
+             jLabel63.setText("");
+             jLabel64.setText("");
+             jLabel65.setText("");
+             jLabel66.setText("");
+             jLabel67.setText("");
+             jLabel68.setText("");
+             jLabel69.setText("");
+             jLabel70.setText("");
+                 jLabel57.setText("");
+                 
+                 
+             }
+              else if(panel.retrieveProperty("panelstate").equals("rte")){
+                  jLabel48.setText("RTE 1");
+             jLabel51.setText("Origin");
+             jLabel52.setText(panelSelector.retrieveProperty("origin"));
+             jLabel49.setText("RUNWAY");
+             jLabel50.setText(panelSelector.retrieveProperty("runwaydep"));
+             jLabel54.setText("");
+             jLabel53.setText("");
+             jLabel55.setText("");
+             jLabel56.setText("");
+             jLabel58.setText("");
+             jLabel59.setText("");
+             jLabel61.setText("DEST");
+             jLabel62.setText(panelSelector.retrieveProperty("dest"));
+             jLabel63.setText("FLT NO");
+             jLabel64.setText(panelSelector.retrieveProperty("fltno"));
+             jLabel65.setText("CO ROUTE");
+             jLabel66.setText(panelSelector.retrieveProperty("coroute"));
+             jLabel67.setText("");
+             jLabel68.setText("");
+             jLabel69.setText("");
+             jLabel70.setText("ALTN >");
+                 jLabel57.setText("");
+                 
+                 
+             }
+             else if(panel.retrieveProperty("panelstate").equals("perfinit")){
+                  jLabel48.setText("PERF INIT");
+             jLabel51.setText("GR WT");
+             jLabel52.setText(panelSelector.retrieveProperty("groundweight"));
+             jLabel49.setText("FUEL");
+             jLabel50.setText(panelSelector.retrieveProperty("fuel"));
+             jLabel54.setText("ZFW");
+             jLabel53.setText(panelSelector.retrieveProperty("zfw"));
+             jLabel55.setText("RESERVES");
+             jLabel56.setText(panelSelector.retrieveProperty("reserves"));
+             jLabel58.setText("");
+             jLabel59.setText("");
+             jLabel61.setText("CRZ ALT");
+             jLabel62.setText(panelSelector.retrieveProperty("crzalt"));
+             jLabel63.setText("COST INDEX");
+             jLabel64.setText(panelSelector.retrieveProperty("costindex"));
+             jLabel65.setText("");
+             jLabel66.setText("");
+             jLabel67.setText("CRZ CG");
+             jLabel68.setText(panelSelector.retrieveProperty("crzcg"));
+             jLabel69.setText("");
+             jLabel70.setText("");
+                 jLabel57.setText("");
+                 
+                 
+             }
+             
+             if(panel.retrieveProperty("panelstate").equals("posref")){
+                  pagenumber.setText("PAGE 2/2");
+             jLabel48.setText("POS REF");
+             jLabel51.setText("FMC (GPS)");
+      
+       
+             jLabel52.setText(location[0] +" " +location [1]);
+             jLabel49.setText("IRU L ");
+             jLabel50.setText("INOP");
+             jLabel54.setText("GPS - IRU L");
+             jLabel53.setText("INOP");
+             jLabel55.setText("RADIO L");
+             jLabel56.setText("INOP ");
+             jLabel58.setText("RNP / ACTUAL");
+             jLabel59.setText("2.00 / 0.01");
+             jLabel61.setText("");
+             jLabel62.setText("");
+             jLabel63.setText("");
+             jLabel64.setText("");
+             jLabel65.setText("");
+             jLabel66.setText("");
+             jLabel67.setText("");
+             jLabel68.setText("");
+             jLabel69.setText("");
+             jLabel70.setText("");
+             jLabel57.setText("");
+         }
+             
+             if(panel.retrieveProperty("panelstate").equals("deparr")){
+                  pagenumber.setText("PAGE 1/1");
+             jLabel48.setText("DEP/ARR INDEX ");
+             jLabel51.setText("");
+      
+       
+             jLabel52.setText("< DEP                           "+panelSelector.retrieveProperty("origin")+"                           ARR >");
+             jLabel49.setText("");
+             jLabel50.setText("                                "+panelSelector.retrieveProperty("dest")+"                           ARR >");
+             jLabel54.setText("");
+             jLabel53.setText("-------------------------------------------------------------------------------------------------------------");
+             jLabel55.setText("");
+             jLabel56.setText(" ");
+             jLabel58.setText("");
+             jLabel59.setText("");
+             jLabel61.setText("");
+             jLabel62.setText("");
+             jLabel63.setText("");
+             jLabel64.setText("");
+             jLabel65.setText("");
+             jLabel66.setText("");
+             jLabel67.setText("");
+             jLabel68.setText("");
+             jLabel69.setText("");
+             jLabel70.setText("");
+             jLabel57.setText("");
+         }if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")){
+             
+         }
+             
+             try{Thread.sleep(1000);}catch(InterruptedException ex){}
          }
             
         }        
@@ -1408,122 +2339,8 @@ public void panelSelector(){
 }
     
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"1");
-// TODO add your handling code here:
-    }//GEN-LAST:event_jLabel3MousePressed
-
-    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"2");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel4MousePressed
-
-    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"3");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel2MousePressed
-
-    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"4");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel5MousePressed
-
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"5");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MousePressed
-
-    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"6");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel7MousePressed
-
-    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"7");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8MousePressed
-
-    private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"8");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MousePressed
-
-    private void jLabel10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"9");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel10MousePressed
-
-    private void jLabel11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+".");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel11MousePressed
-
-    private void jLabel12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MousePressed
-String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"0");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MousePressed
-
-    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
-
-if(jLabel54.getText().equals("")){
-    jLabel54.setText("+");
     
-}else{
-    String currentText=jLabel54.getText();
-int length=currentText.length();
-if(currentText.charAt(length-1)=='-'){
-    currentText=jLabel54.getText();
-    currentText=currentText.substring(0,currentText.length()-1)+"+";
-jLabel54.setText(currentText);        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel13MousePressed
-
-    
-else if(currentText.charAt(length-1)=='+'){
+/*else if(currentText.charAt(length-1)=='+'){
     currentText=jLabel54.getText();
     currentText=currentText.substring(0,currentText.length()-1)+"-";
     jLabel54.setText(currentText);        // TODO add your handling code here:
@@ -1532,159 +2349,7 @@ else if(currentText.charAt(length-1)=='+'){
     jLabel54.setText(currentText+"+");  
 }
 }
-}
-private void jLabel15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MousePressed
-    String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"A");       // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel15MousePressed
-
-    private void jLabel16MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MousePressed
-       String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"B");   // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel16MousePressed
-
-    private void jLabel17MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MousePressed
-      String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"C");   // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel17MousePressed
-
-    private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"D");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel18MousePressed
-
-    private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"E");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel19MousePressed
-
-    private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"F");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel20MousePressed
-
-    private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"G");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel21MousePressed
-
-    private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"H");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel22MousePressed
-
-    private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"I");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel23MousePressed
-
-    private void jLabel24MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"J");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel24MousePressed
-
-    private void jLabel25MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"K");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel25MousePressed
-
-    private void jLabel26MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"L");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel26MousePressed
-
-    private void jLabel27MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"M");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel27MousePressed
-
-    private void jLabel28MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"N");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel28MousePressed
-
-    private void jLabel29MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"O");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel29MousePressed
-
-    private void jLabel30MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"P");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel30MousePressed
-
-    private void jLabel31MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"Q");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel31MousePressed
-
-    private void jLabel32MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"R");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel32MousePressed
-
-    private void jLabel33MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"S");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel33MousePressed
-
-    private void jLabel34MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel34MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"T");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel34MousePressed
-
-    private void jLabel35MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"U");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel35MousePressed
-
-    private void jLabel36MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel36MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"V");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel36MousePressed
-
-    private void jLabel37MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"W");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel37MousePressed
-
-    private void jLabel38MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel38MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"X");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel38MousePressed
-
-    private void jLabel39MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel39MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"Y");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel39MousePressed
-
-    private void jLabel40MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel40MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"Z");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel40MousePressed
-
-    private void jLabel41MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel41MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+" ");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel41MousePressed
-
-    private void jLabel42MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel42MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText("DELETE");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel42MousePressed
-
-    private void jLabel43MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel43MousePressed
- String currentText=jLabel54.getText();
-jLabel54.setText(currentText+"/");        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel43MousePressed
-int clicked=0;
-    private void jLabel44MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel44MousePressed
- String currentText=jLabel54.getText();
- clicked++;
- if(clicked<3){
-jLabel54.setText(currentText.substring(0,currentText.length()-1));        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel44MousePressed
-
+}int clicked=0;
     
 
    
@@ -1692,30 +2357,46 @@ jLabel54.setText(currentText.substring(0,currentText.length()-1));        // TOD
  jLabel54.setText("");
  clicked=0;
  }
-    }
-	 private void jLabel53MousePressed(java.awt.event.MouseEvent evt) {                                      
-        // TODO add your handling code here:
-        if(jLabel74.getText().equals("< INDEX")){
-        panelSelector.writePanelState("index");
-    }
-         }
-    private void jLabel73MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel73MousePressed
-        // TODO add your handling code here:
+    }*/
         
-    }//GEN-LAST:event_jLabel73MousePressed
-
-    private void jLabel61MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel61MousePressed
-        // TODO add your handling code here:
-        if(jLabel73.getText().equals("POS INIT >")){
-            
-            panelSelector.writePanelState("posinit");
-        }
-    }//GEN-LAST:event_jLabel61MousePressed
-         
          
          /**
      * @param args the command line arguments
      */
+    
+    public void intializePanel(){
+     panelSelector.writeProperty("refairport", "----");
+     panelSelector.writeProperty("gate", ""); 
+        panelSelector.writeProperty("lastpos", "Not Available");
+        panelSelector.writeProperty("gpspos", "Not Available");
+        panelSelector.writeProperty("irspos", "---*--.- ----*--.-");
+       
+        panelSelector.writeProperty("origin", "----");
+        panelSelector.writeProperty("runwaydep", "----");
+        panelSelector.writeProperty("dest", "----");
+        panelSelector.writeProperty("fltno", "----------");
+        panelSelector.writeProperty("coroute", "----");
+        panelSelector.writeProperty("groundweight", "00.00");
+        panelSelector.writeProperty("fuel", "----");
+        panelSelector.writeProperty("zfw", "---.- LB");
+        panelSelector.writeProperty("reserves", "___._");
+        panelSelector.writeProperty("crzalt","-----");
+        panelSelector.writeProperty("costindex", "---");
+        panelSelector.writeProperty("refairport", "----");
+        panelSelector.writeProperty("crzcg", "__._%");
+        panelSelector.writeProperty("refairport", "----");
+        panelSelector.writeProperty("seltemp", "---°c");
+        panelSelector.writeProperty("takeoffderate", "TO");
+        panelSelector.writeProperty("climbselect", "CLB");
+        panelSelector.writeProperty("takeoffflaps", "--");
+        panelSelector.writeProperty("takeoffV1", "---");
+        panelSelector.writeProperty("takeoffVR", "---");
+        panelSelector.writeProperty("takeoffV2", "---");
+        panelSelector.writeProperty("takeoffwinds", "---° /---");
+        panelSelector.writeProperty("refairport", "----");
+        panelSelector.writeProperty("transitionaltitude", "-----");
+        
+    }
     
     public static void main(String args[]) {
         MainApp obj1=new MainApp();
@@ -1754,18 +2435,26 @@ jLabel54.setText(currentText.substring(0,currentText.length()-1));        // TOD
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel InitRef;
+    private javax.swing.JLabel LSKL1;
+    private javax.swing.JLabel LSKL2;
+    private javax.swing.JLabel LSKL3;
+    private javax.swing.JLabel LSKL4;
+    private javax.swing.JLabel LSKL5;
+    private javax.swing.JLabel LSKL6;
+    private javax.swing.JLabel LSKR1;
+    private javax.swing.JLabel LSKR2;
+    private javax.swing.JLabel LSKR3;
+    private javax.swing.JLabel LSKR4;
+    private javax.swing.JLabel LSKR5;
+    private javax.swing.JLabel LSKR6;
+    private javax.swing.JLabel alternate1;
+    private javax.swing.JLabel deparr1;
+    private javax.swing.JLabel fix1;
+    private javax.swing.JLabel fmccomm;
+    private javax.swing.JLabel hold1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    protected javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1813,7 +2502,7 @@ jLabel54.setText(currentText.substring(0,currentText.length()-1));        // TOD
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    public javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
@@ -1821,6 +2510,7 @@ jLabel54.setText(currentText.substring(0,currentText.length()-1));        // TOD
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
@@ -1832,25 +2522,19 @@ jLabel54.setText(currentText.substring(0,currentText.length()-1));        // TOD
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
-    private javax.swing.JLabel jLabel71;
-    private javax.swing.JLabel jLabel72;
-    private javax.swing.JLabel jLabel73;
-    private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
-    private javax.swing.JLabel jLabel76;
-    private javax.swing.JLabel jLabel77;
-    private javax.swing.JLabel jLabel78;
-    private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel81;
-    private javax.swing.JLabel jLabel84;
-    private javax.swing.JLabel jLabel85;
-    private javax.swing.JLabel jLabel86;
-    private javax.swing.JLabel jLabel87;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    public javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel legs1;
+    private javax.swing.JLabel navrad;
+    private javax.swing.JLabel nextpage;
+    private javax.swing.JLabel pagenumber;
+    private javax.swing.JLabel prevpage;
+    private javax.swing.JLabel prog1;
+    private javax.swing.JLabel rte1;
+    private javax.swing.JLabel vnav1;
     // End of variables declaration//GEN-END:variables
 
 }

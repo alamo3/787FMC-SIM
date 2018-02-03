@@ -11,7 +11,10 @@ import java.lang.*;
  * @author omer
  */
 public class FMCLogicTest {
-  
+  public static void main(String [] args){
+   FMCLogicTest obj1=new FMCLogicTest(); 
+    obj1.getAirportLatLong("01ID");
+  }
   
   
    public String filepath=System.getProperty("user.dir") ;
@@ -24,6 +27,41 @@ public void setAirportDep(String x){airportChosenDep=x;}
 public String getAirportDep(){return airportChosenDep;}
 public void setAirportArr(String x){airportChosenArr=x;}
 public String getAirportArr(){return airportChosenArr;}
+
+
+public String[] getAirportLatLong(String x){
+ String airportData="";
+       String  icao=x;
+       String line;
+ try{
+ BufferedReader br= new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/Airports.txt"))));
+ while((line=br.readLine())!=null){
+     
+     if(line.contains(","+icao+",")){
+     airportData=line;
+     break;
+     }
+     
+ }
+ 
+ 
+ System.out.println(airportData);
+ }catch(IOException ex){}
+    String [] temp=airportData.split(",");
+     for(String next:temp){
+   System.out.println(next); 
+  }
+    String []finalData=new String[3];
+    finalData[0]=temp[2];
+    finalData[1]=temp[3];
+    finalData[2]=temp[4];
+    
+  for(String next:finalData){
+   System.out.println(next); 
+  }
+    
+    return finalData;
+}
 
 
 public String[] getAirports(){
