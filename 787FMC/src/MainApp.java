@@ -1861,6 +1861,17 @@ public void performAction(String x, String y, String z){
           sidAndRunwayDisplayer();
          }
          
+         if(panelSelector.retrieveProperty("panelstate").equals("stardep")||panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
+          if(starSelectedDep==null){
+           starSelectedDep=jLabel52.getText();
+           displayStarsandRunways();
+          }else if(starSelectedDep!=null){
+           starSelectedDep=null;
+           displayStarsandRunways();
+          }
+             
+         }
+         
          
          
          if(state.equals("perfinit")){panelSelector.writeProperty("groundweight", text);jTextField1.setText("");}
@@ -1900,7 +1911,16 @@ public void performAction(String x, String y, String z){
           
           }
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "posinit");}
-            
+             if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
+          if(starSelectedDep==null){
+           starSelectedDep=jLabel50.getText();
+           displayStarsandRunways();
+          }else{
+           starSelectedDep=null;
+           displayStarsandRunways();
+          }
+             
+         }
             
              if(state.equals("rtepagedep1")){
                  
@@ -1975,7 +1995,16 @@ public void performAction(String x, String y, String z){
              
          }
             
+              if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
+          if(starSelectedDep==null){
+           starSelectedDep=jLabel53.getText();
+           displayStarsandRunways();
+          }else{
+           starSelectedDep=null;
+           displayStarsandRunways();
+          }
              
+         }
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel53.getText().equals("")==false||jLabel53.getText().equals(null))==false){
               TransSelected=jLabel53.getText();   
@@ -2032,6 +2061,17 @@ public void performAction(String x, String y, String z){
               sidSelected=null;
               sidAndRunwayDisplayer();
              }
+             
+         }
+             
+              if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
+          if(starSelectedDep==null){
+           starSelectedDep=jLabel56.getText();
+           displayStarsandRunways();
+          }else{
+           starSelectedDep=null;
+           displayStarsandRunways();
+          }
              
          }
             
@@ -2091,6 +2131,18 @@ public void performAction(String x, String y, String z){
              }
              
          }
+             
+              if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
+          if(starSelectedDep==null){
+           starSelectedDep=jLabel59.getText();
+           displayStarsandRunways();
+          }else{
+           starSelectedDep=null;
+           displayStarsandRunways();
+          }
+             
+         }
+             
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel59.getText().equals("")==false||jLabel59.getText().equals(null))==false){
               TransSelected=jLabel59.getText();   
@@ -2152,7 +2204,7 @@ public void performAction(String x, String y, String z){
             if(state.equals("perfinit")){panelSelector.writeProperty("crzalt", text);jTextField1.setText("");}
             
             if(state.equals("rtepagedep1")||state.equals("transselect")){
-                
+                 
                 if(runwaySelected==null){
              runwaySelected=jLabel62.getText();
              panelSelector.writeProperty("runwaydep",jLabel62.getText());
@@ -2164,6 +2216,11 @@ public void performAction(String x, String y, String z){
                  sidAndRunwayDisplayer();
                 }
             }
+             if(state.equals("deparr")){
+                 panelSelector.writeProperty("panelstate", "stardep");
+             displayStarsandRunways();
+             
+         }
             break;
             case "Right2": if(state.equals("posinit")){}
           if(state.equals("rte")){panelSelector.writeProperty("fltno", text);jTextField1.setText("");}
@@ -2397,6 +2454,10 @@ if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSele
     sidAndRunwayDisplayer();
     
 }
+if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
+ listStarDep-=5;
+ displayStarsandRunways();
+}
 if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     legsDisplay-=5;   
     displayLegs();
@@ -2416,7 +2477,10 @@ if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSele
     sidAndRunwayDisplayer();
     
 }
-
+if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
+ listStarDep+=5;
+ displayStarsandRunways();
+}
 if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
  legsDisplay+=5;   
     displayLegs();
@@ -2452,6 +2516,229 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
       * 
       * **************************/
   int legsDisplay=0;
+  
+  String starSelectedDep;
+  String arrivalRunway;
+  String arrivalTransDep;
+  String arrivalApproachDep;
+   String arrivalTransArr;
+  String arrivalApproachArr;
+  int listStarDep=0;
+  int listStarArr=0;
+  int listTransStarDep=0;
+  int listTransStarArr=0;
+  public void displayStarsandRunways(){
+      Map<String,Stars> starsDep=new LinkedHashMap<>();
+    
+    List<String> rawDataStars=accessLogic.getStars(panelSelector.retrieveProperty("origin"));
+    List<String> starsTransition;
+    List<String> runwayAvail;
+    
+
+    //System.out.println(rawDataStars);
+    for(int i=0;i<rawDataStars.size();i++){
+    
+     starsTransition= accessLogic.getTransition(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
+     runwayAvail=accessLogic.getProcstoRunways(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
+      starsDep.put(rawDataStars.get(i),new Stars(panelSelector.retrieveProperty("origin"),rawDataStars.get(i),starsTransition,runwayAvail));
+      
+      
+    }
+    Map<String,Stars> starsArr=new LinkedHashMap<>();
+    List<String> rawDataStars1=accessLogic.getStars(panelSelector.retrieveProperty("dest"));
+     List<String> starsTransitionArr;
+    List<String> runwayAvailArr;
+      for(int i=0;i<rawDataStars1.size();i++){
+    
+     starsTransitionArr= accessLogic.getTransition(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
+     runwayAvailArr=accessLogic.getProcstoRunways(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
+      starsDep.put(rawDataStars1.get(i),new Stars(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i),starsTransitionArr,runwayAvailArr));
+      
+      
+    }
+    
+      if(listStarDep>=rawDataStars.size()){
+       listStarDep-=5;   
+      }
+      if(listStarDep<=0){
+       listStarDep=0; 
+      }
+      
+      if(panelSelector.retrieveProperty("panelstate").equals("stardep")||panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
+      if(rawDataStars.size()<=5){
+          if(starSelectedDep==null){
+            panelSelector.writeProperty("panelstate", "stardep");
+           try{
+              jLabel51.setText("");
+          jLabel52.setText(rawDataStars.get(0));
+          }catch(IndexOutOfBoundsException e){ jLabel51.setText(""); jLabel52.setText("");}
+          
+           try{
+              jLabel49.setText("");
+          jLabel50.setText(rawDataStars.get(1));
+          }catch(IndexOutOfBoundsException e){jLabel49.setText(""); jLabel50.setText("");}
+           
+            try{
+              jLabel54.setText("");
+          jLabel53.setText(rawDataStars.get(2));
+          }catch(IndexOutOfBoundsException e){jLabel54.setText(""); jLabel53.setText("");}
+          
+      
+      try{
+              jLabel55.setText("");
+          jLabel56.setText(rawDataStars.get(3));
+          }catch(IndexOutOfBoundsException e){jLabel55.setText(""); jLabel56.setText("");}
+       try{
+              jLabel58.setText("");
+          jLabel59.setText(rawDataStars.get(4));
+          }catch(IndexOutOfBoundsException e){jLabel58.setText(""); jLabel59.setText("");}
+          }
+          else if(starSelectedDep!=null){
+               String text="";
+                panelSelector.writeProperty("panelstate", "transSelectDepStar");
+              if(starsDep.get(starSelectedDep).getTrans().size()<=4){
+                 
+                 
+              jLabel51.setText("STAR");
+           jLabel52.setText(starSelectedDep+"<SEL>");   
+              jLabel49.setText("Transitions");
+              try{
+                  text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(0);
+              jLabel50.setText(text);
+              }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
+              try{
+                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(1);
+               jLabel53.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
+              try{
+                   text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(2);
+                jLabel56.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
+              try{
+                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(4);
+                 jLabel59.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
+              
+          } else if(starsDep.get(starSelectedDep).getTrans().size()>4){
+            
+               jLabel51.setText("STAR");
+           jLabel52.setText(starSelectedDep+"<SEL>");   
+              jLabel49.setText("Transitions");
+              try{
+                
+                   text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep);
+              jLabel50.setText(text);
+              }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
+              try{
+                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+1);
+               jLabel53.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
+              try{
+                    text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
+                jLabel56.setText(starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2));
+              }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
+              try{
+                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
+                 jLabel59.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
+          }
+          }
+          
+       
+       
+       
+          
+      }
+      else if(rawDataStars.size()>5){
+          if(starSelectedDep==null){
+              panelSelector.writeProperty("panelstate", "stardep");
+           try{
+              jLabel51.setText("");
+          jLabel52.setText(rawDataStars.get(listStarDep));
+          }catch(IndexOutOfBoundsException e){ jLabel51.setText(""); jLabel52.setText("");}
+          
+           try{
+              jLabel49.setText("");
+          jLabel50.setText(rawDataStars.get(listStarDep+1));
+          }catch(IndexOutOfBoundsException e){jLabel49.setText(""); jLabel50.setText("");}
+           
+            try{
+              jLabel54.setText("");
+          jLabel53.setText(rawDataStars.get(listStarDep+2));
+          }catch(IndexOutOfBoundsException e){jLabel54.setText(""); jLabel53.setText("");}
+          
+      
+      try{
+              jLabel55.setText("");
+          jLabel56.setText(rawDataStars.get(listStarDep+3));
+          }catch(IndexOutOfBoundsException e){jLabel55.setText(""); jLabel56.setText("");}
+       try{
+              jLabel58.setText("");
+          jLabel59.setText(rawDataStars.get(listStarDep+4));
+          }catch(IndexOutOfBoundsException e){jLabel58.setText(""); jLabel59.setText("");}
+          }
+          else if(starSelectedDep!=null){
+               String text="";
+                panelSelector.writeProperty("panelstate", "transSelectDepStar");
+              if(starsDep.get(starSelectedDep).getTrans().size()<=4){
+                 
+                 
+              jLabel51.setText("STAR");
+           jLabel52.setText(starSelectedDep+"<SEL>");   
+              jLabel49.setText("Transitions");
+              try{
+                  text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(0);
+              jLabel50.setText(text);
+              }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
+              try{
+                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(1);
+               jLabel53.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
+              try{
+                   text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(2);
+                jLabel56.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
+              try{
+                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(4);
+                 jLabel59.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
+              
+          } else if(starsDep.get(starSelectedDep).getTrans().size()>4){
+              panelSelector.writeProperty("panelstate", "transSelectDepStar");
+               jLabel51.setText("STAR");
+           jLabel52.setText(starSelectedDep+"<SEL>");   
+              jLabel49.setText("Transitions");
+              try{
+                
+                   text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep);
+              jLabel50.setText(text);
+              }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
+              try{
+                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+1);
+               jLabel53.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
+              try{
+                    text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
+                jLabel56.setText(starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2));
+              }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
+              try{
+                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
+                 jLabel59.setText(text);
+              }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
+          }
+          }
+          
+      }
+      }else if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+      
+      
+      }
+      
+      
+  }
+  
+  
+  
    public void displayLegs(){
        
      if(sidSelected!=null){

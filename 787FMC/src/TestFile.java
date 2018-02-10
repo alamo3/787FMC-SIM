@@ -10,15 +10,15 @@ class TestFile{
 FMCLogicTest accessLogic=new FMCLogicTest();
 public static WaypoimtAccess navDataPull=new WaypoimtAccess();
 
-  public String runwaySelected="05";
-    public String sidSelected="AVSEP3";
-    public String TransSelected="OTNIK";
+  public String runwaySelected="24L";
+    public String starSelected="LINNG8";
+    public String TransSelected="WOZEE";
     String icao="CYYZ";
   public static void main(String[]args){
     
 TestFile obj1=new TestFile();
     
-obj1.displayLegs();
+obj1.displayStars();
 
 
 
@@ -29,7 +29,7 @@ obj1.displayLegs();
     
     
   
-  public void displayLegs(){
+ /* public void displayLegs(){
    Map<String,legs> legsData=new HashMap<>();
 
     List<String> rawDataSID=navDataPull.getSIDWpt(icao,sidSelected,runwaySelected,TransSelected);
@@ -120,6 +120,42 @@ latlongBearing++;
    
    }
     
+  }*/
+  
+  
+  
+  public void displayStars(){
+    Map<String,Stars> stars=new LinkedHashMap<>();
+    
+    List<String> rawDataStars=accessLogic.getStars(icao);
+    List<String> starsTransition;
+    List<String> runwayAvail;
+    if(starSelected!=null){
+    //  starsTransition=accessLogic.getTransition(icao,starSelected);
+    }
+
+    System.out.println(rawDataStars);
+    for(int i=0;i<rawDataStars.size();i++){
+    
+     starsTransition= accessLogic.getTransition(icao,rawDataStars.get(i));
+     runwayAvail=accessLogic.getProcstoRunways(icao,rawDataStars.get(i));
+      stars.put(rawDataStars.get(i),new Stars(icao,rawDataStars.get(i),starsTransition,runwayAvail));
+      
+      
+    }
+//    System.out.println(stars.size());
+//    for(int i =0; i<stars.size();i++){
+//      try{
+//        String test;
+//     System.out.println(stars.get(rawDataStars.get(i)).getStarIcao() + " : "+stars.get(rawDataStars.get(i)).getStarIdent()+" : "+stars.get(rawDataStars.get(i)).getTrans()+" : "+stars.get(rawDataStars.get(i)).getRunways());
+//     }catch(NullPointerException e){}
+//      
+      
+    }
+    
+    
+    
+    
   }
   
-}
+  

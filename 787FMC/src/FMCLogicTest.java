@@ -35,10 +35,17 @@ public void setAirportArr(String x){airportChosenArr=x;}
 public String getAirportArr(){return airportChosenArr;}
 
 
+/************************
+  * 
+  * Method to pull transitions for a Sid / STAR from NAVIGRAPH ARINC 424 DB
+  * 
+  * 
+  * *******************/
+
 public List<String> getTransition(String x, String y){
  List<String> transitions=new ArrayList<>(); 
 String icao=x;  
- String sid=y;
+ String proc=y;
  
  String line;
  
@@ -46,7 +53,7 @@ String icao=x;
    BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt"))));
    
    while((line=br.readLine())!=null){
-     if(line.contains("SID,")&&line.contains(sid)){
+     if((line.contains("SID,")&&line.contains(proc))||(line.contains("STAR,")&&line.contains(proc))){
       transitions.add(line); 
        
        
@@ -66,16 +73,18 @@ String icao=x;
     
   }
   
-  for(String next: transFinal){
-  System.out.println(next);
-  }
+ 
   
   
   
   return transFinal;
 }
 
-
+/*************************
+  * 
+  * Method to pull Airport Location from Navigraph ARINC 424 DB
+  * 
+  * **********************/
 
 public String[] getAirportLatLong(String x){
  String airportData="";
@@ -110,7 +119,10 @@ public String[] getAirportLatLong(String x){
     
     return finalData;
 }
-
+/***************
+  * Method to pull All Airports in the world recognized by an ICAO Code 
+  * From Navigraph ARINC 424 DB
+  * *****************/
 
 public String[] getAirports(){
  String [] airports = fileScanner.list();
@@ -124,20 +136,52 @@ public String[] getAirports(){
          return airports;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+public List<String> getProcstoRunways(String x, String y){
+ String icao=x;
+ 
+ String procedure=y;
+  String directory=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+    
+ List<String> procFound=new LinkedList<>();
+ 
+ 
+ String line;
+ try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
+   while((line=br.readLine())!=null){
+  
+     if(line.contains(procedure)){
+       String [] temp=line.split(","); 
+       if(Character.isDigit(temp[2].charAt(0))==true&&Character.isDigit(temp[2].charAt(1))){
+       procFound.add(temp[2]);
+       }
+       }
+     }
+     
+     
+     
+     
+   }
+ catch(IOException e){}
+ 
+ return procFound;
+}
+
 public List<String> getRunwaystoSids(String x, String y){
     
     String icao=x;
     String runway=y;
     String departure=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
     
-    List<String> SidFound= new ArrayList<>();
+    List<String> ProcFound= new ArrayList<>();
     String line;
     try{
      BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(departure))));   
         
      while((line=br.readLine())!=null){
-      if(line.contains("SID,")&&line.contains(runway)){   
-       SidFound.add(line);  
+      if((line.contains("SID,")&&line.contains(runway))||(line.contains("STAR,")&&line.contains(runway))){   
+       ProcFound.add(line);  
          
       }
          
@@ -147,27 +191,24 @@ public List<String> getRunwaystoSids(String x, String y){
      
      
     }catch(IOException e){}
-     List<String> finalSids=new ArrayList<>();
+     List<String> finalProcs=new ArrayList<>();
      
-     for(String next: SidFound){
-         System.out.println(next);
-         
-     }
-     
-     for(int i=0; i<SidFound.size();i++){
-         String [] temp=SidFound.get(i).split(",");
-         finalSids.add(temp[1]);
-         
-     }
-     for(String next: finalSids){
-         System.out.println(next);
+   
+     for(int i=0; i<ProcFound.size();i++){
+         String [] temp=ProcFound.get(i).split(",");
+         finalProcs.add(temp[1]);
          
      }
     
-    return finalSids;
+    
+    return finalProcs;
 }
 
-
+/***********
+  * 
+  * Method to pull Runways for an aiport from Navigraph ARINC 424
+  * 
+  * *************/
 public String[] getRunways(String x){
  String icao=x;
  String [] runways;
@@ -218,10 +259,11 @@ boolean takeInput=false;
  }
   
   
-  
-
-
-
+  /******************************
+*
+*Method to check if inputted Airport exists or not. Pulls Data from ARINC 424 Database
+* 
+* *********************************/
 
 public boolean checkAirport(String x){
    String icao=x;
@@ -237,6 +279,14 @@ public boolean checkAirport(String x){
    return isAirportFound;
 }
 
+
+
+
+/**************
+  * 
+  * Method to pull All SIDS from a Navigraph ARINC 424 DB
+  * 
+  * ********************/
 
 public String[] getSIDS(String icao){
  String[] sids;
@@ -321,87 +371,38 @@ int sizeFinal=Sids.size();
 }
     
 
-public String[] getStars(String icao){
- String[] stars;
+
+/***************
+  * 
+  * Method to pull Stars from Navigraph Database ARINC 424
+  * 
+  * **************/
+
+
+
+
+public List<String> getStars(String icao){
+ List<String> stars = new ArrayList<>();
  String arrSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
  
- 
-List<Integer> listStarFound = new ArrayList<Integer>();
- int line=0;
- String buff;
- int listSize;
- int line2;
-  String ph;
-  List<String> Stars=new ArrayList<String>();
- 
- Set<String> duplicates=new HashSet<>();
- String[] Starident;
- String[] StarsFinal;
- try{
+String line;
 
-  BufferedReader buf = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(arrSelected))));
+try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(arrSelected))))){
+  while((line=br.readLine())!=null){
+    if(line.contains("STAR,")){
+  String [] temp=line.split(",");
+ // if(Character.isDigit(temp[2].charAt(0))==true&&Character.isDigit(temp[2].charAt(1))==true){
+    if(stars.contains(temp[1])==false){
+     stars.add(temp[1]); 
+    }
+ // }
+    }
+  }
+}catch (IOException e){System.out.println("File Not Found");}
 
- while((buff=buf.readLine()) != null){
-     line++;
-     if(buff.contains("STAR,")&&buff.length()<25){
-      listStarFound.add(line);   
-     }
- }
-
- 
- listSize=listStarFound.size();
-  line2=0;
-ph="";
- Starident=new String[listSize];
- BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(arrSelected))));
- int i=0;
- while((ph=br.readLine())!=null){
-  line2++;
-   
-   if(ph.contains("STAR,")&&ph.length()<25){
-    Starident[i]=ph; 
-     i++;
-   }
-   
- }
-
-
-for(int k=0;k<Starident.length;k++ ){
-  Stars.add(Starident[k].substring(5,11)); 
-   
- }
- }catch(IOException ex){
-  ex.printStackTrace();
- }
- 
- 
- 
- 
- 
- 
- duplicates.addAll(Stars);
- Stars.clear();
- Stars.addAll(duplicates);
-  Collections.sort(Stars);
-
-int sizeFinal=Stars.size();
- StarsFinal= new String[sizeFinal];
- for(int i=0; i<StarsFinal.length;i++){
-   
-  StarsFinal[i]=""; 
- }
- 
- for(int j=0;j<StarsFinal.length;j++){
-  StarsFinal[j]=Stars.get(j); 
-   
- }
- for(int j=0;j<StarsFinal.length;j++){
-  StarsFinal[j]=StarsFinal[j].replaceAll(",","");
-   
- }
- 
+//System.out.println(stars);
+  return stars;
   
-  return StarsFinal;
 }
 }  
         
