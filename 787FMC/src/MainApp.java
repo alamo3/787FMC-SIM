@@ -11,6 +11,8 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+
+import java.util.HashMap;
 public class MainApp extends javax.swing.JFrame {
 PropertiesChecker panelSelector;
 FMCLogicTest accessLogic=new FMCLogicTest();
@@ -22,9 +24,13 @@ WaypoimtAccess navDataPull=new WaypoimtAccess();
 
 findGpsPosition getLocation=new findGpsPosition();
     public MainApp() {
+      
         initComponents();
     panelSelector=new PropertiesChecker();
+    intializePanel();
     panelSelector();
+   
+   
     }
 
     /**
@@ -1434,7 +1440,7 @@ findGpsPosition getLocation=new findGpsPosition();
         jLabel62.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLayeredPane1.setLayer(jLabel62, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.add(jLabel62);
-        jLabel62.setBounds(270, 90, 170, 30);
+        jLabel62.setBounds(220, 90, 220, 30);
 
         jLabel63.setFont(new java.awt.Font("Futura LtCn BT", 0, 16)); // NOI18N
         jLabel63.setForeground(new java.awt.Color(204, 204, 204));
@@ -1506,7 +1512,7 @@ findGpsPosition getLocation=new findGpsPosition();
         jLabel70.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLayeredPane1.setLayer(jLabel70, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.add(jLabel70);
-        jLabel70.setBounds(270, 300, 170, 30);
+        jLabel70.setBounds(250, 300, 190, 30);
 
         nextpage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextpage.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1519,6 +1525,11 @@ findGpsPosition getLocation=new findGpsPosition();
         nextpage.setBounds(430, 500, 60, 40);
 
         InitRef.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        InitRef.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                InitRefMousePressed(evt);
+            }
+        });
         jLayeredPane1.setLayer(InitRef, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.add(InitRef);
         InitRef.setBounds(40, 410, 50, 40);
@@ -1559,6 +1570,11 @@ findGpsPosition getLocation=new findGpsPosition();
         fix1.setBounds(30, 460, 60, 40);
 
         legs1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        legs1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                legs1MousePressed(evt);
+            }
+        });
         jLayeredPane1.setLayer(legs1, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.add(legs1);
         legs1.setBounds(90, 460, 60, 40);
@@ -1826,55 +1842,397 @@ public void performAction(String x, String y, String z){
              sidAndRunwayDisplayer();
              
          }
+         
+         if(state.equals("rtepagedep1")){
+             if(sidSelected==null){
+                 sidSelected=jLabel52.getText();
+                 System.out.println(jLabel52.getText());sidAndRunwayDisplayer();
+                 
+             }else {
+                 
+              sidSelected=null;
+              sidAndRunwayDisplayer();
+             }
+             
+         }
+         
+         if(state.equals("transselect")){
+          sidSelected=null;
+          sidAndRunwayDisplayer();
+         }
+         
+         
+         
          if(state.equals("perfinit")){panelSelector.writeProperty("groundweight", text);jTextField1.setText("");}
-          if(state.equals("rte")){panelSelector.writeProperty("origin", text);jTextField1.setText("");}
+         
+         
+          if(state.equals("rte")){
+              
+              if(Arrays.asList(temp=accessLogic.getAirports()).contains(text)==true){
+             
+             
+             
+             panelSelector.writeProperty("origin", text);jTextField1.setText("");
+             }else{
+                 jTextField1.setText("Entry Invalid - Airport Not Found");
+             }
+          
+          
+          }
+          
+          
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "ident");jTextField1.setText("");}
+            
+            
             break;
              case "Left2": if(state.equals("posinit")){panelSelector.writeProperty("gate", text);jTextField1.setText("");}
              if(state.equals("perfinit")){panelSelector.writeProperty("fuel", text);jTextField1.setText("");}
-          if(state.equals("rte")){panelSelector.writeProperty("runwaydep", text);jTextField1.setText("");}
+          if(state.equals("rte")){
+            String [] runwaysAvail=accessLogic.getRunways(panelSelector.retrieveProperty("origin"));
+            
+            if(Arrays.asList(runwaysAvail).contains(text)){
+              panelSelector.writeProperty("runwaydep", text);jTextField1.setText("");
+            }else{
+             jTextField1.setText("Entry Invalid - Runway Not Found"); 
+            }
+            
+            
+          
+          }
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "posinit");}
+            
+            
+             if(state.equals("rtepagedep1")){
+                 
+             if(sidSelected==null){
+                 sidSelected=jLabel50.getText();
+                 sidAndRunwayDisplayer();
+                 
+             }else{
+                 
+              sidSelected=null;
+              sidAndRunwayDisplayer();
+             }
+             
+         }
+             if(state.equals("transselect")){
+                 if(TransSelected==null&&(jLabel50.getText().equals("")==false||jLabel50.getText().equals(null))==false){
+              TransSelected=jLabel50.getText();   
+                 jLabel50.setText(jLabel50.getText()+"<SEL>");
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 
+                 }else if(TransSelected==null){
+                 TransSelected=jLabel50.getText();   
+                 jLabel50.setText(jLabel50.getText()+"<SEL>");
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 }else if(TransSelected!=null){
+                     if(jLabel50.getText().contains("<SEL>")){
+                       String text1=jLabel50.getText().replaceAll("<SEL>","");
+                       jLabel50.setText(text1);
+                       
+                     TransSelected=null;
+                     
+                     }else if((jLabel50.getText().contains("<SEL>"))==false){
+                      TransSelected=jLabel50.getText(); 
+                       jLabel50.setText(jLabel50.getText()+"<SEL>");
+                       
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                     }
+                  
+                     
+                     
+                 }
+                 
+             }
+             
+             
+            
             break;
             case "Left3": if(state.equals("posinit")){}
           if(state.equals("rte")){}
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "perfinit");}
             if(state.equals("perfinit")){panelSelector.writeProperty("zfw", text);jTextField1.setText("");}
+            
+             if(state.equals("rtepagedep1")){
+             if(sidSelected==null){
+                 sidSelected=jLabel53.getText();
+                 System.out.println(jLabel53.getText());
+                 sidAndRunwayDisplayer();
+                 
+             }else{
+                 
+              sidSelected=null;
+              sidAndRunwayDisplayer();
+             }
+             
+         }
+            
+             
+             if(state.equals("transselect")){
+                 if(TransSelected==null&&(jLabel53.getText().equals("")==false||jLabel53.getText().equals(null))==false){
+              TransSelected=jLabel53.getText();   
+                 jLabel53.setText(jLabel53.getText()+"<SEL>");
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 
+                 }else if(TransSelected==null){
+                 TransSelected=jLabel53.getText();   
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText()+"<SEL>");
+                 }else if(TransSelected!=null){
+                     if(jLabel53.getText().contains("<SEL>")){
+                       String text1=jLabel53.getText().replaceAll("<SEL>","");
+                       jLabel53.setText(text1);
+                       
+                     TransSelected=null;
+                     
+                     }else if((jLabel53.getText().contains("<SEL>"))==false){
+                      TransSelected=jLabel53.getText(); 
+                       jLabel53.setText(jLabel53.getText()+"<SEL>");
+                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+             
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                     }
+                  
+                     
+                     
+                 }
+                 
+             }
+             
+             
+            
             break;
             case "Left4": if(state.equals("posinit")){}
           if(state.equals("rte")){}
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "takeoffinit");}
             if(state.equals("perfinit")){panelSelector.writeProperty("reserves", text);jTextField1.setText("");}
+            
+             if(state.equals("rtepagedep1")){
+             if(sidSelected==null){
+                 sidSelected=jLabel56.getText();
+                 sidAndRunwayDisplayer();
+                 
+             }else{
+                 
+              sidSelected=null;
+              sidAndRunwayDisplayer();
+             }
+             
+         }
+            
+             if(state.equals("transselect")){
+                 if(TransSelected==null&&(jLabel56.getText().equals("")==false||jLabel56.getText().equals(null))==false){
+              TransSelected=jLabel56.getText();   
+                 jLabel56.setText(jLabel56.getText()+"<SEL>");
+                 
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 }else if(TransSelected==null){
+                 TransSelected=jLabel56.getText();   
+                 jLabel56.setText(jLabel56.getText()+"<SEL>");
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 }else if(TransSelected!=null){
+                     if(jLabel56.getText().contains("<SEL>")){
+                       String text1=jLabel56.getText().replaceAll("<SEL>","");
+                       jLabel56.setText(text1);
+                       
+                     TransSelected=null;
+                     
+                     }else if((jLabel56.getText().contains("<SEL>"))==false){
+                      TransSelected=jLabel56.getText(); 
+                       jLabel56.setText(jLabel56.getText()+"<SEL>");
+                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                     }
+                  
+                     
+                     
+                 }
+                 
+             }
+             
             break;
             case "Left5": if(state.equals("posinit")){}
           if(state.equals("rte")){}
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "approachinit");}
             if(state.equals("perfinit")){}
+            
+             if(state.equals("rtepagedep1")){
+             if(sidSelected==null){
+                 sidSelected=jLabel59.getText();
+                 sidAndRunwayDisplayer();
+                 
+             }else{
+                 
+              sidSelected=null;
+              sidAndRunwayDisplayer();
+             }
+             
+         }
+             if(state.equals("transselect")){
+                 if(TransSelected==null&&(jLabel59.getText().equals("")==false||jLabel59.getText().equals(null))==false){
+              TransSelected=jLabel59.getText();   
+                 jLabel59.setText(jLabel59.getText()+"<SEL>");
+                 jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 }else if(TransSelected==null){
+                 TransSelected=jLabel59.getText();   
+                 jLabel59.setText(jLabel59.getText()+"<SEL>");
+                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
+                 }else if(TransSelected!=null){
+                     if(jLabel59.getText().contains("<SEL>")){
+                       String text1=jLabel59.getText().replaceAll("<SEL>","");
+                       jLabel59.setText(text1);
+                       
+                     TransSelected=null;
+                      
+                     }else if((jLabel59.getText().contains("<SEL>"))==false){
+                      TransSelected=jLabel59.getText(); 
+                       jLabel59.setText(jLabel59.getText()+"<SEL>");
+                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
+                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
+                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
+                 
+                     }
+                  
+                     
+                     
+                 }
+                 
+             }
+             
             break;
             
             case "Right1": if(state.equals("posinit")){}
-          if(state.equals("rte")){panelSelector.writeProperty("dest",text);jTextField1.setText("");}
+         
+          if(state.equals("rte")){
+              
+              if(Arrays.asList(temp=accessLogic.getAirports()).contains(text)==true){
+             
+             
+             
+             panelSelector.writeProperty("dest", text);jTextField1.setText("");
+             }else{
+                 jTextField1.setText("Entry Invalid - Airport Not Found");
+             }
+          
+          
+          }
+          
+          
+          
             if(state.equals("index")){panelSelector.writeProperty("panelstate", "navdata");}
             if(state.equals("perfinit")){panelSelector.writeProperty("crzalt", text);jTextField1.setText("");}
+            
+            if(state.equals("rtepagedep1")||state.equals("transselect")){
+                
+                if(runwaySelected==null){
+             runwaySelected=jLabel62.getText();
+             panelSelector.writeProperty("runwaydep",jLabel62.getText());
+             jLabel62.setText("<SEL> "+runwaySelected);
+                sidAndRunwayDisplayer();
+                }else if(runwaySelected!=null){
+                  panelSelector.writeProperty("runwaydep","----");
+                 runwaySelected=null;   
+                 sidAndRunwayDisplayer();
+                }
+            }
             break;
             case "Right2": if(state.equals("posinit")){}
           if(state.equals("rte")){panelSelector.writeProperty("fltno", text);jTextField1.setText("");}
             if(state.equals("index")){}
             if(state.equals("perfinit")){panelSelector.writeProperty("costindex", text);jTextField1.setText("");}
+            if(state.equals("rtepagedep1")||state.equals("transselect")){
+                if(runwaySelected==null){
+             runwaySelected=jLabel64.getText();
+              panelSelector.writeProperty("runwaydep",jLabel64.getText());
+             jLabel64.setText("<SEL> "+runwaySelected);
+                sidAndRunwayDisplayer();
+                }
+                else if(runwaySelected!=null){
+                 runwaySelected=null;   
+                 sidAndRunwayDisplayer();
+                }
+            }
             break;
              case "Right3": if(state.equals("posinit")){}
           if(state.equals("rte")){panelSelector.writeProperty("coroute", "Not Implemented Yet");}
             if(state.equals("index")){}
             if(state.equals("perfinit")){}
+            if(state.equals("rtepagedep1")||state.equals("transselect")){
+                if(runwaySelected==null){
+             runwaySelected=jLabel66.getText();
+              panelSelector.writeProperty("runwaydep",jLabel66.getText());
+             jLabel66.setText("<SEL> "+runwaySelected);
+                sidAndRunwayDisplayer();
+                }
+               else if(runwaySelected!=null){
+                 runwaySelected=null;   
+                 sidAndRunwayDisplayer();
+                }
+            }
             break;
             
             case "Right4": if(state.equals("posinit")){}
           if(state.equals("rte")){}
             if(state.equals("index")){}
             if(state.equals("perfinit")){panelSelector.writeProperty("crzcg", text);jTextField1.setText("");}
+            if(state.equals("rtepagedep1")||state.equals("transselect")){
+                if(runwaySelected==null){
+             runwaySelected=jLabel68.getText();
+              panelSelector.writeProperty("runwaydep",jLabel68.getText());
+             jLabel68.setText("<SEL> "+runwaySelected);
+                sidAndRunwayDisplayer();
+                }
+              else  if(runwaySelected!=null){
+                 runwaySelected=null;   
+                 
+                 sidAndRunwayDisplayer();
+                }
+            }
             break;
             case "Right5": if(state.equals("posinit")){panelSelector.writeProperty("irspos", text);jTextField1.setText("");}
           if(state.equals("rte")){}
             if(state.equals("index")){}
+            if(state.equals("rtepagedep1")||state.equals("transselect")){
+                if(runwaySelected==null){
+             runwaySelected=jLabel70.getText();
+              panelSelector.writeProperty("runwaydep",jLabel70.getText());
+             jLabel70.setText("<SEL> "+runwaySelected);
+                sidAndRunwayDisplayer();
+                }
+               else if(runwaySelected!=null){
+                 runwaySelected=null;   
+                 sidAndRunwayDisplayer();
+                }
+            }
             break;
         }
         
@@ -1971,7 +2329,7 @@ if(jLabel60.getText().equals("< INDEX")){
     }//GEN-LAST:event_LSKL6MousePressed
 
     private void rte1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rte1MousePressed
-
+panelSelector.writeProperty("panelstate","rte");
 
         // TODO add your handling code here:
     }//GEN-LAST:event_rte1MousePressed
@@ -2033,6 +2391,17 @@ if(panelSelector.retrieveProperty("panelstate").equals("posref")){
  panelSelector.writeProperty("panelstate", "posinit");   
     
 }
+if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSelector.retrieveProperty("panelstate").equals("transselect")){
+    listing-=5;
+    listrun-=5;
+    sidAndRunwayDisplayer();
+    
+}
+if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
+    legsDisplay-=5;   
+    displayLegs();
+}
+
         // TODO add your handling code here:
     }//GEN-LAST:event_prevpageMousePressed
 
@@ -2040,7 +2409,19 @@ if(panelSelector.retrieveProperty("panelstate").equals("posref")){
 if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
     panelSelector.writeProperty("panelstate", "posref");
     
-}       
+}
+if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSelector.retrieveProperty("panelstate").equals("transselect")){
+    listing+=5;
+    listrun+=5;
+    sidAndRunwayDisplayer();
+    
+}
+
+if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
+ legsDisplay+=5;   
+    displayLegs();
+    
+}
         
 // TODO add your handling code here:
     }//GEN-LAST:event_nextpageMousePressed
@@ -2053,79 +2434,844 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
         // TODO add your handling code here:
     }//GEN-LAST:event_deparr1MousePressed
 
+    private void legs1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_legs1MousePressed
+        // TODO add your handling code here:
+        
+        displayLegs();
+        
+        
+    }//GEN-LAST:event_legs1MousePressed
+
+    private void InitRefMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InitRefMousePressed
+        // TODO add your handling code here:
+        panelSelector.writeProperty("panelstate","posinit");
+    }//GEN-LAST:event_InitRefMousePressed
+    
+    /*******************************
+      * Method to Display legs. 
+      * 
+      * **************************/
+  int legsDisplay=0;
+   public void displayLegs(){
+       
+     if(sidSelected!=null){
+         panelSelector.writeProperty("panelstate", "legspage");
+   Map<String,legs> legsData=new HashMap<>();
+
+    List<String> rawDataSID=navDataPull.getSIDWpt(panelSelector.retrieveProperty("origin"),sidSelected,runwaySelected,TransSelected);
+    List<String> rawDataSIDLatLong=navDataPull.getSIDWptLatLong(panelSelector.retrieveProperty("origin"),sidSelected,runwaySelected,TransSelected);
+    List<String> distanceFromWPT=new ArrayList<>();
+    List<String> bearingFromWPT=new ArrayList<>();
+    if(legsDisplay>rawDataSID.size()){
+     legsDisplay-=5; 
+    }
+    
+    List<String> altRestrictions=new LinkedList<>();
+    try{
+     altRestrictions=navDataPull.getAltRest(panelSelector.retrieveProperty("origin"),sidSelected,TransSelected); 
+    }catch(IOException e){}
+    
+    for(int i=0;i<altRestrictions.size();i++){
+     System.out.println(altRestrictions.get(i)); 
+    }
+    
+    System.out.println(rawDataSIDLatLong);
+   
+
+    for(int i=0;i<rawDataSIDLatLong.size()-2;i+=2){
+
+        Double lat1=Double.parseDouble(rawDataSIDLatLong.get(i));
+        Double lon1=Double.parseDouble(rawDataSIDLatLong.get(i+1));
+        Double lat2=Double.parseDouble(rawDataSIDLatLong.get(i+2));
+        Double lon2=0D;
+        
+        lon2=Double.parseDouble(rawDataSIDLatLong.get(i+3));
+        
+       navDataPull.distanceNM(lat1,lon1,lat2,lon2);
+        distanceFromWPT.add(Double.toString(navDataPull.distanceNM(lat1,lon1,lat2,lon2)));
+
+        bearingFromWPT.add(Double.toString(navDataPull.calcBearing(lat1,lon1,lat2,lon2)));
+
+
+    }
+
+    
+  String []  runwayData=navDataPull.runwayData(panelSelector.retrieveProperty("origin"),runwaySelected).split(",");
+
+ bearingFromWPT.add(0,runwayData[2]);
+    
+    
+//     System.out.println("DFWPT: "+distanceFromWPT);
+//     System.out.println("ALL HGS: "+bearingFromWPT);
+    int latlongselect=0;
+   System.out.println(distanceFromWPT.size()-1  +"  "+ bearingFromWPT.size() );
+    int latlong=0;
+    int latlongBearing=0;
+    int altrest=0;
+    for(int i=0; i<rawDataSID.size();i++){
+      
+        String distanceFromLast="0 NM";
+        String bearingFromLast="N/A";
+        String altRestr="----";
+         if(i>0&&i< bearingFromWPT.size()+3&&!(rawDataSID.get(i).charAt(0)=='('||rawDataSID.get(i).contains("VECTORS")==true)){
+          
+            bearingFromLast=bearingFromWPT.get(latlongBearing);
+            distanceFromLast=distanceFromWPT.get(latlong);
+           
+//            System.out.println("Distance :" +distanceFromLast);
+//            System.out.println("HDG :"+bearingFromLast);
+latlong++;
+latlongBearing++;
+
+
+         }else if(rawDataSID.get(i).contains("RW"+runwaySelected)){
+           bearingFromLast=bearingFromWPT.get(0);
+           latlongBearing++;
+         }
+          if(i>0&&i<altRestrictions.size()+3){
+            altRestr=altRestrictions.get(altrest);
+            altrest++;
+         }
+         if(rawDataSID.get(i).charAt(0)=='('||rawDataSID.get(i).contains("VECTORS")==true){
+           legsData.put(rawDataSID.get(i),new legs(rawDataSID.get(i),rawDataSIDLatLong.get(latlongselect),rawDataSIDLatLong.get(latlongselect+1),"0 NM",bearingFromLast,altRestr) );
+         }else{
+        legsData.put(rawDataSID.get(i),new legs(rawDataSID.get(i),rawDataSIDLatLong.get(latlongselect),rawDataSIDLatLong.get(latlongselect+1),distanceFromLast,bearingFromLast,altRestr) );
+    }
+        
+        if(latlongselect!=rawDataSIDLatLong.size()-2){
+        latlongselect+=2;
+        }
+
+    } 
+//   for(int i=0; i<legsData.size();i++){
+//   System.out.println(legsData.get(rawDataSID.get(i)).getLegName()+": Latitude: " +legsData.get(rawDataSID.get(i)).getLatitude()+" ,Longitude: "+ legsData.get(rawDataSID.get(i)).getLongitude() +" ,Distance from last:"+ legsData.get(rawDataSID.get(i)).getDistanceFromLast()+" ,Bearing From Last:"+legsData.get(rawDataSID.get(i)).getBearingFromLast() +
+//   " ALTITUDE RESTRICTION: "+legsData.get(rawDataSID.get(i)).getaltRestr());
+//   
+//   }
+ 
+    if(rawDataSID.size()<=5){
+       jLabel48.setText("ACT 1 RTE LEGS");
+      
+       double distSelect=0D;
+       jLabel48.setText("ACT 1 RTE LEGS");
+       String altSelect="";
+       
+       double hdgSelect=0;
+        try{
+            
+            jLabel52.setText(legsData.get(rawDataSID.get(0)).getLegName());
+            if(legsData.get(rawDataSID.get(0))!=null){
+                altSelect=legsData.get(rawDataSID.get(0)).getaltRestr();
+                if(legsData.get(rawDataSID.get(0)).getDistanceFromLast().equals("0 NM")==false){
+                distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));
+                jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+          jLabel51.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel61.setText(Double.toString(distSelect)+" NM");
+           jLabel62.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel51.setText("");
+            jLabel52.setText("");
+            jLabel61.setText("");
+            jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel62.setText("");
+                    
+        }
+        
+          try{
+           
+            jLabel50.setText(legsData.get(rawDataSID.get(1)).getLegName());
+            if(legsData.get(rawDataSID.get(1))!=null){
+                altSelect=legsData.get(rawDataSID.get(1)).getaltRestr();
+                if(legsData.get(rawDataSID.get(1)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(1)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                try{
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(1)).getBearingFromLast()));
+                }catch(NumberFormatException e){hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));}
+                jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel49.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel63.setText(Double.toString(distSelect)+" NM");
+           jLabel64.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel49.setText("");
+            jLabel50.setText("");
+            jLabel63.setText("");
+            jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel64.setText("");
+                    
+        }
+          
+          
+            try{
+          //  jLabel54.setText(legsData.get(rawDataSID.get(legsDisplay+2)).getBearingFromLast());
+            jLabel53.setText(legsData.get(rawDataSID.get(2)).getLegName());
+            if(legsData.get(rawDataSID.get(2))!=null){
+                altSelect=legsData.get(rawDataSID.get(2)).getaltRestr();
+                if(legsData.get(rawDataSID.get(2)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(2)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                try{
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(2)).getBearingFromLast()));
+                }catch(NumberFormatException e){hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));}
+                jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel54.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel65.setText(Double.toString(distSelect)+" NM");
+           jLabel66.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel54.setText("");
+            jLabel53.setText("");
+            jLabel65.setText("");
+            jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel66.setText("");
+                    
+        }
+        
+          try{
+          //  jLabel55.setText(legsData.get(rawDataSID.get(legsDisplay+3)).getBearingFromLast());
+            jLabel56.setText(legsData.get(rawDataSID.get(3)).getLegName());
+            if(legsData.get(rawDataSID.get(3))!=null){
+                altSelect=legsData.get(rawDataSID.get(3)).getaltRestr();
+                try{
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(3)).getBearingFromLast()));
+                }catch(NumberFormatException e){hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));}
+                 if(legsData.get(rawDataSID.get(3)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(3)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                
+                jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel55.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel67.setText(Double.toString(distSelect)+" NM");
+           jLabel68.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel55.setText("");
+            jLabel56.setText("");
+            jLabel67.setText("");
+            jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel68.setText("");
+                    
+        }
+          
+          
+            try{
+      //      jLabel58.setText(legsData.get(rawDataSID.get(legsDisplay+4)).getBearingFromLast());
+            jLabel59.setText(legsData.get(rawDataSID.get(4)).getLegName());
+            if(legsData.get(rawDataSID.get(4))!=null){
+                altSelect=legsData.get(rawDataSID.get(4)).getaltRestr();
+                 if(legsData.get(rawDataSID.get(4)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(4)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(4)).getBearingFromLast()));
+                jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel58.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel69.setText(Double.toString(distSelect)+" NM");
+           jLabel70.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel58.setText("");
+            jLabel59.setText("");
+            jLabel69.setText("");
+            jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel70.setText("");
+                    
+        }
+        
+        
+            
+        
+    } else if(rawDataSID.size()>5){
+     
+       jLabel48.setText("ACT 1 RTE LEGS");
+       String altSelect="";
+       double distSelect=0D;
+       double hdgSelect=0;
+        try{
+            
+            jLabel52.setText(legsData.get(rawDataSID.get(legsDisplay)).getLegName());
+            if(legsData.get(rawDataSID.get(legsDisplay))!=null){
+                altSelect=legsData.get(rawDataSID.get(legsDisplay)).getaltRestr();
+                if(legsData.get(rawDataSID.get(legsDisplay)).getDistanceFromLast().equals("0 NM")==false){
+                distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay)).getBearingFromLast()));
+                jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+          jLabel51.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel61.setText(Double.toString(distSelect)+" NM");
+           jLabel62.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel51.setText("");
+            jLabel52.setText("");
+            jLabel61.setText("");
+            jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel62.setText("");
+                    
+        }
+        
+          try{
+           
+            jLabel50.setText(legsData.get(rawDataSID.get(legsDisplay+1)).getLegName());
+            if(legsData.get(rawDataSID.get(legsDisplay+1))!=null){
+                altSelect=legsData.get(rawDataSID.get(legsDisplay+1)).getaltRestr();
+                if(legsData.get(rawDataSID.get(legsDisplay+1)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+1)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                try{
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+1)).getBearingFromLast()));
+                }catch(NumberFormatException e){hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));}
+                jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel49.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel63.setText(Double.toString(distSelect)+" NM");
+           jLabel64.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel49.setText("");
+            jLabel50.setText("");
+            jLabel63.setText("");
+            jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel64.setText("");
+                    
+        }
+          
+          
+            try{
+          //  jLabel54.setText(legsData.get(rawDataSID.get(legsDisplay+2)).getBearingFromLast());
+            jLabel53.setText(legsData.get(rawDataSID.get(legsDisplay+2)).getLegName());
+            if(legsData.get(rawDataSID.get(legsDisplay+2))!=null){
+                altSelect=legsData.get(rawDataSID.get(legsDisplay+2)).getaltRestr();
+                if(legsData.get(rawDataSID.get(legsDisplay+2)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+2)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                try{
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+2)).getBearingFromLast()));
+                }catch(NumberFormatException e){hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));}
+                jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel54.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel65.setText(Double.toString(distSelect)+" NM");
+           jLabel66.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel54.setText("");
+            jLabel53.setText("");
+            jLabel65.setText("");
+            jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel66.setText("");
+                    
+        }
+        
+          try{
+          //  jLabel55.setText(legsData.get(rawDataSID.get(legsDisplay+3)).getBearingFromLast());
+            jLabel56.setText(legsData.get(rawDataSID.get(legsDisplay+3)).getLegName());
+            if(legsData.get(rawDataSID.get(legsDisplay+3))!=null){
+                altSelect=legsData.get(rawDataSID.get(legsDisplay+3)).getaltRestr();
+                try{
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+3)).getBearingFromLast()));
+                }catch(NumberFormatException e){hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(0)).getBearingFromLast()));}
+                 if(legsData.get(rawDataSID.get(legsDisplay+3)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+3)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                
+                jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel55.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel67.setText(Double.toString(distSelect)+" NM");
+           jLabel68.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel55.setText("");
+            jLabel56.setText("");
+            jLabel67.setText("");
+            jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel68.setText("");
+                    
+        }
+          
+          
+            try{
+      //      jLabel58.setText(legsData.get(rawDataSID.get(legsDisplay+4)).getBearingFromLast());
+            jLabel59.setText(legsData.get(rawDataSID.get(legsDisplay+4)).getLegName());
+            if(legsData.get(rawDataSID.get(legsDisplay+4))!=null){
+                altSelect=legsData.get(rawDataSID.get(legsDisplay+4)).getaltRestr();
+                 if(legsData.get(rawDataSID.get(legsDisplay+4)).getDistanceFromLast().equals("0 NM")==false){
+               distSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+4)).getDistanceFromLast()));
+                }else{
+                 distSelect=0; 
+                }
+                
+                hdgSelect=Math.round(Double.parseDouble(legsData.get(rawDataSID.get(legsDisplay+4)).getBearingFromLast()));
+                jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            }
+            jLabel58.setText(Double.toString(hdgSelect)+"\u00b0");
+           jLabel69.setText(Double.toString(distSelect)+" NM");
+           jLabel70.setText("----/"+altSelect);
+            
+            
+        }catch(IndexOutOfBoundsException e){
+            jLabel58.setText("");
+            jLabel59.setText("");
+            jLabel69.setText("");
+            jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            jLabel70.setText("");
+                    
+        }
+        
+        
+            
+        
+     
+      
+      
+    }
+
+
+     }
+  }
+
      String [] location = getLocation.getLatLongIP();
     int x=0;
     
    List<String> sids;
    List <String> runways;
-   
-    public void sidAndRunwayDisplayer(){
-        sids=Arrays.asList(accessLogic.getSIDS(panelSelector.retrieveProperty("origin")));
-        runways=Arrays.asList(accessLogic.getRunways(panelSelector.retrieveProperty("origin")));
-        int sidsPage=sids.size()/5;
-        int runwaysPage=runways.size()/5;
-        int maxPage=0;
-        if(sidsPage>runwaysPage){
-        maxPage=sidsPage;
-        }else if(runwaysPage>sidsPage){
-        maxPage=runwaysPage;
-        }
-        if(sids.size()<=5||sids.size()>=5){    
-        panelSelector.writeProperty("panelstate","rtepagedep1");
-        jLabel48.setText("DEPARTURES");
-             jLabel51.setText("");
-             jLabel52.setText(sids.get(0));
-             jLabel49.setText("");
-             jLabel50.setText(sids.get(1));
-             jLabel54.setText("");
-             jLabel53.setText(sids.get(2));
-             jLabel55.setText("");
-             jLabel56.setText(sids.get(3));
-             jLabel58.setText("");
-             jLabel59.setText(sids.get(4));
-             jLabel61.setText("");
-             jLabel62.setText("");
-             jLabel63.setText("");
-             jLabel64.setText("");
-             jLabel65.setText("");
-             jLabel66.setText("");
-             jLabel67.setText("");
-             jLabel68.setText("");
-             jLabel69.setText("");
-             jLabel70.setText("");
-             jLabel57.setText("");
-        }
-        if(runways.size()<=5){    
-        panelSelector.writeProperty("panelstate","rtepagedep1");
-        
-             
-             
-             jLabel61.setText("");
-             jLabel62.setText(runways.get(0));
-             jLabel63.setText("");
-             jLabel64.setText(runways.get(1));
-             jLabel65.setText("");
-             jLabel66.setText(runways.get(2));
-             jLabel67.setText("");
-             jLabel68.setText(runways.get(3));
-             jLabel69.setText("");
-             jLabel70.setText(runways.get(4));
-             jLabel57.setText("");
-        }
-        }
-    /* Thread sidsLoader=new Thread(new Runnable(){
-         
-         public void run(){
-         while (x==0){
-             
-             
-             
-         }
-         }        
-        
-        
-    });*/
+   List<String> Transitions;
+   int listing=0;
+   public String runwaySelected;
+    public String SidSelected;
+    public String TransSelected;
+    public int listrun=0;
+    public int listtrans=0;
     
+    public void sidAndRunwayDisplayer() {
+      
+      runwaySelected=(panelSelector.retrieveProperty("runwaydep").equals("----")) ? null : panelSelector.retrieveProperty("runwaydep");
+
+        if (listing <= 0) {
+            listing = 0;
+        }
+
+        if (listrun <= 0) {
+            listrun = 0;
+        }
+        if (runwaySelected == null || runwaySelected == "") {
+            sids = Arrays.asList(accessLogic.getSIDS(panelSelector.retrieveProperty("origin")));
+        } else if (runwaySelected != null || runwaySelected != "") {
+            sids = accessLogic.getRunwaystoSids(panelSelector.retrieveProperty("origin"), runwaySelected);
+        }
+        runways = Arrays.asList(accessLogic.getRunways(panelSelector.retrieveProperty("origin")));
+       
+      
+        if (sidSelected != null) {
+
+
+            Transitions = accessLogic.getTransition(panelSelector.retrieveProperty("origin"), sidSelected);
+        }
+        if (sidSelected != null) {
+            for (String next : Transitions) {
+                System.out.println(Transitions);
+            }
+        }
+        int sidsPage = (int) (sids.size() / 5.0);
+        int runwaysPage = (int) (runways.size() / 5.0);
+        int maxPage = 0;
+        if (sidsPage > runwaysPage) {
+            maxPage = sidsPage;
+        } else if (runwaysPage > sidsPage) {
+            maxPage = runwaysPage;
+        }
+        if (listing > sids.size()) {
+            listing -= 5;
+        }
+        if (listrun > runways.size()) {
+            listrun -= 5;
+        }
+
+        if (runways.size() <= 5) {
+
+            if (runwaySelected == null) {
+
+                // if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                //}else{
+                //panelSelector.writeProperty("panelstate","rtepagedep1");
+                // }
+
+                try {
+                    jLabel61.setText("");
+                    jLabel62.setText(runways.get(0));
+                } catch (Exception e) {
+              //      System.out.println("NO Runway HERE");
+                    jLabel62.setText("");
+                }
+                try {
+                    jLabel63.setText("");
+                    jLabel64.setText(runways.get(1));
+                } catch (Exception e) {
+            //        System.out.println("NO Runway HERE");
+                    jLabel64.setText("");
+                }
+                try {
+                    jLabel65.setText("");
+                    jLabel66.setText(runways.get(2));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel66.setText("");
+                }
+                try {
+                    jLabel67.setText("");
+                    jLabel68.setText(runways.get(3));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel68.setText("");
+                }
+                try {
+                    jLabel69.setText("");
+                    jLabel70.setText(runways.get(4));
+                } catch (Exception e) {
+               //     System.out.println("NO Runway HERE");
+                    jLabel70.setText("");
+                }
+
+
+            }
+            if (runwaySelected != null) {
+                // if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                //}else{
+                //panelSelector.writeProperty("panelstate","rtepagedep1");
+                // }
+                jLabel61.setText("");
+                jLabel62.setText("<SEL> " + runwaySelected);
+                jLabel64.setText("");
+                jLabel66.setText("");
+                jLabel68.setText("");
+                jLabel70.setText("");
+            }
+
+
+        }
+
+        if (runways.size() > 5) {
+
+
+            if (runwaySelected == null) {
+                //  if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                // }else{
+                //panelSelector.writeProperty("panelstate","rtepagedep1");
+                // }
+
+                try {
+                    jLabel61.setText("");
+                    jLabel62.setText(runways.get(listrun));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel62.setText("");
+                }
+                try {
+                    jLabel63.setText("");
+                    jLabel64.setText(runways.get(listrun + 1));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel64.setText("");
+                }
+                try {
+                    jLabel65.setText("");
+                    jLabel66.setText(runways.get(listrun + 2));
+                } catch (Exception e) {
+              //      System.out.println("NO Runway HERE");
+                    jLabel66.setText("");
+                }
+                try {
+                    jLabel67.setText("");
+                    jLabel68.setText(runways.get(listrun + 3));
+                } catch (Exception e) {
+              //      System.out.println("NO Runway HERE");
+                    jLabel68.setText("");
+                }
+                try {
+                    jLabel69.setText("");
+                    jLabel70.setText(runways.get(listrun + 4));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel70.setText("");
+                }
+            }
+            if (runwaySelected != null) {
+                //  if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                //  }else{
+                // panelSelector.writeProperty("panelstate","rtepagedep1");
+                //  }
+                jLabel61.setText("");
+                jLabel62.setText("<SEL> " + runwaySelected);
+                jLabel64.setText("");
+                jLabel66.setText("");
+                jLabel68.setText("");
+                jLabel70.setText("");
+
+            }
+
+        }
+
+        if (sids.size() <= 5) {
+
+            if (sidSelected == null) {
+                panelSelector.writeProperty("panelstate", "rtepagedep1");
+                jLabel48.setText("DEPARTURES");
+                jLabel51.setText("");
+                jLabel52.setText(sids.get(0));
+                jLabel49.setText("");
+                jLabel50.setText(sids.get(1));
+                jLabel54.setText("");
+                jLabel53.setText(sids.get(2));
+                jLabel55.setText("");
+                jLabel56.setText(sids.get(3));
+                jLabel58.setText("");
+                jLabel59.setText(sids.get(4));
+//                jLabel61.setText("");
+//                jLabel62.setText("");
+//                jLabel63.setText("");
+//                jLabel64.setText("");
+//                jLabel65.setText("");
+//                jLabel66.setText("");
+//                jLabel67.setText("");
+//                jLabel68.setText("");
+//                jLabel69.setText("");
+//                jLabel70.setText("");
+                jLabel57.setText("");
+            } else if (sidSelected != null) {
+
+                if (sidSelected != null) {
+                    panelSelector.writeProperty("panelstate", "transselect");
+                    if (Transitions.size() <= 4) {
+                        jLabel52.setText(sidSelected + "<SEL>");
+                        try {
+                            String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : Transitions.get(0);
+                            jLabel50.setText(text);
+                        } catch (Exception e) {
+                            jLabel50.setText("");
+                        }
+                        try {
+                            String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : Transitions.get(1);
+                            jLabel53.setText(text);
+                        } catch (Exception e) {
+                            jLabel53.setText("");
+                        }
+                        try {
+                            String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : Transitions.get(2);
+                            jLabel56.setText(text);
+
+
+                        } catch (Exception e) {
+                            jLabel56.setText("");
+                        }
+                        try {
+                            String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : Transitions.get(3);
+                            jLabel59.setText(text);
+
+
+                        } catch (Exception e) {
+                            jLabel59.setText("");
+                        }
+                    }
+                    if (Transitions.size() > 4) {
+                        jLabel52.setText(sidSelected + "<SEL>");
+                        panelSelector.writeProperty("panelstate", "transselect");
+                        try {
+                            String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : Transitions.get(0);
+                            jLabel50.setText(text);
+                        } catch (Exception e) {
+                            jLabel50.setText("");
+                        }
+                        try {
+                            String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : Transitions.get(1);
+                            jLabel53.setText(text);
+                        } catch (Exception e) {
+                            jLabel53.setText("");
+                        }
+                        try {
+                            String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : Transitions.get(2);
+                            jLabel56.setText(text);
+
+
+                        } catch (Exception e) {
+                            jLabel56.setText("");
+                        }
+                        try {
+                            String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : Transitions.get(3);
+                            jLabel59.setText(text);
+
+
+                        } catch (Exception e) {
+                            jLabel59.setText("");
+                        }
+                    }
+                }
+
+            }
+
+        }
+        if (sids.size() > 5) {
+            panelSelector.writeProperty("panelstate", "rtepagedep1");
+
+            try {
+                jLabel52.setText(sids.get(listing));
+            } catch (Exception ex) {
+                jLabel52.setText("");
+             //   System.out.println("NO SID HERE");
+            }
+            try {
+                jLabel49.setText("");
+                jLabel50.setText(sids.get(listing + 1));
+            } catch (Exception e) {
+                jLabel50.setText("");
+             //   System.out.println("NO SID HERE");
+            }
+            try {
+                jLabel54.setText("");
+                jLabel53.setText(sids.get(listing + 2));
+            } catch (Exception e) {
+                jLabel53.setText("");
+             //   System.out.println("NO SID HERE");
+            }
+            try {
+                jLabel55.setText("");
+                jLabel56.setText(sids.get(listing + 3));
+            } catch (Exception e) {
+                jLabel56.setText("");
+             //   System.out.println("NO SID HERE");
+            }
+            try {
+                jLabel58.setText("");
+                jLabel59.setText(sids.get(listing + 4));
+            } catch (Exception e) {
+                jLabel59.setText("");
+            //    System.out.println("NO SID HERE");
+            }
+            if (sidSelected != null) {
+                if (Transitions.size() <= 4) {
+                    panelSelector.writeProperty("panelstate", "transselect");
+                    jLabel51.setText("SIDS");
+                    jLabel52.setText(sidSelected + "<SEL>");
+                    jLabel49.setText("TRANS");
+                    try {
+                        String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : Transitions.get(listtrans);
+                        jLabel50.setText(text);
+                    } catch (Exception e) {
+                        jLabel50.setText("");
+                    }
+                    try {
+                        String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : Transitions.get(listtrans + 1);
+                        jLabel53.setText(text);
+                    } catch (Exception e) {
+                        jLabel53.setText("");
+                    }
+                    try {
+                        String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : Transitions.get(listtrans + 2);
+                        jLabel56.setText(text);
+
+
+                    } catch (Exception e) {
+                        jLabel56.setText("");
+                    }
+                    try {
+                        String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : Transitions.get(listtrans + 3);
+                        jLabel59.setText(text);
+
+
+                    } catch (Exception e) {
+                        jLabel59.setText("");
+                    }
+
+                }
+                if (Transitions.size() > 4) {
+                    panelSelector.writeProperty("panelstate", "transselect");
+                    jLabel51.setText("SIDS");
+                    jLabel52.setText(sidSelected + "<SEL>");
+                    jLabel49.setText("TRANS");
+                    try {
+                        String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : Transitions.get(listtrans);
+                        jLabel50.setText(text);
+                    } catch (Exception e) {
+                        jLabel50.setText("");
+                    }
+                    try {
+                        String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : Transitions.get(listtrans + 1);
+                        jLabel53.setText(text);
+                    } catch (Exception e) {
+                        jLabel53.setText("");
+                    }
+                    try {
+                        String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : Transitions.get(listtrans + 2);
+                        jLabel56.setText(text);
+
+
+                    } catch (Exception e) {
+                        jLabel56.setText("");
+                    }
+                    try {
+                        String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : Transitions.get(listtrans + 3);
+                        jLabel59.setText(text);
+
+
+                    } catch (Exception e) {
+                        jLabel59.setText("");
+                    }
+                }
+            }
+
+        }
+    }
+        
+
+
+    
+
+
+
+
+    public String sidSelected;
+   
     
     public void panelSelector(){
     //panelstate=ident opens ident page
@@ -2140,6 +3286,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
          while(x==0){
            
              if(panel.retrieveProperty("panelstate").equals("ident")){
+               listing=0;
                  pagenumber.setText("");
              jLabel48.setText("IDENT");
              jLabel51.setText("MODEL");
@@ -2165,6 +3312,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
              jLabel57.setText("POS INIT >");
          }
              else if(panel.retrieveProperty("panelstate").equals("posinit")){
+               listing=0;
                   pagenumber.setText("PAGE 1/2");
                  jLabel48.setText("POS INIT");
              jLabel51.setText("REF AIRPORT");
@@ -2192,6 +3340,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
              
              
              else if(panel.retrieveProperty("panelstate").equals("index")){
+               listing=0;
                   jLabel48.setText("INIT/REF INDEX");
              jLabel51.setText("");
              jLabel52.setText("< IDENT");
@@ -2218,6 +3367,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
                  
              }
               else if(panel.retrieveProperty("panelstate").equals("rte")){
+                listing=0;
                   jLabel48.setText("RTE 1");
              jLabel51.setText("Origin");
              jLabel52.setText(panelSelector.retrieveProperty("origin"));
@@ -2244,6 +3394,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
                  
              }
              else if(panel.retrieveProperty("panelstate").equals("perfinit")){
+               listing=0;
                   jLabel48.setText("PERF INIT");
              jLabel51.setText("GR WT");
              jLabel52.setText(panelSelector.retrieveProperty("groundweight"));
@@ -2271,6 +3422,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
              }
              
              if(panel.retrieveProperty("panelstate").equals("posref")){
+               listing=0;
                   pagenumber.setText("PAGE 2/2");
              jLabel48.setText("POS REF");
              jLabel51.setText("FMC (GPS)");
@@ -2299,6 +3451,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
          }
              
              if(panel.retrieveProperty("panelstate").equals("deparr")){
+               listing=0;
                   pagenumber.setText("PAGE 1/1");
              jLabel48.setText("DEP/ARR INDEX ");
              jLabel51.setText("");
@@ -2324,16 +3477,16 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
              jLabel69.setText("");
              jLabel70.setText("");
              jLabel57.setText("");
-         }if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")){
+         /*}if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")){
              
-         }
-             
+         }*/
+             }
              try{Thread.sleep(1000);}catch(InterruptedException ex){}
+         
          }
-            
-        }        
-        
-    });
+        }
+    
+        });
     panelVerifier.start();
     
 }
@@ -2365,12 +3518,13 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
      */
     
     public void intializePanel(){
+      
      panelSelector.writeProperty("refairport", "----");
      panelSelector.writeProperty("gate", ""); 
         panelSelector.writeProperty("lastpos", "Not Available");
         panelSelector.writeProperty("gpspos", "Not Available");
         panelSelector.writeProperty("irspos", "---*--.- ----*--.-");
-       
+       panelSelector.writeProperty("panelstate","ident");
         panelSelector.writeProperty("origin", "----");
         panelSelector.writeProperty("runwaydep", "----");
         panelSelector.writeProperty("dest", "----");
@@ -2400,8 +3554,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
     
     public static void main(String args[]) {
         MainApp obj1=new MainApp();
-        PropertiesChecker panelSetter=new PropertiesChecker();
-        panelSetter.writePanelState("ident");
+        
         obj1.panelSelector();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -154,7 +154,7 @@ public void setList(){
         String rwy=obj1.retrieveProperty("Runway");
         String icao=obj1.retrieveProperty("ICAO");
         setText(icao, sid, rwy);
-        List<String> waypoints=sidpull.getSIDWpt(icao, sid, rwy);
+        List<String> waypoints=sidpull.getSIDWpt(icao, sid, rwy,null);
         
           
  
@@ -170,7 +170,6 @@ public double c(Double d){
 
 public double distanceNM(double lat1, double lat2, double lon1, double lon2) {
  
-  // function nd_calc_dist2(req_lat, req_lon, req_lat2, req_lon2)
  
  double nd_lat = Math.toRadians(lat1);
  double nd_lat2 = Math.toRadians(lat2);
@@ -187,6 +186,23 @@ public double distanceNM(double lat1, double lat2, double lon1, double lon2) {
 
 }
 
+public double calcBearing (double req_lat, double req_lon, double req_lat2, double req_lon2){
+ 
+ double nd_lat = Math.toRadians(req_lat);
+ double nd_lon = Math.toRadians(req_lon);
+ 
+ double nd_lat2 = Math.toRadians(req_lat2);
+ double nd_lon2 = Math.toRadians(req_lon2);
+ 
+ double nd_y = Math.sin(nd_lon2 - nd_lon) * Math.cos(nd_lat2);
+ double nd_x = Math.cos(nd_lat) * Math.sin(nd_lat2) - Math.sin(nd_lat) * Math.cos(nd_lat2) * Math.cos(nd_lon2 - nd_lon);
+ double nd_hdg = Math.atan2(nd_y, nd_x);
+ nd_hdg = Math.toDegrees(nd_hdg);
+ nd_hdg = (nd_hdg + 360) % 360;
+ 
+ return nd_hdg;
+}
+
 public void calculateIRS(){
     String sid=obj1.retrieveProperty("SID");
         String rwy=obj1.retrieveProperty("Runway");
@@ -195,7 +211,7 @@ public void calculateIRS(){
  
  
  
- waypoints.addAll(sidpull.getSIDWptLatLong(icao,sid,rwy));
+ //waypoints.addAll(sidpull.getSIDWptLatLong(icao,sid,rwy));
 
  List<String> distmag=new ArrayList<String>();
  System.out.println("I'm here");

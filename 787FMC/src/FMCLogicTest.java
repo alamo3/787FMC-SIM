@@ -11,10 +11,16 @@ import java.lang.*;
  * @author omer
  */
 public class FMCLogicTest {
-  public static void main(String [] args){
+  
+  
+  public String runwaySelected;
+    public String SidSelected;
+    public String TransSelected;
+  
+ /*public static void main(String [] args){
    FMCLogicTest obj1=new FMCLogicTest(); 
-    obj1.getAirportLatLong("01ID");
-  }
+    List<String> new1=obj1.getTransition("CYYZ","AVSEP3");
+  }*/
   
   
    public String filepath=System.getProperty("user.dir") ;
@@ -27,6 +33,48 @@ public void setAirportDep(String x){airportChosenDep=x;}
 public String getAirportDep(){return airportChosenDep;}
 public void setAirportArr(String x){airportChosenArr=x;}
 public String getAirportArr(){return airportChosenArr;}
+
+
+public List<String> getTransition(String x, String y){
+ List<String> transitions=new ArrayList<>(); 
+String icao=x;  
+ String sid=y;
+ 
+ String line;
+ 
+ try{
+   BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt"))));
+   
+   while((line=br.readLine())!=null){
+     if(line.contains("SID,")&&line.contains(sid)){
+      transitions.add(line); 
+       
+       
+     }
+   
+     
+   }
+ }catch(IOException e){}
+  String [] temp=transitions.stream().toArray(String []::new);
+  List<String> transFinal=new ArrayList<>();
+  for(int i=0; i<temp.length;i++){
+    String [] temp1=temp[i].split(",");
+    
+    if(Character.isDigit(temp1[2].charAt(0))==false&&Character.isDigit(temp1[2].charAt(1))==false){
+      transFinal.add(temp1[2]);
+    }
+    
+  }
+  
+  for(String next: transFinal){
+  System.out.println(next);
+  }
+  
+  
+  
+  return transFinal;
+}
+
 
 
 public String[] getAirportLatLong(String x){
@@ -76,83 +124,94 @@ public String[] getAirports(){
          return airports;
 }
 
+public List<String> getRunwaystoSids(String x, String y){
+    
+    String icao=x;
+    String runway=y;
+    String departure=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+    
+    List<String> SidFound= new ArrayList<>();
+    String line;
+    try{
+     BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(departure))));   
+        
+     while((line=br.readLine())!=null){
+      if(line.contains("SID,")&&line.contains(runway)){   
+       SidFound.add(line);  
+         
+      }
+         
+         
+     }
+    
+     
+     
+    }catch(IOException e){}
+     List<String> finalSids=new ArrayList<>();
+     
+     for(String next: SidFound){
+         System.out.println(next);
+         
+     }
+     
+     for(int i=0; i<SidFound.size();i++){
+         String [] temp=SidFound.get(i).split(",");
+         finalSids.add(temp[1]);
+         
+     }
+     for(String next: finalSids){
+         System.out.println(next);
+         
+     }
+    
+    return finalSids;
+}
+
+
 public String[] getRunways(String x){
  String icao=x;
  String [] runways;
   String[] sids;
- String depSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+ String depSelected=System.getProperty("user.dir")+"/navdata/navdata/Airports.txt";
  
  
-List<Integer> listSidFound = new ArrayList<Integer>();
- int line=0;
- String buff;
- int listSize;
- int line2;
-  String ph;
-  List<String> Sids=new ArrayList<String>();
- 
- Set<String> duplicates=new HashSet<>();
- String[] Sidident;
- List<String> StringSplits=new ArrayList<String>();
- try{
 
+ 
+
+ 
+ String line2;
+  String ph;
+  List<String> runwaysFound=new ArrayList<String>();
+ 
+ //Set<String> duplicates=new HashSet<>();
+ //String[] Sidident;
+// List<String> StringSplits=new ArrayList<String>();
+ 
+ try{
+boolean takeInput=false;
   BufferedReader buf = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
 
- while((buff=buf.readLine()) != null){
-     line++;
-     if(buff.contains("SID,")&&buff.length()<25){
-      listSidFound.add(line);   
-     }
- }
-
- 
- listSize=listSidFound.size();
-  line2=0;
-ph="";
- Sidident=new String[listSize];
- BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
- int i=0;
- while((ph=br.readLine())!=null){
-  line2++;
-   
-   if(ph.contains("SID,")&&ph.length()<25){
-    Sidident[i]=ph; 
-     i++;
-   }
-   
- }
- for(int k=0; k<Sidident.length; k++){
-   
-   
-   String[] split=Sidident[k].split(",");
-    String temp=split[2];
-    
-    if(Character.isDigit(temp.charAt(0))==true&&Character.isDigit(temp.charAt(1))==true){
-  StringSplits.add(temp); 
+  while((line2=buf.readLine())!=null){
+    if(line2.contains(icao)){
+     takeInput=true; 
     }
-   
- }
+    if(takeInput==true&&line2.isEmpty()){
+     takeInput=false; 
+    }
+    
+    if(takeInput==true&&line2.startsWith("R,")){
+     String [] temp=line2.split(",");
+     runwaysFound.add(temp[1]);
+    }
+    
+  }
  }catch(IOException ex){
    
  }
  
    
   
- Set<String> duplicates2=new HashSet<>();
- 
- duplicates2.addAll(StringSplits);
- StringSplits.clear();
- StringSplits.addAll(duplicates2);
- Collections.sort(StringSplits);
-
- 
- runways=new String[StringSplits.size()];
-
- for(int j=0; j<runways.length;j++){
-  runways[j]=StringSplits.get(j); 
-   
- }
- 
+ runways=runwaysFound.toArray(new String[runwaysFound.size()]); 
  
  return runways;
  

@@ -11,9 +11,15 @@ import java.lang.*;
  * @author omer
  */
 public class FMCLogicTest {
-  /*public static void main(String [] args){
+  
+  
+  public String runwaySelected;
+    public String SidSelected;
+    public String TransSelected;
+  
+ /*public static void main(String [] args){
    FMCLogicTest obj1=new FMCLogicTest(); 
-    obj1.getAirportLatLong("01ID");
+    List<String> new1=obj1.getTransition("CYYZ","AVSEP3");
   }*/
   
   
@@ -29,6 +35,48 @@ public void setAirportArr(String x){airportChosenArr=x;}
 public String getAirportArr(){return airportChosenArr;}
 
 
+public List<String> getTransition(String x, String y){
+ List<String> transitions=new ArrayList<>(); 
+String icao=x;  
+ String sid=y;
+ 
+ String line;
+ 
+ try{
+   BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt"))));
+   
+   while((line=br.readLine())!=null){
+     if(line.contains("SID,")&&line.contains(sid)){
+      transitions.add(line); 
+       
+       
+     }
+   
+     
+   }
+ }catch(IOException e){}
+  String [] temp=transitions.stream().toArray(String []::new);
+  List<String> transFinal=new ArrayList<>();
+  for(int i=0; i<temp.length;i++){
+    String [] temp1=temp[i].split(",");
+    
+    if(Character.isDigit(temp1[2].charAt(0))==false&&Character.isDigit(temp1[2].charAt(1))==false){
+      transFinal.add(temp1[2]);
+    }
+    
+  }
+  
+  for(String next: transFinal){
+  System.out.println(next);
+  }
+  
+  
+  
+  return transFinal;
+}
+
+
+
 public String[] getAirportLatLong(String x){
  String airportData="";
        String  icao=x;
@@ -39,24 +87,26 @@ public String[] getAirportLatLong(String x){
      
      if(line.contains(","+icao+",")){
      airportData=line;
-     
-     }
      break;
+     }
+     
  }
  
  
- 
+ System.out.println(airportData);
  }catch(IOException ex){}
     String [] temp=airportData.split(",");
-    
+     for(String next:temp){
+   System.out.println(next); 
+  }
     String []finalData=new String[3];
     finalData[0]=temp[2];
     finalData[1]=temp[3];
     finalData[2]=temp[4];
     
-  /*for(String next:finalData){
+  for(String next:finalData){
    System.out.println(next); 
-  }*/
+  }
     
     return finalData;
 }
@@ -73,6 +123,50 @@ public String[] getAirports(){
  
          return airports;
 }
+
+public List<String> getRunwaystoSids(String x, String y){
+    
+    String icao=x;
+    String runway=y;
+    String departure=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+    
+    List<String> SidFound= new ArrayList<>();
+    String line;
+    try{
+     BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(departure))));   
+        
+     while((line=br.readLine())!=null){
+      if(line.contains("SID,")&&line.contains(runway)){   
+       SidFound.add(line);  
+         
+      }
+         
+         
+     }
+    
+     
+     
+    }catch(IOException e){}
+     List<String> finalSids=new ArrayList<>();
+     
+     for(String next: SidFound){
+         System.out.println(next);
+         
+     }
+     
+     for(int i=0; i<SidFound.size();i++){
+         String [] temp=SidFound.get(i).split(",");
+         finalSids.add(temp[1]);
+         
+     }
+     for(String next: finalSids){
+         System.out.println(next);
+         
+     }
+    
+    return finalSids;
+}
+
 
 public String[] getRunways(String x){
  String icao=x;
