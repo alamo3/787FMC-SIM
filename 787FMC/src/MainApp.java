@@ -22,6 +22,16 @@ FMCLogicTest accessLogic=new FMCLogicTest();
 
 WaypoimtAccess navDataPull=new WaypoimtAccess();
 
+
+/////////ALL VARIABLES FROM 2/12/2018 LISTED HERE MAKING MY LIFE EASIER
+
+String cacheAirportDep="";
+boolean airportCachedOnceDep=false;
+
+
+////////////////////////////////////END OF VARIABLES LISTED 
+
+
 findGpsPosition getLocation=new findGpsPosition();
     public MainApp() {
       
@@ -1884,10 +1894,28 @@ public void performAction(String x, String y, String z){
              
              
              panelSelector.writeProperty("origin", text);jTextField1.setText("");
+             
+             if(airportCachedOnceDep==false){
+                cacheAirportDep=panelSelector.retrieveProperty("origin");
+                 airportCachedOnceDep=true;
+             }
+             if(airportCachedOnceDep==true){
+               if(cacheAirportDep.equals(panelSelector.retrieveProperty("origin"))==false){
+                 sidSelected=null;
+                  listing=0;
+                  runwaySelected=null;
+                  panelSelector.writeProperty("runwaydep","----");
+                 TransSelected=null;
+                 listrun=0;
+                  listtrans=0;
+                 cacheAirportDep=panelSelector.retrieveProperty("origin");
+    
+               }
+             }
              }else{
                  jTextField1.setText("Entry Invalid - Airport Not Found");
              }
-          
+         
           
           }
           
@@ -2511,10 +2539,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
         panelSelector.writeProperty("panelstate","posinit");
     }//GEN-LAST:event_InitRefMousePressed
     
-    /*******************************
-      * Method to Display legs. 
-      * 
-      * **************************/
+  
   int legsDisplay=0;
   
   String starSelectedDep;
@@ -2527,7 +2552,16 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
   int listStarArr=0;
   int listTransStarDep=0;
   int listTransStarArr=0;
+  int listRun;
+  
+  /***********************************
+   * 
+   * 
+   * Method to display Stars and Runways (W.I.P)
+   */
+  
   public void displayStarsandRunways(){
+    double timeCheck=System.nanoTime();
       Map<String,Stars> starsDep=new LinkedHashMap<>();
     
     List<String> rawDataStars=accessLogic.getStars(panelSelector.retrieveProperty("origin"));
@@ -2535,16 +2569,17 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     List<String> runwayAvail;
     
 
-    //System.out.println(rawDataStars);
+   
     for(int i=0;i<rawDataStars.size();i++){
     
      starsTransition= accessLogic.getTransition(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
-     runwayAvail=accessLogic.getProcstoRunways(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
+     runwayAvail= (starsTransition.contains("ALL")) ?   Arrays.asList(accessLogic.getRunways(panelSelector.retrieveProperty("origin"))): accessLogic.getProcstoRunways(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
       starsDep.put(rawDataStars.get(i),new Stars(panelSelector.retrieveProperty("origin"),rawDataStars.get(i),starsTransition,runwayAvail));
-      
+    
       
     }
-    Map<String,Stars> starsArr=new LinkedHashMap<>();
+    
+  /* Map<String,Stars> starsArr=new LinkedHashMap<>();
     List<String> rawDataStars1=accessLogic.getStars(panelSelector.retrieveProperty("dest"));
      List<String> starsTransitionArr;
     List<String> runwayAvailArr;
@@ -2552,10 +2587,10 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     
      starsTransitionArr= accessLogic.getTransition(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
      runwayAvailArr=accessLogic.getProcstoRunways(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
-      starsDep.put(rawDataStars1.get(i),new Stars(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i),starsTransitionArr,runwayAvailArr));
+      starsArr.put(rawDataStars1.get(i),new Stars(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i),starsTransitionArr,runwayAvailArr));
       
       
-    }
+    }*/
     
       if(listStarDep>=rawDataStars.size()){
        listStarDep-=5;   
@@ -2594,8 +2629,52 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
           }catch(IndexOutOfBoundsException e){jLabel58.setText(""); jLabel59.setText("");}
           }
           else if(starSelectedDep!=null){
+              
+              
+              
                String text="";
                 panelSelector.writeProperty("panelstate", "transSelectDepStar");
+                if(starsDep.get(starSelectedDep).getRunways().size()<=5){
+                    
+                    try{
+                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(0));
+                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
+                     try{
+                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(1));
+                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
+                try{
+                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(2));
+                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
+                 try{
+                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(3));
+                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
+                  try{
+                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(4));
+                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
+     
+                
+                }else if(starsDep.get(starSelectedDep).getRunways().size()>5){
+                    
+                     try{
+                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(listRun));
+                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
+                     try{
+                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+1));
+                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
+                try{
+                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+2));
+                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
+                 try{
+                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+3));
+                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
+                  try{
+                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+4));
+                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
+                    
+                    
+                }
+                
+                
               if(starsDep.get(starSelectedDep).getTrans().size()<=4){
                  
                  
@@ -2651,6 +2730,12 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
       }
       else if(rawDataStars.size()>5){
           if(starSelectedDep==null){
+            jLabel62.setText("");
+            jLabel64.setText("");
+            jLabel66.setText("");
+            jLabel68.setText("");
+            jLabel70.setText("");
+            
               panelSelector.writeProperty("panelstate", "stardep");
            try{
               jLabel51.setText("");
@@ -2678,8 +2763,53 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
           }catch(IndexOutOfBoundsException e){jLabel58.setText(""); jLabel59.setText("");}
           }
           else if(starSelectedDep!=null){
+              
+              
+              
                String text="";
                 panelSelector.writeProperty("panelstate", "transSelectDepStar");
+                
+                 if(starsDep.get(starSelectedDep).getRunways().size()<=5){
+                    System.out.println(starsDep.get(starSelectedDep).getRunways());
+                    try{
+                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(0));
+                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
+                     try{
+                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(1));
+                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
+                try{
+                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(2));
+                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
+                 try{
+                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(3));
+                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
+                  try{
+                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(4));
+                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
+     
+                
+                }else if(starsDep.get(starSelectedDep).getRunways().size()>5){
+                    
+                     try{
+                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(listRun));
+                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
+                     try{
+                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+1));
+                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
+                try{
+                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+2));
+                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
+                 try{
+                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+3));
+                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
+                  try{
+                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+4));
+                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
+                    
+                    
+                }
+                
+                
               if(starsDep.get(starSelectedDep).getTrans().size()<=4){
                  
                  
@@ -2719,7 +2849,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
               }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
               try{
                     text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
-                jLabel56.setText(starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2));
+                jLabel56.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
               try{
                    text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
@@ -2734,16 +2864,25 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
       
       }
       
-      
+       double timeCheck1=System.nanoTime();
+       System.out.println((timeCheck1-timeCheck)/1000000);
   }
   
+/////////////////////////////////////////////////////////////////////////////////////////
+  
+  
+  /*************
+   * 
+   * METHOD TO DISPLAY LEGS
+   * 
+   */
   
   
    public void displayLegs(){
-       
+       Map<String,legs> legsData=new HashMap<>();
      if(sidSelected!=null){
          panelSelector.writeProperty("panelstate", "legspage");
-   Map<String,legs> legsData=new HashMap<>();
+   
 
     List<String> rawDataSID=navDataPull.getSIDWpt(panelSelector.retrieveProperty("origin"),sidSelected,runwaySelected,TransSelected);
     List<String> rawDataSIDLatLong=navDataPull.getSIDWptLatLong(panelSelector.retrieveProperty("origin"),sidSelected,runwaySelected,TransSelected);
@@ -3158,16 +3297,36 @@ latlongBearing++;
      String [] location = getLocation.getLatLongIP();
     int x=0;
     
+    
+    
+    /************************
+     * 
+     * METHOD TO DISPLAY SIDS AND RUNWAYS PAGE STATES INCLUDE : rtedeppage1 && transselect
+     * 
+     */
+    
+    
    List<String> sids;
+   
+   
    List <String> runways;
+   
+   
    List<String> Transitions;
+   
+   
    int listing=0;
+   
    public String runwaySelected;
-    public String SidSelected;
+  
     public String TransSelected;
+    
     public int listrun=0;
+    
     public int listtrans=0;
     
+     public String sidSelected;
+     
     public void sidAndRunwayDisplayer() {
       
       runwaySelected=(panelSelector.retrieveProperty("runwaydep").equals("----")) ? null : panelSelector.retrieveProperty("runwaydep");
@@ -3557,7 +3716,7 @@ latlongBearing++;
 
 
 
-    public String sidSelected;
+   
    
     
     public void panelSelector(){

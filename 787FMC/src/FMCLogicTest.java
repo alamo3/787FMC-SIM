@@ -382,6 +382,7 @@ int sizeFinal=Sids.size();
 
 
 public List<String> getStars(String icao){
+  double timeCheck= System.nanoTime();
  List<String> stars = new ArrayList<>();
  String arrSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
  
@@ -399,7 +400,9 @@ try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputSt
     }
   }
 }catch (IOException e){System.out.println("File Not Found");}
-
+double timeEnd=System.nanoTime();
+double timeTotal=(timeEnd-timeCheck)/1000000;
+System.out.println(timeTotal);
 //System.out.println(stars);
   return stars;
   

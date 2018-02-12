@@ -25,6 +25,117 @@ public class WaypoimtAccess {
    
     
     //Calculates the distance between 2 waypoints. Requires Lat and Long for Both
+  
+  String procedure="";
+  String icao="";
+  String procTrans="";
+  public List<String> getAltRest(String icao, String procedure, String procTrans) throws IOException{
+    this.icao=icao;
+    this.procedure=procedure;
+    List<String> altRest=new ArrayList<>();
+    this.procTrans=procTrans;
+    
+     String directory=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+        String lineCapture="";
+        boolean takeLine=false;
+     try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
+       label1:   while((lineCapture=br.readLine())!=null){
+         if(lineCapture.contains("SID,"+procedure)||lineCapture.contains("STAR,"+procedure)){
+          takeLine=true; 
+         }
+         
+         if(takeLine==true&&lineCapture.isEmpty()){
+          takeLine=false; 
+          break label1;
+         }
+         if(takeLine==true){
+           String [] temp=lineCapture.split(",");
+           if(lineCapture.startsWith("VA,")||lineCapture.startsWith("CA,")){
+             //altRest.add(temp[3]);
+             altRest.add(temp[4]);
+             
+           }else if(lineCapture.startsWith("CF,")||lineCapture.startsWith("VD,")||lineCapture.startsWith("FD,")||lineCapture.startsWith("FC,")||lineCapture.startsWith("CD,")||lineCapture.startsWith("PI,")||lineCapture.startsWith("HA,")||lineCapture.startsWith("HF,")||lineCapture.startsWith("TF,")){
+            // altRest.add(temp[10]);
+             altRest.add(temp[11]);
+             
+           }else if(lineCapture.startsWith("CI,")||lineCapture.startsWith("CR,")||lineCapture.startsWith("VM,")||lineCapture.startsWith("VR,")){
+           //  altRest.add(temp[5]);
+             altRest.add(temp[6]);
+           }else if(lineCapture.startsWith("FA,")||lineCapture.startsWith("FM,")||lineCapture.startsWith("AF,")){
+          //   altRest.add(temp[9]);
+             altRest.add(temp[10]);
+             
+           } else if(lineCapture.startsWith("RF,")||lineCapture.startsWith("VI,")||lineCapture.startsWith("DF,")||lineCapture.startsWith("IF,")){
+         //   altRest.add(temp[8]);
+            altRest.add(temp[9]);
+           }
+           else if(lineCapture.startsWith("HM,")){
+        //    altRest.add(temp[13]);
+            altRest.add(temp[14]);
+           }
+           
+         }
+         
+         
+       }
+       
+       
+     }
+     if(procTrans!=null){
+    String lineTrans="";
+    boolean takeTransInfo=false;
+     try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
+       label2:  while((lineTrans=br.readLine())!=null){
+         if(lineTrans.contains("SID,"+procedure+","+procTrans+",")||lineTrans.contains("STAR,"+procedure+","+procTrans+",")){
+          takeTransInfo=true; 
+           
+         }
+         if(takeTransInfo==true&&lineTrans.isEmpty()){
+          takeTransInfo=false;
+          break label2;
+         }
+         if(takeTransInfo==true){
+          String [] temp=lineTrans.split(",");
+            if(lineTrans.startsWith("VA,")||lineTrans.startsWith("CA,")){
+             //altRest.add(temp[3]);
+             altRest.add(temp[4]);
+             
+           }else if(lineTrans.startsWith("CF,")||lineTrans.startsWith("VD,")||lineTrans.startsWith("FD,")||lineTrans.startsWith("FC,")||lineTrans.startsWith("CD,")||lineTrans.startsWith("PI,")||lineTrans.startsWith("HA,")||lineTrans.startsWith("HF,")||lineTrans.startsWith("TF,")){
+            // altRest.add(temp[10]);
+             altRest.add(temp[11]);
+             
+           }else if(lineTrans.startsWith("CI,")||lineTrans.startsWith("CR,")||lineTrans.startsWith("VM,")||lineTrans.startsWith("VR,")){
+           //  altRest.add(temp[5]);
+             altRest.add(temp[6]);
+           }else if(lineTrans.startsWith("FA,")||lineTrans.startsWith("FM,")||lineTrans.startsWith("AF,")){
+          //   altRest.add(temp[9]);
+             altRest.add(temp[10]);
+             
+           } else if(lineTrans.startsWith("RF,")||lineTrans.startsWith("VI,")||lineTrans.startsWith("DF,")||lineTrans.startsWith("IF,")){
+         //   altRest.add(temp[8]);
+            altRest.add(temp[9]);
+           }
+           else if(lineTrans.startsWith("HM,")){
+        //    altRest.add(temp[13]);
+            altRest.add(temp[14]);
+           }
+            
+         }
+         
+         
+       }
+       
+     }
+     }
+    
+    
+    
+    
+    return altRest;
+  }
+  
+  
+  
     
     public double distanceNM(double lat1, double lon1, double lat2, double lon2) {
  
@@ -65,13 +176,22 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
     
     
     //WIP method.
-    public List<String> returnWaypoints(String x, String y)
+    public List<String> returnWaypoint(String x, String y) throws IOException
     {
     List<String> waypoints=new ArrayList<String>();
     String airway=x;
     String exitAirway=y;
-    
-    
+     String directory=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+        String lineCapture="";
+     try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
+       while((lineCapture=br.readLine())!=null){
+         
+         
+         
+       }
+       
+       
+     }
     
     
     
