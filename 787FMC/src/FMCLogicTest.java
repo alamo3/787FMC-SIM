@@ -6,6 +6,7 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import java.util.regex.Pattern;
 /**
  *
  * @author omer
@@ -22,6 +23,9 @@ public class FMCLogicTest {
     List<String> new1=obj1.getTransition("CYYZ","AVSEP3");
   }*/
   
+    
+ 
+    
   
    public String filepath=System.getProperty("user.dir") ;
         File fileScanner=new File(filepath+"/navdata/navdata/PROC");
@@ -102,20 +106,19 @@ public String[] getAirportLatLong(String x){
  }
  
  
- System.out.println(airportData);
  }catch(IOException ex){}
     String [] temp=airportData.split(",");
-     for(String next:temp){
+    /* for(String next:temp){
    System.out.println(next); 
-  }
+  }*/
     String []finalData=new String[3];
     finalData[0]=temp[2];
     finalData[1]=temp[3];
     finalData[2]=temp[4];
     
-  for(String next:finalData){
+/*  for(String next:finalData){
    System.out.println(next); 
-  }
+  }*/
     
     return finalData;
 }
@@ -138,6 +141,11 @@ public String[] getAirports(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**********
+  * METHOD TO GET RUNWAYS FOR PROCEDURES FROM NAVIGRAPH ARINC 424 DATABASE
+  * 
+  * **************/
+
 public List<String> getProcstoRunways(String x, String y){
  String icao=x;
  
@@ -149,10 +157,16 @@ public List<String> getProcstoRunways(String x, String y){
  
  String line;
  try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
-   while((line=br.readLine())!=null){
+   label1: while((line=br.readLine())!=null){
   
      if(line.contains(procedure)){
-       String [] temp=line.split(","); 
+       if(line.contains("ALL")){
+         procFound.clear();
+         procFound=getRunwaysList(icao);
+         break label1;
+         
+       }
+       String [] temp=splitString(line,',');
        if(Character.isDigit(temp[2].charAt(0))==true&&Character.isDigit(temp[2].charAt(1))){
        procFound.add(temp[2]);
        }
@@ -167,6 +181,41 @@ public List<String> getProcstoRunways(String x, String y){
  
  return procFound;
 }
+
+
+  public static String[] splitString(String line, char delimiter){
+  
+    List<String> splits=new LinkedList<>();
+  int begin=0;
+  int end=0;
+   int j=0;
+   String catchWord="";
+   
+ char[] charSplit=line.toCharArray();
+ for(int i=0;i<charSplit.length;i++){
+   if(charSplit[i]==delimiter){
+     j=i;
+     end = begin;
+     while(end<i){
+      catchWord=catchWord+charSplit[end]; 
+      end++;
+     }
+     splits.add(catchWord);
+     begin=i+1;
+     catchWord="";
+   }
+ 
+   
+ }
+    splits.add(line.substring(line.lastIndexOf(',')+1,line.length()));
+
+  
+  
+  return splits.toArray(new String[splits.size()]);
+  
+  }
+
+
 
 public List<String> getRunwaystoSids(String x, String y){
     
@@ -241,7 +290,7 @@ boolean takeInput=false;
     }
     
     if(takeInput==true&&line2.startsWith("R,")){
-     String [] temp=line2.split(",");
+     String [] temp=splitString(line2,',');
      runwaysFound.add(temp[1]);
     }
     
@@ -257,7 +306,56 @@ boolean takeInput=false;
  return runways;
  
  }
+
+
+
+/*************
+  * 
+  * Same Method as above, just returns a list instead of an array. Did this to not deal with unmodifiable lists returned by Arrays class.
+  * 
+  * **************/
+  public List<String> getRunwaysList(String x){
+ String icao=x;
+
+ String depSelected=System.getProperty("user.dir")+"/navdata/navdata/Airports.txt";
+ 
+ 
+
+ 
+
+ 
+ String line2;
   
+  List<String> runwaysFound=new ArrayList<String>();
+ 
+ //Set<String> duplicates=new HashSet<>();
+ //String[] Sidident;
+// List<String> StringSplits=new ArrayList<String>();
+ 
+ try{
+boolean takeInput=false;
+  BufferedReader buf = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
+
+  while((line2=buf.readLine())!=null){
+    if(line2.contains(icao)){
+     takeInput=true; 
+    }
+    if(takeInput==true&&line2.isEmpty()){
+     takeInput=false; 
+    }
+    
+    if(takeInput==true&&line2.startsWith("R,")){
+     String [] temp=splitString(line2,',');
+     runwaysFound.add(temp[1]);
+    }
+    
+  }
+ }catch(IOException ex){
+   
+ }
+ return runwaysFound;
+ 
+  }
   
   /******************************
 *
@@ -288,7 +386,7 @@ public boolean checkAirport(String x){
   * 
   * ********************/
 
-public String[] getSIDS(String icao){
+public List<String> getSIDS(String icao){
  String[] sids;
  String depSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
  
@@ -367,7 +465,14 @@ int sizeFinal=Sids.size();
    
  }
   
-  return SidsFinal;
+  List<String> SIDFinal=new LinkedList<>();
+  
+  for(int i=0;i<SidsFinal.length;i++){
+   SIDFinal.add(SidsFinal[i]); 
+    
+  }
+  
+  return SIDFinal;
 }
     
 
@@ -382,7 +487,7 @@ int sizeFinal=Sids.size();
 
 
 public List<String> getStars(String icao){
-  double timeCheck= System.nanoTime();
+ 
  List<String> stars = new ArrayList<>();
  String arrSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
  
@@ -391,7 +496,7 @@ String line;
 try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(arrSelected))))){
   while((line=br.readLine())!=null){
     if(line.contains("STAR,")){
-  String [] temp=line.split(",");
+  String [] temp=splitString(line,',');
  // if(Character.isDigit(temp[2].charAt(0))==true&&Character.isDigit(temp[2].charAt(1))==true){
     if(stars.contains(temp[1])==false){
      stars.add(temp[1]); 
@@ -401,8 +506,7 @@ try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputSt
   }
 }catch (IOException e){System.out.println("File Not Found");}
 double timeEnd=System.nanoTime();
-double timeTotal=(timeEnd-timeCheck)/1000000;
-System.out.println(timeTotal);
+
 //System.out.println(stars);
   return stars;
   

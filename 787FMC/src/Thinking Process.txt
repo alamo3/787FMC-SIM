@@ -1,0 +1,48 @@
+HERE IS MY THINKING PROCESS FOR WHAT I WANT TO DO.
+  
+  
+  
+  
+  //TODO For airways:
+  PREMISE 1 WANT TO PULL WAYPOINTS FOR AIRWAYS FROM FILE. 
+  IM THINKING OF USING THE ONE PROVIDED FOR PMDG BECAUSE IT SEEMS THE SIMPLEST ONE TO ME?
+  
+  I'VE GOT THE FILE IN. NOW I HAVE TO ACTUALLY READ FROM IT
+  HOW WOULD I DO THAT?
+  
+  First, I want the user to actually input the airway then the exit point.
+  But the problem is, I don't know know which way they want to actually go?
+  I'm thinking of comparing the latitude and longitude of destination and arrival to see if its going east , west, north , or south. 
+  Then I want to compare the last waypoint and the first waypoint of the airway to see if the airway is going which polar direction?
+  
+  I'll calculate the bearing between the two which should tell me the direction. 
+  
+  Then, I want to actually see if I'm moving up the airway or down the airway?
+  
+  That will also be accomplished by looking at the direction of the airway and the bearing between the two airports.
+  Note: This might fail because I have no idea if this will actually work?
+  
+  If I am able to do this, I can basically import all airways
+  
+  
+  A definite modification of the displayLegs() Method will be required.
+  
+  
+  Alright, SO here's the scenario
+  
+  I get the name of the airway, mark the stream 
+  
+
+  
+  HERE'S ANOTHER SCENARIO EATING MY BRAIN
+  
+  GET THE WAYPOINT NAME 
+  SAVE IT
+  IN THE NEXT LOOP IT DOESNT CHANGE
+  WHEN THE LAT AND LONG OF IT ARE TAKEN THEN IT CHANGES
+  
+  i have a variable called taken
+  
+  when taken is 1, the thing changes the wpt name to the current one but if its zero, it doesnt change
+  
+  so i take the name of the waypoint, 

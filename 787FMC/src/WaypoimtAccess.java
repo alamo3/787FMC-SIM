@@ -29,6 +29,8 @@ public class WaypoimtAccess {
   String procedure="";
   String icao="";
   String procTrans="";
+  
+  
   public List<String> getAltRest(String icao, String procedure, String procTrans) throws IOException{
     this.icao=icao;
     this.procedure=procedure;

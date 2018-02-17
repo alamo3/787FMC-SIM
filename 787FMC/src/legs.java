@@ -3,7 +3,7 @@ import java.util.*;
 import java.lang.*;
 
 
-class legs extends WaypoimtAccess{
+class legs extends WaypoimtAccess implements Serializable{
   
   
   String legName;
@@ -12,7 +12,8 @@ class legs extends WaypoimtAccess{
   String distanceFromLast;
   String bearingFromLast;
   String altRestr;
-
+private long serialVersionUID;
+  
   //CONSTRUCTOR
 
     public legs(String legName, String latitude, String longitude, String distanceFromLast, String bearingFromLast, String altRestr) {
@@ -70,4 +71,29 @@ class legs extends WaypoimtAccess{
     public void setBearingFromLast(String bearingFromLast) {
         this.bearingFromLast = bearingFromLast;
     }
+    
+    @Override
+public boolean equals(Object obj){
+   if(obj==this){
+    return true;
+   }
+   if((obj==null)|| (obj.getClass()!=this.getClass())){
+    return false; 
+   }
+   
+   String objName=((legs) obj).getLegName();
+   
+   return this.legName.equals(objName);
+   
+ }
+
+@Override
+
+  public int hashCode(){
+  
+ return this.legName.hashCode()+32; 
+}
+    
+    
+    
 }

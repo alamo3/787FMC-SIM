@@ -11,20 +11,26 @@ class legs extends WaypoimtAccess{
   String longitude;
   String distanceFromLast;
   String bearingFromLast;
+  String altRestr;
 
   //CONSTRUCTOR
 
-    public legs(String legName, String latitude, String longitude, String distanceFromLast, String bearingFromLast) {
+    public legs(String legName, String latitude, String longitude, String distanceFromLast, String bearingFromLast, String altRestr) {
         this.legName = legName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.distanceFromLast = distanceFromLast;
         this.bearingFromLast = bearingFromLast;
+        this.altRestr=altRestr;
 
 
     }
 
     //GET SET METHODS
+    public String getaltRestr(){
+     return altRestr; 
+    }
+    
     public String getLegName() {
         return legName;
     }

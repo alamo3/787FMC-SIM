@@ -418,7 +418,7 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
           for(int i=0; i<Waypoints.size();i++){
            System.out.println( Waypoints.get(i)); 
           }
-          
+          System.out.println("Waypoints extracted: "+ Waypoints);
         return Waypoints;
         }
         

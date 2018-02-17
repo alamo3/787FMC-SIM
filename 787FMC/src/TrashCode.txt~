@@ -1,0 +1,130 @@
+
+THIS IS THE CODE THAT I REPLACED WITH THE ENHANCED RUNWAY DISPLAY METHOD
+
+//  if (runways.size() <= 5) {
+
+           /* if (runwaySelected == null) {
+
+                // if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                //}else{
+                //panelSelector.writeProperty("panelstate","rtepagedep1");
+                // }
+
+                try {
+                    jLabel61.setText("");
+                    jLabel62.setText(runways.get(0));
+                } catch (Exception e) {
+              //      System.out.println("NO Runway HERE");
+                    jLabel62.setText("");
+                }
+                try {
+                    jLabel63.setText("");
+                    jLabel64.setText(runways.get(1));
+                } catch (Exception e) {
+            //        System.out.println("NO Runway HERE");
+                    jLabel64.setText("");
+                }
+                try {
+                    jLabel65.setText("");
+                    jLabel66.setText(runways.get(2));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel66.setText("");
+                }
+                try {
+                    jLabel67.setText("");
+                    jLabel68.setText(runways.get(3));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel68.setText("");
+                }
+                try {
+                    jLabel69.setText("");
+                    jLabel70.setText(runways.get(4));
+                } catch (Exception e) {
+               //     System.out.println("NO Runway HERE");
+                    jLabel70.setText("");
+                }
+
+
+            }
+            if (runwaySelected != null) {
+                // if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                //}else{
+                //panelSelector.writeProperty("panelstate","rtepagedep1");
+                // }
+                jLabel61.setText("");
+                jLabel62.setText("<SEL> " + runwaySelected);
+                jLabel64.setText("");
+                jLabel66.setText("");
+                jLabel68.setText("");
+                jLabel70.setText("");
+            }
+
+
+        }
+
+        if (runways.size() > 5) {
+
+
+            if (runwaySelected == null) {
+                //  if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                // }else{
+                //panelSelector.writeProperty("panelstate","rtepagedep1");
+                // }
+
+                try {
+                    jLabel61.setText("");
+                    jLabel62.setText(runways.get(listrun));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel62.setText("");
+                }
+                try {
+                    jLabel63.setText("");
+                    jLabel64.setText(runways.get(listrun + 1));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel64.setText("");
+                }
+                try {
+                    jLabel65.setText("");
+                    jLabel66.setText(runways.get(listrun + 2));
+                } catch (Exception e) {
+              //      System.out.println("NO Runway HERE");
+                    jLabel66.setText("");
+                }
+                try {
+                    jLabel67.setText("");
+                    jLabel68.setText(runways.get(listrun + 3));
+                } catch (Exception e) {
+              //      System.out.println("NO Runway HERE");
+                    jLabel68.setText("");
+                }
+                try {
+                    jLabel69.setText("");
+                    jLabel70.setText(runways.get(listrun + 4));
+                } catch (Exception e) {
+             //       System.out.println("NO Runway HERE");
+                    jLabel70.setText("");
+                }
+            }
+            if (runwaySelected != null) {
+                //  if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+
+                //  }else{
+                // panelSelector.writeProperty("panelstate","rtepagedep1");
+                //  }
+                jLabel61.setText("");
+                jLabel62.setText("<SEL> " + runwaySelected);
+                jLabel64.setText("");
+                jLabel66.setText("");
+                jLabel68.setText("");
+                jLabel70.setText("");
+
+            }
+
+        }*/
