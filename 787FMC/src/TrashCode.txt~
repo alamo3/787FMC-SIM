@@ -128,3 +128,411 @@ THIS IS THE CODE THAT I REPLACED WITH THE ENHANCED RUNWAY DISPLAY METHOD
             }
 
         }*/
+  
+  
+  THIS IS THE CODE I REMOVED FROM TESTFILE.JAVA
+  
+   public static String[] splitString(String line, char delimiter){
+  
+    List<String> splits=new LinkedList<>();
+  int begin=0;
+  int end=0;
+   int j=0;
+   String catchWord="";
+   
+ char[] charSplit=line.toCharArray();
+ for(int i=0;i<charSplit.length;i++){
+   if(charSplit[i]==','){
+     j=i;
+     end = begin;
+     while(end<i){
+      catchWord=catchWord+charSplit[end]; 
+      end++;
+     }
+     splits.add(catchWord);
+     begin=i+1;
+     catchWord="";
+   }
+ 
+   
+ }
+    splits.add(line.substring(line.lastIndexOf(',')+1,line.length()));
+
+  
+  
+  return splits.toArray(new String[splits.size()]);
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  /*PropertiesChecker panelSelector = new PropertiesChecker();
+FMCLogicTest accessLogic=new FMCLogicTest();
+public static WaypoimtAccess navDataPull=new WaypoimtAccess();
+
+  public String runwaySelected="24L";
+    public String starSelected="LINNG8";
+    public String TransSelected="WOZEE";
+    String icao="CYYZ";
+  public static void main(String[]args){
+    
+TestFile obj1=new TestFile();
+    
+obj1.displayStars();
+
+
+
+
+
+        } 
+    
+    
+    
+  
+ /* public void displayLegs(){
+   Map<String,legs> legsData=new HashMap<>();
+
+    List<String> rawDataSID=navDataPull.getSIDWpt(icao,sidSelected,runwaySelected,TransSelected);
+    List<String> rawDataSIDLatLong=navDataPull.getSIDWptLatLong(icao,sidSelected,runwaySelected,TransSelected);
+    List<String> distanceFromWPT=new ArrayList<>();
+    List<String> bearingFromWPT=new ArrayList<>();
+    
+    List<String> altRestrictions=new LinkedList<>();
+    try{
+     altRestrictions=navDataPull.getAltRest(icao,sidSelected,TransSelected); 
+    }catch(IOException e){}
+    
+    for(int i=0;i<altRestrictions.size();i++){
+     System.out.println(altRestrictions.get(i)); 
+    }
+    
+    System.out.println(rawDataSIDLatLong);
+   
+
+    for(int i=0;i<rawDataSIDLatLong.size()-2;i+=2){
+
+        Double lat1=Double.parseDouble(rawDataSIDLatLong.get(i));
+        Double lon1=Double.parseDouble(rawDataSIDLatLong.get(i+1));
+        Double lat2=Double.parseDouble(rawDataSIDLatLong.get(i+2));
+        Double lon2=0D;
+        
+        lon2=Double.parseDouble(rawDataSIDLatLong.get(i+3));
+        
+       navDataPull.distanceNM(lat1,lon1,lat2,lon2);
+        distanceFromWPT.add(Double.toString(navDataPull.distanceNM(lat1,lon1,lat2,lon2)));
+
+        bearingFromWPT.add(Double.toString(navDataPull.calcBearing(lat1,lon1,lat2,lon2)));
+
+
+    }
+
+    
+  String []  runwayData=navDataPull.runwayData(icao,runwaySelected).split(",");
+
+ bearingFromWPT.add(0,runwayData[2]);
+    
+    
+     System.out.println("DFWPT: "+distanceFromWPT);
+     System.out.println("ALL HGS: "+bearingFromWPT);
+    int latlongselect=0;
+   System.out.println(distanceFromWPT.size()-1  +"  "+ bearingFromWPT.size() );
+    int latlong=0;
+    int latlongBearing=0;
+    int altrest=0;
+    for(int i=0; i<rawDataSID.size();i++){
+      
+        String distanceFromLast="0 NM";
+        String bearingFromLast="N/A";
+        String altRestr="----";
+         if(i>0&&i< bearingFromWPT.size()+3&&!(rawDataSID.get(i).charAt(0)=='('||rawDataSID.get(i).contains("VECTORS")==true)){
+          
+            bearingFromLast=bearingFromWPT.get(latlongBearing);
+            distanceFromLast=distanceFromWPT.get(latlong);
+           
+//            System.out.println("Distance :" +distanceFromLast);
+//            System.out.println("HDG :"+bearingFromLast);
+latlong++;
+latlongBearing++;
+
+
+         }else if(rawDataSID.get(i).contains("RW"+runwaySelected)){
+           bearingFromLast=bearingFromWPT.get(0);
+           latlongBearing++;
+         }
+          if(i>0&&i<altRestrictions.size()+3){
+            altRestr=altRestrictions.get(altrest);
+            altrest++;
+         }
+         if(rawDataSID.get(i).charAt(0)=='('||rawDataSID.get(i).contains("VECTORS")==true){
+           legsData.put(rawDataSID.get(i),new legs(rawDataSID.get(i),rawDataSIDLatLong.get(latlongselect),rawDataSIDLatLong.get(latlongselect+1),"0 NM",bearingFromLast,altRestr) );
+         }else{
+        legsData.put(rawDataSID.get(i),new legs(rawDataSID.get(i),rawDataSIDLatLong.get(latlongselect),rawDataSIDLatLong.get(latlongselect+1),distanceFromLast,bearingFromLast,altRestr) );
+    }
+        
+        if(latlongselect!=rawDataSIDLatLong.size()-2){
+        latlongselect+=2;
+        }
+
+    } 
+   for(int i=0; i<legsData.size();i++){
+   System.out.println(legsData.get(rawDataSID.get(i)).getLegName()+": Latitude: " +legsData.get(rawDataSID.get(i)).getLatitude()+" ,Longitude: "+ legsData.get(rawDataSID.get(i)).getLongitude() +" ,Distance from last:"+ legsData.get(rawDataSID.get(i)).getDistanceFromLast()+" ,Bearing From Last:"+legsData.get(rawDataSID.get(i)).getBearingFromLast() +
+   " ALTITUDE RESTRICTION: "+legsData.get(rawDataSID.get(i)).getaltRestr());
+   
+   }
+    
+  }*/
+  
+  
+  
+/*  public void displayStars(){
+    Map<String,Stars> stars=new LinkedHashMap<>();
+    
+    List<String> rawDataStars=accessLogic.getStars(icao);
+    List<String> starsTransition;
+    List<String> runwayAvail;
+    if(starSelected!=null){
+    //  starsTransition=accessLogic.getTransition(icao,starSelected);
+    }
+
+    System.out.println(rawDataStars);
+    for(int i=0;i<rawDataStars.size();i++){
+    
+     starsTransition= accessLogic.getTransition(icao,rawDataStars.get(i));
+     runwayAvail=accessLogic.getProcstoRunways(icao,rawDataStars.get(i));
+      stars.put(rawDataStars.get(i),new Stars(icao,rawDataStars.get(i),starsTransition,runwayAvail));
+      
+      
+    }
+//    System.out.println(stars.size());
+//    for(int i =0; i<stars.size();i++){
+//      try{
+//        String test;
+//     System.out.println(stars.get(rawDataStars.get(i)).getStarIcao() + " : "+stars.get(rawDataStars.get(i)).getStarIdent()+" : "+stars.get(rawDataStars.get(i)).getTrans()+" : "+stars.get(rawDataStars.get(i)).getRunways());
+//     }catch(NullPointerException e){}
+//      
+      
+//    }
+    
+    
+  */  
+/*
+    String line;
+   long time=System.nanoTime();
+   long timeItTook=0L;
+    try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/PROC/EGLL.txt"))))){
+      while((line=br.readLine())!=null){ 
+      String [] temp=splitString(line,',');
+      long timetest=System.nanoTime();
+        for(int i=0;i<temp.length;i++){
+         System.out.println(temp[i]); 
+        }
+        long timeEnd=System.nanoTime();
+        timeItTook=timeItTook+(timeEnd-timetest);
+      
+      }
+    }catch (IOException e){}
+    long timeend=System.nanoTime();
+    System.out.println("Took "+(timeend-timeItTook-time)+" Seconds to split entire file each line for EGLL.txt");
+  }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//REMOVED FROM WHILE LOOP FOR GETTING ATS WPTS
+
+String[] temp= line.split(" ");
+       if(taken==0){
+        airway=line.replaceAll(" .*","");
+        
+        something.add(temp[0]);
+        taken++;
+        }
+      
+        if(airway.equals(line.replaceAll(" .*",""))==false){
+         
+          
+          if(takeInput==true){
+           takeInput=false; 
+           break label1;
+          }
+          something.clear();
+           airway=line.replaceAll(" .*","");
+       
+        }
+          
+        if(line.contains(exit)==true){
+      
+         takeInput=true;
+        }
+        
+        
+        if(takeInput==true){
+      
+         waypoints.add(temp[2]);
+        
+        }
+        
+        try{
+        something.add(temp[2]);
+        }catch(Exception e){something.add(line);}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //WHAT I REMOVED FROM GETATS METHOD
+        
+        
+         public List<String> getatsWaypoints(){
+    String bearing=getDirectionBWAirports("CYYZ","EGLL");
+    
+    String directory=System.getProperty("user.dir")+"/navdata/navdata/wpNavRTE.txt";
+    
+    try{
+     File file=new File(directory);
+     System.out.println(file.exists());
+      
+    }catch(Exception e){}
+    
+    String exit="TANGI";
+    String line;
+    boolean takeInput=false;
+    
+   
+    String airway="";
+    int taken=0;
+    List<String> waypoints=new LinkedList<>();
+    List<String> cache=new LinkedList<>();
+    
+    HashMap<String,Airways> airways=new LinkedHashMap<>();
+    Map<String,legs> legs=new LinkedHashMap<>();
+    String [] temp;
+    boolean begin=false;
+    String wptName="";
+    legs []tempwpt;
+    try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
+      
+       while((line=br.readLine())!=null){
+      temp=splitString(line,' ');
+        if(begin==false){
+          if(line.startsWith("A1")){
+           begin=true; 
+           airway="A1";
+           cache.add(temp[3]);
+           cache.add(temp[4]);
+           if(taken==0){
+          wptName=temp[2];
+        }
+          }
+        }
+        if(airway.equals("Z998")){
+          System.out.println(legs);
+         System.out.println("At Z998"); 
+        }
+        
+        if(begin==true){
+           if(airway.equals(line.replaceAll(" .*",""))==false){
+            tempwpt=legs.values().toArray(new legs[legs.size()]);
+            
+            airways.put(airway,new Airways(airway,tempwpt,cache));
+          
+            airway=temp[0];
+           legs.clear();
+            cache.clear();
+            cache.add(temp[3]);
+           cache.add(temp[4]);
+             wptName=temp[2];
+             taken=0;
+            
+           }
+        //  try{
+        //      System.out.println(airways.get("A100").getAirwayIdent()+" : " + airways.get("A100").getWaypoints());
+        //     }catch(Exception e){}
+          
+          if(taken==0){
+          latlongDepAir=accessLogic.getAirportLatLong("CYYZ");
+          
+        distance=  navDataPull.distanceNM(Double.valueOf(latlongDepAir[1]),Double.valueOf(latlongDepAir[2]),Double.valueOf(temp[3]),Double.valueOf(temp[4]));
+        bearing1=navDataPull.calcBearing(Double.valueOf(latlongDepAir[1]),Double.valueOf(latlongDepAir[2]),Double.valueOf(temp[3]),Double.valueOf(temp[4]));
+        legs.put(temp[2],new legs(temp[2],temp[3],temp[4],Double.toString(distance),Double.toString(bearing1),"0"));
+         wptName=temp[2];
+         taken++;
+          }else if(taken!=0){
+            double distance=0D;
+       String something=legs.get(wptName).getLatitude();
+         latitudeWpt=Double.valueOf(legs.get(wptName).getLatitude());
+       longitudeWpt=Double.valueOf(legs.get(wptName).getLongitude());
+         distance=  navDataPull.distanceNM(latitudeWpt,longitudeWpt,Double.valueOf(temp[3]),Double.valueOf(temp[4]));
+       double bearing1=navDataPull.calcBearing(latitudeWpt,longitudeWpt,Double.valueOf(temp[3]),Double.valueOf(temp[4]));
+        legs.put(temp[2],new legs(temp[2],temp[3],temp[4],Double.toString(distance),Double.toString(bearing1),"0"));
+         taken++;
+         wptName=temp[2];
+          }
+          
+   
+        }
+        
+        
+      }
+    }catch(IOException e){e.printStackTrace();}
+     //airways.put("Z999",new Airways(airway,tempwpt,cache));
+           // airway="Z999";
+           // legs.clear();
+           // cache.clear();
+            
+            // wptName=temp[2];
+             taken=0;
+             
+        
+             
+    
+    try{
+      FileOutputStream serialize=new FileOutputStream("airways.ser");
+      ObjectOutputStream writeAirways=new ObjectOutputStream(serialize);
+      writeAirways.writeObject(airways);
+    }catch(IOException e){e.printStackTrace();}
+    
+    return waypoints;
+  }
+         
+         
+          /*  HashMap<String,Airways> airways=new LinkedHashMap<>();
+    try{
+    FileInputStream readAirways=new FileInputStream("airways.ser");
+    ObjectInputStream readData=new ObjectInputStream(readAirways);
+    airways=(LinkedHashMap)readData.readObject();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+    double timeEnd=System.nanoTime();
+    
+    
+    timeInit=System.nanoTime();
+     legs [] temp5=airways.get("UL18").getWaypoints();
+    for(legs h1:temp5){
+     System.out.println(h1.getLegName()); 
+      
+    }
+    timeEnd=System.nanoTime();*/

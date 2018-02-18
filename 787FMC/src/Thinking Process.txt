@@ -46,3 +46,27 @@ HERE IS MY THINKING PROCESS FOR WHAT I WANT TO DO.
   when taken is 1, the thing changes the wpt name to the current one but if its zero, it doesnt change
   
   so i take the name of the waypoint, 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  I DONT CARE ABOUT WHAT I WROTE BEFORE, I DID IT. THE ONLY PROBLEM WAS THAT THE RFERRENCES TO MEMORY WERE BEING ERASED SO
+  ONLY THE LAST ONE FOR AIRWAY Z999 WAS BEING SAVED 
+  I HAD TO CACHE THE LEGS FOR EACH EVERY AIRWAY
+  THEN CACHE THE NAME FOR EACH AIRWAY
+  THEN CACHE THE LAT AND LONG FOR EACH AIRWAY
+  THEN ACTUALLY BRING THEM TOGETHER AND CREATE THE FINAL AIRWAY OBJECT THAT HOLDS ALL AIRWAYS
+  THEN CACHE THAT AND IT FINALLY WORKS NOW :)
+  
+  
+  //TODO: Excitement aside, now I actually have to work on implementing this into the GUI and start working on navAids  (ugh)!

@@ -26,3 +26,23 @@ HERE IS MY THINKING PROCESS FOR WHAT I WANT TO DO.
   
   
   A definite modification of the displayLegs() Method will be required.
+  
+  
+  Alright, SO here's the scenario
+  
+  I get the name of the airway, mark the stream 
+  
+
+  
+  HERE'S ANOTHER SCENARIO EATING MY BRAIN
+  
+  GET THE WAYPOINT NAME 
+  SAVE IT
+  IN THE NEXT LOOP IT DOESNT CHANGE
+  WHEN THE LAT AND LONG OF IT ARE TAKEN THEN IT CHANGES
+  
+  i have a variable called taken
+  
+  when taken is 1, the thing changes the wpt name to the current one but if its zero, it doesnt change
+  
+  so i take the name of the waypoint, 
