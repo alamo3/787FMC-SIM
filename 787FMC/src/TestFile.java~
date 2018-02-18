@@ -11,78 +11,58 @@ static WaypoimtAccess navDataPull=new WaypoimtAccess();
 static FMCLogicTest accessLogic=new FMCLogicTest();
   public static void main(String [] args){
     TestFile obj1=new TestFile();
-    System.out.println("TESTFILE INITIATED");
+
     
-    getDirectionBWAirports("CYYZ","EGLL");
-    
- List<String> waypoints=obj1.readLines();
+  int latlong=0;
+     List<String>airwayName=new LinkedList<>();
+ Map<String,waypointsAirway> waypointAirway=new LinkedHashMap<>();
+ List<String> airwayLoc=new LinkedList<>();
+String[]temp=new String[2];
  
- 
- System.out.println("Element at 1 : "+ waypoints.get(0));
- System.out.println("Element at 2 : "+ waypoints.get(1));
- System.out.println("Element at 3 : "+ waypoints.get(2));
- 
-    double timeInit=System.nanoTime();
+    try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysIdent.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
+      airwayName=(LinkedList)ois.readObject();
+fis.close();
+ois.close();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+
+   try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysLatLong.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
+      airwayLoc=(LinkedList)ois.readObject();
+fis.close();
+ois.close();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+
+    Map<String, Airways> airways=new LinkedHashMap<>();
+    List<String> finalLat= new LinkedList<>();
+    for(int i=0;i<airwayName.size()-1;i++){
+      System.out.println(airwayLoc);
+      try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/legs/"+airwayName.get(i)+".ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+      waypointAirway=(LinkedHashMap) ois.readObject();
+  fis.close();
+  ois.close();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+    temp[0]=airwayLoc.get(latlong);
+    temp[1]=airwayLoc.get(latlong+1);
     
+    airways.put(airwayName.get(i),new Airways(airwayName.get(i),waypointAirway,temp));
   
-List<String> retain=new LinkedList<>();    
-    
-    
-  ListIterator<String> iterate = waypoints.listIterator();
-  
-  String [] temp;
-  
-  Map<String , waypointsAirway> legsHoldAirway=new LinkedHashMap<>();
-  Map<String, Airways> airways=new LinkedHashMap<>();
-  String airwayIdent="";
-  String line="";
-  boolean start=false;
-  int compareToAirport=0;
-  
-  
-  
-  for(int i=0;i<waypoints.size();i++){
-    
-    line=waypoints.get(i);
-    
-     temp=obj1.splitString(line,' ');
-     
-    if(line.startsWith("A1")&&start==false){
-      start=true;
-      airwayIdent=temp[0];
-      retain.add(airwayIdent);
-    }
-    
-    if(start==true){
-      if(airwayIdent.equals(line.substring(0,line.indexOf(" ")))==false){
-       // System.out.println(airwayIdent);
-        retain.add(airwayIdent);
-        obj1.writeLegObject(airwayIdent,legsHoldAirway);
-        airwayIdent=temp[0];
-        legsHoldAirway.clear();
-      }
-      
-      legsHoldAirway.put(temp[2],new waypointsAirway(temp[2],temp[3],temp[4]));
-      
-      
-    }
-    
-    
+  latlong=latlong+2;
     
   }
     
-    
-    
-   
-//System.out.println(waypoints);
-/*  Map<String,waypointsAirway> legs= new HashMap<>();
-  try(FileInputStream readObj=new FileInputStream(System.getProperty("user.dir")+"/legs/A2.ser")){
-    ObjectInputStream ois=new ObjectInputStream(readObj);
-    legs=(HashMap)ois.readObject();
-    
-  }catch(IOException e){e.printStackTrace();}
-  catch(ClassNotFoundException f){f.printStackTrace();}
-  System.out.println(legs);*/
+    try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/airwaysFinal.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+     oos.writeObject(airways);
+     oos.close();
+       fos.close();
+    }catch(IOException e){e.printStackTrace();}
+        
+        
+        
+        
+        
+  
   }
   
   

@@ -5,15 +5,15 @@ public class Airways implements java.io.Serializable{
   
   
  private final String AIRWAYIDENT;
- private final legs[] waypoints;
- private final List<String> latLongBegin;
+ private final Map<String,waypointsAirway>waypoints;
+ private final String[] latLongBegin;
  private long serialVersionUID;
   
   
- public Airways(String ident, legs[] waypoints2, List<String> latlong){ 
+ public Airways(String ident,Map<String,waypointsAirway> waypoints2, String[] latlong){ 
   this.AIRWAYIDENT=ident;
   this.waypoints=waypoints2;
-  latLongBegin=latlong;
+  this.latLongBegin=latlong;
  }
   
  public String getAirwayIdent(){
@@ -21,10 +21,15 @@ public class Airways implements java.io.Serializable{
  }
   
  
- public legs[] getWaypoints(){
+ public Map<String,waypointsAirway> getWaypoints(){
   return waypoints; 
    
  }
+ 
+ public String [] getLocation(){
+   return latLongBegin;
+ }
+ 
  
 @Override
 public boolean equals(Object obj){

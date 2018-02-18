@@ -20,6 +20,8 @@ Changelog in V1.22;
 - Added logic to pull airways and cache them for further use (It takes a long time to do this so i saved it once and for all and will regenerate it every month)
 - Added caching functionality to application
 
+Bug Fixed: The latitude and longitude of the airways were being miscalculated and it has been fixed
+
 TODO For Version 1.23:
 
 - Add ATS Support to the actual FMC.

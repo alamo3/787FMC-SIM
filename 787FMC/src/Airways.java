@@ -6,14 +6,16 @@ public class Airways implements java.io.Serializable{
   
  private final String AIRWAYIDENT;
  private final Map<String,waypointsAirway>waypoints;
- private final List<String> latLongBegin;
+ private final String latitude;
+ private final String longitude;
  private long serialVersionUID;
   
   
- public Airways(String ident,Map<String,waypointsAirway> waypoints2, List<String> latlong){ 
+ public Airways(String ident,Map<String,waypointsAirway> waypoints2, String latitude, String longitude){ 
   this.AIRWAYIDENT=ident;
   this.waypoints=waypoints2;
-  latLongBegin=latlong;
+  this.latitude=latitude;
+  this.longitude=longitude;
  }
   
  public String getAirwayIdent(){
@@ -24,6 +26,13 @@ public class Airways implements java.io.Serializable{
  public Map<String,waypointsAirway> getWaypoints(){
   return waypoints; 
    
+ }
+ 
+ public String [] getLocation(){
+   String [] temp=new String[2];
+   temp[0]=latitude;
+   temp[1]=longitude;
+   return temp;
  }
  
  
