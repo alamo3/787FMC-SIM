@@ -536,3 +536,340 @@ String[] temp= line.split(" ");
       
     }
     timeEnd=System.nanoTime();*/
+         
+         
+         THIS IS THE CODE I TRASHED TO CACHE THE LEGS FOR EACH AIRWAY
+           
+           /* while(iterate.hasNext()){
+    
+    line=iterate.next();
+    
+     temp=obj1.splitString(line,' ');
+     
+    if(line.startsWith("A1")&&start==false){
+      start=true;
+      airwayIdent=temp[0];
+      retain.add(airwayIdent);
+    }
+    
+   /* if(start==true){
+      if(airwayIdent.equals(line.substring(0,line.indexOf(" ")))==false){
+       // System.out.println(airwayIdent);
+        retain.add(airwayIdent);
+        obj1.writeLegObject(airwayIdent,legsHoldAirway);
+        airwayIdent=temp[0];
+        legsHoldAirway.clear();
+      }
+      
+      legsHoldAirway.put(temp[2],new waypointsAirway(temp[2],temp[3],temp[4]));
+      
+      
+    }
+    
+    
+    
+  }*/
+    
+    
+    
+   
+//System.out.println(waypoints);
+/* Map<String,waypointsAirway> legs= new LinkedHashMap<>();
+  try(FileInputStream readObj=new FileInputStream(System.getProperty("user.dir")+"/legs/A1.ser")){
+    ObjectInputStream ois=new ObjectInputStream(readObj);
+    legs=(LinkedHashMap)ois.readObject();
+    
+  }catch(IOException e){e.printStackTrace();}
+  catch(ClassNotFoundException f){f.printStackTrace();}*/
+ // System.out.println(legs.get("HCE").getWptName()+" : "+legs.get("HCE").getLatitude()+" : "+legs.get("HCE").getLongitude());
+           
+           
+           SOME MORE TRASH CODE
+           
+             for(ListIterator<String> iterate = waypoints.listIterator(); iterate.hasNext();){
+  line=iterate.next();    
+  if(line.startsWith("A1")&&start==false){
+   start=true; 
+  }
+  if(start==true){
+   retain.add(line.substring(0,line.indexOf(" "))); 
+  }
+  
+  
+  }
+  
+  try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysIdent.ser");  ObjectOutputStream oos=new ObjectOutputStream(fos) ){
+   
+  oos.writeObject(retain);
+    oos.close();
+    fos.close();
+  }catch(IOException e){e.printStackTrace();}
+  
+ 
+  }
+
+
+
+SOME MORE JUNK CODE
+  
+    for(ListIterator<String> iterate = waypoints.listIterator();iterate.hasNext();){
+    line=iterate.next();
+     temp=splitString(line,' ');
+    if(line.startsWith("A1")&&start==false){
+     start=true; 
+     LatLongAir.add(temp[3]);
+     LatLongAir.add(temp[4]);
+     airway=temp[0];
+    }
+    if(start==true){
+      if(airway.equals(line.substring(0,line.indexOf(" ")))==false){
+        LatLongAir.add(temp[3]);
+         LatLongAir.add(temp[4]);
+         airway=temp[0];
+      }
+      
+      
+    }
+    
+  }
+  
+  try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysLatLong.ser");  ObjectOutputStream oos=new ObjectOutputStream(fos) ){
+   
+  oos.writeObject(LatLongAir);
+    oos.close();
+    fos.close();
+  }catch(IOException e){e.printStackTrace();}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /********************
+    * 
+    * HERE IS THE FINAL CODE THAT I TRASHED AFTER I SUCCESSFULLY CREATED THE AIRWAYSFINAL OBJECT :)
+    * 
+    * 
+    * ******************/
+  
+   /*  List<String>airwayName=new LinkedList<>();
+ Map<String,waypointsAirway> waypointAirway=new LinkedHashMap<>();
+ List<String> airwayLoc=new LinkedList<>();
+
+ 
+ 
+    try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysIdent.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
+      airwayName=(LinkedList)ois.readObject();
+fis.close();
+ois.close();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+
+   try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysLatLong.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
+      airwayLoc=(LinkedList)ois.readObject();
+fis.close();
+ois.close();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+ int latlong=0;
+    Map<String, Airways> airways=new LinkedHashMap<>();
+    List<String> finalLat= new LinkedList<>();
+    for(int i=0;i<airwayName.size()-1;i++){
+      
+      try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/legs/"+airwayName.get(i)+".ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+      waypointAirway=(LinkedHashMap) ois.readObject();
+  fis.close();
+  ois.close();
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
+    finalLat.add(airwayLoc.get(latlong));
+    finalLat.add(airwayLoc.get(latlong+1));
+    airways.put(airwayName.get(i),new Airways(airwayName.get(i),waypointAirway,finalLat));
+  
+    finalLat.clear();
+    
+  }
+    
+    try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/airwaysFinal.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+     oos.writeObject(airways);
+     oos.close();
+       fos.close();
+    }catch(IOException e){e.printStackTrace();}*/
+    
+    
+    Map<String, Airways> airways=new LinkedHashMap<>();
+    
+    try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/airwaysFinal.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+          airways=(LinkedHashMap)ois.readObject();
+          
+    }catch(IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        
+        Map<String,waypointsAirway> wpts=new LinkedHashMap<>();
+        
+        
+        wpts=airways.get("Z999").getWaypoints();
+        
+    System.out.println(wpts.get("XEBIX").getWptName()+" : "+wpts.get("XEBIX").getLatitude()+" : "+wpts.get("XEBIX").getLongitude());
+        
+     System.out.println(wpts.get("BEMKI").getWptName()+" : "+wpts.get("BEMKI").getLatitude()+" : "+wpts.get("BEMKI").getLongitude());   
+  System.out.println(wpts.get("KPT").getWptName()+" : "+wpts.get("KPT").getLatitude()+" : "+wpts.get("KPT").getLongitude()); 
+  
+  
+  /**********************
+    * 
+    * 
+    * FINAL CODE USED TO CREATE AIRWAYS OBJECT FROM MAIN METHOD
+    * 
+    * ************/
+  
+  
+  //    List<String> waypoints=obj1.readLines();
+//  int latlong=0;
+//     List<String>airwayName=new LinkedList<>();
+// Map<String,waypointsAirway> waypointAirway=new LinkedHashMap<>();
+// List<String> airwayLoc=new LinkedList<>();
+//
+// 
+//    try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysIdent.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
+//      airwayName=(LinkedList)ois.readObject();
+//fis.close();
+//ois.close();
+//    }catch(IOException e){e.printStackTrace();}
+//    catch(ClassNotFoundException f){f.printStackTrace();}
+//
+//   try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysLatLong.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
+//      airwayLoc=(LinkedList)ois.readObject();
+//fis.close();
+//ois.close();
+//    }catch(IOException e){e.printStackTrace();}
+//    catch(ClassNotFoundException f){f.printStackTrace();}
+//
+//    Map<String, Airways> airways=new LinkedHashMap<>();
+//    List<String> finalLat= new LinkedList<>();
+//    
+//   // System.out.println(airwayLoc/*.get(0)+" : "+airwayLoc.get(1)*/);
+//    
+//    
+//    
+//    
+//    
+//    for(int i=0;i<airwayName.size();i++){
+//      
+//      try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/legs/"+airwayName.get(i)+".ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+//      waypointAirway=(LinkedHashMap) ois.readObject();
+//  fis.close();
+//  ois.close();
+//    }catch(IOException e){e.printStackTrace();}
+//    catch(ClassNotFoundException f){f.printStackTrace();}
+//   
+//    
+//    airways.put(airwayName.get(i),new Airways(airwayName.get(i),waypointAirway,airwayLoc.get(latlong),airwayLoc.get(latlong+1)));
+//  
+//  latlong=latlong+2;
+//    
+//  }
+//    
+//    try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/airwaysFinal.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+//     oos.writeObject(airways);
+//     oos.close();
+//       fos.close();
+//    }catch(IOException e){e.printStackTrace();}
+//        
+   
+ 
+    
+        Map<String, Airways> airways=new LinkedHashMap<>();
+    
+    try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/airwaysFinal.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+          airways=(LinkedHashMap)ois.readObject();
+          
+    }catch(IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        
+        String[]temp=airways.get("Z924").getLocation();
+        System.out.println(temp[0]);
+        System.out.println(temp[1]);
+        
+        
+//        
+    
+//    List<String>retain=new LinkedList<>();
+//       boolean start=false;
+//    String airway="";
+//    String line="";
+//       for(ListIterator<String> iterate = waypoints.listIterator(); iterate.hasNext();){
+//  line=iterate.next();    
+//  if(line.startsWith("A1")&&start==false){
+//    airway=line.substring(0,line.indexOf(" "));
+//   start=true; 
+//  }
+//  if(start==true){
+//    if(airway.equals(line.substring(0,line.indexOf(" ")))==false){
+//   retain.add(line.substring(0,line.indexOf(" "))); 
+//   airway=line.substring(0,line.indexOf(" "));
+//    }
+//  }
+//  
+//  
+//  }
+//  
+//  try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/airways.ser");  ObjectOutputStream oos=new ObjectOutputStream(fos) ){
+//   
+//  oos.writeObject(retain);
+//    oos.close();
+//    fos.close();
+//  }catch(IOException e){e.printStackTrace();}
+  
+        
+         if(start==true){
+    
+    if(temp[0].equals("")){
+      if(navaidsTemp.containsKey(temp[8])==false){
+        try{
+      if(temp[1].equals("2")){
+       type="NDB"; 
+       navaidsTemp.put(temp[8],new Navaid(temp[8],temp[11],type,temp[5],temp[2],temp[3]));
+      }else if(temp[1].equals("3")){
+       type="VOR"; 
+       navaidsTemp.put(temp[8],new Navaid(temp[8],temp[11],type,temp[5],temp[2],temp[3]));
+      }else if(temp[1].equals("4")||temp[1].equals("5")){
+       type="LOC"; 
+      }else if(temp[1].equals("6")){
+       type="GLIDE"; 
+      }else if(temp[1].equals("7")||temp[1].equals("8")||temp[1].equals("9")){
+        type="MARKER";
+     
+   navaidsTemp.put(temp[8],new Navaid(temp[8],temp[11],type,temp[5],temp[2],temp[3]));
+        }catch(ArrayIndexOutOfBoundsException e){for(String next: temp){System.out.println(next);} System.out.println("Count :"+count); break label1; 
+        }
+      }else{
+     
+   }
+   
+    }else{
+      if(navaidsTemp.containsKey(temp[7])==false){
+      if(temp[0].equals("12")||temp[0].equals("13")){
+       type="DME"; 
+      }
+   navaidsTemp.put(temp[7],new Navaid(temp[7],temp[10],type,temp[4],temp[1],temp[2]));
+      
+    }
+    
+  }
+  
+  
+}
+  
+  }

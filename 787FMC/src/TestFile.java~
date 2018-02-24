@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
-
+import com.google.common.collect.*;
 
 
 class TestFile{
@@ -12,72 +12,87 @@ static FMCLogicTest accessLogic=new FMCLogicTest();
   public static void main(String [] args){
     TestFile obj1=new TestFile();
 
-    
-  int latlong=0;
-     List<String>airwayName=new LinkedList<>();
- Map<String,waypointsAirway> waypointAirway=new LinkedHashMap<>();
- List<String> airwayLoc=new LinkedList<>();
-String[]temp=new String[2];
- 
-    try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysIdent.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
-      airwayName=(LinkedList)ois.readObject();
-fis.close();
-ois.close();
-    }catch(IOException e){e.printStackTrace();}
-    catch(ClassNotFoundException f){f.printStackTrace();}
 
-   try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysLatLong.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){    
-      airwayLoc=(LinkedList)ois.readObject();
-fis.close();
-ois.close();
-    }catch(IOException e){e.printStackTrace();}
-    catch(ClassNotFoundException f){f.printStackTrace();}
-
-    Map<String, Airways> airways=new LinkedHashMap<>();
-    List<String> finalLat= new LinkedList<>();
-    for(int i=0;i<airwayName.size()-1;i++){
-      System.out.println(airwayLoc);
-      try(FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"/legs/"+airwayName.get(i)+".ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
-      waypointAirway=(LinkedHashMap) ois.readObject();
-  fis.close();
-  ois.close();
-    }catch(IOException e){e.printStackTrace();}
-    catch(ClassNotFoundException f){f.printStackTrace();}
-    temp[0]=airwayLoc.get(latlong);
-    temp[1]=airwayLoc.get(latlong+1);
+//lets see how multimap works
+ List<String> lines=obj1.readLines();   
     
-    airways.put(airwayName.get(i),new Airways(airwayName.get(i),waypointAirway,temp));
-  
-  latlong=latlong+2;
+    String[]temp;
+Multimap<String, Navaid> multimap = LinkedListMultimap.create();
+String line="";
+for(int i=0;i<lines.size();i++){
+  line=lines.get(i);
+  temp=splitString(line,',');
+  try{
+  if(((temp[3].equals("0"))||(temp[3].equals("1")))&&((temp[4].equals("0"))||(temp[4].equals("1")))&&(temp[1].contains("ILS/")==false)){
+    if(temp[3].equals("0")&&temp[4].equals("1")){
+     multimap.put(temp[0],new Navaid(temp[1],temp[0],"DME",temp[2],temp[6],temp[7])); 
+      
+    }else if(temp[3].equals("0")&&temp[4].equals("0")){
+      
+       multimap.put(temp[0],new Navaid(temp[1],temp[0],"NDB",temp[2],temp[6],temp[7]));
+      
+    }else if(temp[3].equals("1")&&temp[4].equals("1")){
+      
+       multimap.put(temp[0],new Navaid(temp[1],temp[0],"VOR",temp[2],temp[6],temp[7]));
+    }
     
   }
+  }catch(ArrayIndexOutOfBoundsException e){e.printStackTrace(); System.out.println(line);}
+  
+  
+  
+  
+  
+  
+}
+
+   Collection<Navaid> navaids=multimap.get("BK");
+   List<Navaid> collectnav=new LinkedList<>();
+   collectnav.addAll(navaids);
+   
+   List<String> names=new ArrayList<>();
+   List<String> ident=new ArrayList<>();
+   List<String> freq=new ArrayList<>();
+   List<String> lat=new ArrayList<>();
+   List<String> longColl=new ArrayList<>();
+   List<String> type=new ArrayList<>();
+   for(int i=0;i<collectnav.size();i++){
+    names.add(collectnav.get(i).getName());
+    ident.add(collectnav.get(i).getIdent());
+    freq.add(collectnav.get(i).getFreq());
+    lat.add(collectnav.get(i).getLatitude());
+    longColl.add(collectnav.get(i).getLongitude());
+    type.add(collectnav.get(i).getType());
+     
+   }
+   for(int i=0;i<collectnav.size();i++){
+    System.out.println(names.get(i)+" Ident:"+ident.get(i)+" Type: "+type.get(i)+" Frequency:"+freq.get(i)+" Latitude:"+lat.get(i)+" Longitude:"+longColl.get(i)); 
+   }
     
-    try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/airwaysFinal.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
-     oos.writeObject(airways);
-     oos.close();
-       fos.close();
-    }catch(IOException e){e.printStackTrace();}
-        
-        
-        
-        
-        
+   
+   try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/navaids.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+   oos.writeObject(multimap);
+     
+     
+   }catch(IOException e){e.printStackTrace();}
   
   }
   
   
   
-  String airportDep="CYYZ";
+    
+    
+    
   
-  String AirportDest="EGLL";
+  String []temp;
+  List<String> navaids=readLines();
+  
+
   public static String[] latlongDep;
   public static String[] latlongArr;
   public static Double bearing1;
   
-  double latitudeWpt;
-  double longitudeWpt;
-  double distance=0D;
-  String [] latlongDepAir;
+ 
   
   public static String getDirectionBWAirports(String dep,String arr){
      latlongDep=accessLogic.getAirportLatLong(dep);
@@ -107,7 +122,7 @@ ois.close();
  
     public static String[] splitString(String line, char delimiter){
   
-    List<String> splits=new LinkedList<>();
+    List<String> splits=new ArrayList<>();
   int begin=0;
   int end=0;
    int j=0;
@@ -130,6 +145,8 @@ ois.close();
    
  }
     splits.add(line.substring(line.lastIndexOf(delimiter)+1,line.length()));
+    
+
 
   
    
@@ -140,7 +157,7 @@ ois.close();
     public List<String> readLines(){
      List<String> linesRead=new LinkedList<>();
      
-     String directory=System.getProperty("user.dir")+"/navdata/navdata/wpNavRTE.txt";
+     String directory=System.getProperty("user.dir")+"/navdata/navdata/Navaids.txt";
      String line="";
      try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
        while((line=br.readLine())!=null){

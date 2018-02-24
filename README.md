@@ -27,3 +27,19 @@ TODO For Version 1.23:
 - Add ATS Support to the actual FMC.
 - Start working on implenting NavAids and the ability to choose multiple WPTS if there are duplicates
 - Start working on binary search method to efficiently search through airways 
+
+
+Changelog in V1.23
+
+- Implemented ATS support into the FMC 
+- Implemented NavAids into the FMC
+- Implemented DCT Waypoints into the FMC
+- Added RTE pages
+- Created new custom serialied Navdata files
+
+TODO For Version 1.24:
+
+- Implement all waypoints into the GUI.
+- Implement algorithms to draw routes using data entered.
+- Implement approaches and Star Transitions.
+- Start looking at ways to implement FMC into X-Plane 11.

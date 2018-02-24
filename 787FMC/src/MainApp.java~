@@ -8,38 +8,91 @@
  *
  * @author newlife network
  */
+
+
 import java.io.*;
 import java.util.*;
 import java.lang.*;
 
 import java.util.HashMap;
+
 public class MainApp extends javax.swing.JFrame {
 PropertiesChecker panelSelector;
 FMCLogicTest accessLogic=new FMCLogicTest();
+WaypoimtAccess navDataPull=new WaypoimtAccess();
+findGpsPosition getLocation=new findGpsPosition();
+
     /**
      * Creates new form MainApp
      */
 
-WaypoimtAccess navDataPull=new WaypoimtAccess();
+
 
 
 /////////ALL VARIABLES FROM 2/12/2018 LISTED HERE MAKING MY LIFE EASIER
 
-String cacheAirportDep="";
+
+
+// ALL BOOLEANS
 boolean airportCachedOnceDep=false;
 
+
+//ALL LISTS , HASHMAPS and ARRAYS
+public static List<String> sids;
+public static List <String> runways;
+public List<String> Transitions;
+Map<String,Sids> sidsDep=new LinkedHashMap<>();
+public static List<String> rawDataStars;//=new LinkedList<>();
+public static List<String> starsTransition;//=new LinkedList<>();
+public static List<String> runwayAvail=new ArrayList<>();
+public static Map<String,Stars> starsDep=new LinkedHashMap<>();
+public static Map<String, Airways> airwaysList=new LinkedHashMap<>();
+List<String> rteEntries=new ArrayList<>();
+String [][] rteEntry = new String[2][5];
+ 
+    
+   
+    
+    
+
+// ALL STRING VARIABLES
+String starSelectedDep;
+String arrivalRunway;
+String arrivalTransDep;
+String arrivalApproachDep;
+String arrivalTransArr;
+String arrivalApproachArr;
+public String runwaySelected;
+public String TransSelected;
+String cacheAirportDep="";
+public String sidSelected;
+
+
+//ALL INT VARIABLES
+int listStarDep=0;
+int listStarArr=0;
+int listTransStarDep=0;
+int listTransStarArr=0;
+int listRun;
+int listing=0;
+public int listrun=0;
+public int listtrans=0;
+int legsDisplay=0;
+int rtePages=2;
 
 ////////////////////////////////////END OF VARIABLES LISTED 
 
 
-findGpsPosition getLocation=new findGpsPosition();
+
     public MainApp() {
       
         initComponents();
     panelSelector=new PropertiesChecker();
     intializePanel();
     panelSelector();
-   
+   getAirways();
+    
+    
    
     }
 
@@ -1802,7 +1855,7 @@ int clicked=0;
         jTextField1.setText(currentText+"A");       // TODO add your handling code here:
     }//GEN-LAST:event_jLabel15MousePressed
 
-    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
+    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {                                      
 
         if(jTextField1.getText().equals("")){
             jTextField1.setText("+");
@@ -1814,7 +1867,7 @@ int clicked=0;
                 currentText=jTextField1.getText();
                 currentText=currentText.substring(0,currentText.length()-1)+"+";
                 jTextField1.setText(currentText);        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel13MousePressed
+    }
         else if(currentText.charAt(length-1)=='+'){
     currentText=jTextField1.getText();
     currentText=currentText.substring(0,currentText.length()-1)+"-";
@@ -1854,6 +1907,15 @@ public void performAction(String x, String y, String z){
          if(state.equals("deparr")){
              sidAndRunwayDisplayer();
              
+         }
+         
+         
+         if(state.equals("rtepage2")){
+          String lineCap=jLabel52.getText();
+          if(lineCap.equals("----")==false){
+            
+          }
+           
          }
          
          if(state.equals("rtepagedep1")){
@@ -2338,6 +2400,16 @@ public void performAction(String x, String y, String z){
                  sidAndRunwayDisplayer();
                 }
             }
+            
+            if(state.equals("rtepage2")){
+              if(rteEntry[2][5].equals("----")==false&&rteEntry[2][5].equals("")==false){
+               rtePages++; 
+                
+              }
+              
+              
+            }
+            
             break;
         }
         
@@ -2514,7 +2586,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
         // TODO add your handling code here:
     }//GEN-LAST:event_prevpageMousePressed
 
-    private void nextpageMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextpageMousePressed
+    private void nextpageMousePressed(java.awt.event.MouseEvent evt) {
 if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
     panelSelector.writeProperty("panelstate", "posref");
     
@@ -2535,8 +2607,10 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     
 }
         
-// TODO add your handling code here:
-    }//GEN-LAST:event_nextpageMousePressed
+if(panelSelector.retrieveProperty("panelstate").equals("rte")){
+  displayRTE(); 
+}
+    }
 
     private void deparr1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deparr1MousePressed
     
@@ -2584,26 +2658,56 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     }
     
   
-  int legsDisplay=0;
-  
-  String starSelectedDep;
-  String arrivalRunway;
-  String arrivalTransDep;
-  String arrivalApproachDep;
-   String arrivalTransArr;
-  String arrivalApproachArr;
-  int listStarDep=0;
-  int listStarArr=0;
-  int listTransStarDep=0;
-  int listTransStarArr=0;
-  int listRun;
- public static List<String> rawDataStars;//=new LinkedList<>();
- 
- public static List<String> starsTransition;//=new LinkedList<>();
-      
-   public static List<String> runwayAvail=new ArrayList<>();
+    
+    
+    
+    /***********************
+      * 
+      * W.I.P METHOD TO DISPLAY AND SELECT RTE
+      * 
+      * ***********************/
+    
    
-   public static Map<String,Stars> starsDep=new LinkedHashMap<>();
+    private void displayRTE(){
+      panelSelector.writeProperty("panelstate","rtepage2");
+      if(sidSelected==null){
+       jLabel51.setText("");
+       jLabel52.setText("----");
+       jLabel61.setText("");
+       jLabel62.setText("----");
+        jLabel49.setText("");
+        jLabel50.setText("");
+        jLabel63.setText("");
+        jLabel64.setText("");
+        jLabel54.setText("");
+        jLabel65.setText("");
+        jLabel66.setText("");
+        jLabel55.setText("");
+        jLabel56.setText("");
+        jLabel67.setText("");
+        jLabel68.setText("");
+        jLabel58.setText("");
+        jLabel59.setText("");
+        jLabel69.setText("");
+        jLabel70.setText("");
+      }else{
+        if(TransSelected!=null){
+          jLabel51.setText("");
+       jLabel52.setText(sidSelected+"."+TransSelected);
+        }else{
+         jLabel51.setText("");
+       jLabel52.setText(sidSelected+"."+panelSelector.retrieveProperty("runwaydep")); 
+        }
+        
+        
+        
+      }
+    
+    }
+    
+    
+    
+  
   /***********************************
    * 
    * 
@@ -2648,6 +2752,10 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
       
       
     }*/
+    
+    
+    
+    
     
       if(listStarDep>=rawDataStars.size()){
        listStarDep-=5;   
@@ -3382,28 +3490,7 @@ latlongBearing++;
     }
     
     
-  public static List<String> sids;
-   
-   
-  public static List <String> runways;
-   
-   
-  public List<String> Transitions;
-   
-   
-   int listing=0;
-   
-   public String runwaySelected;
-  
-    public String TransSelected;
-    
-    public int listrun=0;
-    
-    public int listtrans=0;
-    
-     public String sidSelected;
-     
-     Map<String,Sids> sidsDep=new LinkedHashMap<>();
+
      
     public void sidAndRunwayDisplayer() {
       
@@ -3753,7 +3840,18 @@ latlongBearing++;
 
 
 
-
+    private void getAirways(){
+      Thread getATS=new Thread(() -> {
+        try(FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"/airwaysFinal.ser") ; ObjectInputStream ois=new ObjectInputStream(fis)){
+          airwaysList=(LinkedHashMap)ois.readObject();
+          
+        }catch (IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        
+      });
+      getATS.start();
+      
+    }
    
    
     

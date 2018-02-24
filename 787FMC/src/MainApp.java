@@ -13,17 +13,23 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import com.google.common.collect.*;
 
 import java.util.HashMap;
-
+@SuppressWarnings("unchecked")
 public class MainApp extends javax.swing.JFrame {
+  
 PropertiesChecker panelSelector;
 FMCLogicTest accessLogic=new FMCLogicTest();
 WaypoimtAccess navDataPull=new WaypoimtAccess();
 findGpsPosition getLocation=new findGpsPosition();
 
+
+
     /**
+     * 
      * Creates new form MainApp
+     * 
      */
 
 
@@ -37,7 +43,7 @@ findGpsPosition getLocation=new findGpsPosition();
 boolean airportCachedOnceDep=false;
 
 
-//ALL LISTS AND HASMAPS
+//ALL LISTS , HASHMAPS and ARRAYS
 public static List<String> sids;
 public static List <String> runways;
 public List<String> Transitions;
@@ -46,8 +52,15 @@ public static List<String> rawDataStars;//=new LinkedList<>();
 public static List<String> starsTransition;//=new LinkedList<>();
 public static List<String> runwayAvail=new ArrayList<>();
 public static Map<String,Stars> starsDep=new LinkedHashMap<>();
-
-
+public static Map<String, Airways> airwaysList=new LinkedHashMap<>();
+List<String> rteEntries=new ArrayList<>();
+String [][] rteEntry = new String[2][5];
+Map<String,Waypoints> wpts=new LinkedHashMap<>(); 
+Multimap<String, Navaid> navaids = LinkedListMultimap.create();
+    
+   
+    
+    
 
 // ALL STRING VARIABLES
 String starSelectedDep;
@@ -72,6 +85,8 @@ int listing=0;
 public int listrun=0;
 public int listtrans=0;
 int legsDisplay=0;
+int rtePages=1;
+
 
 
 ////////////////////////////////////END OF VARIABLES LISTED 
@@ -84,7 +99,10 @@ int legsDisplay=0;
     panelSelector=new PropertiesChecker();
     intializePanel();
     panelSelector();
-   
+   getAirways();
+    retrieveWpts();
+    getNav();
+    
    
     }
 
@@ -1847,7 +1865,7 @@ int clicked=0;
         jTextField1.setText(currentText+"A");       // TODO add your handling code here:
     }//GEN-LAST:event_jLabel15MousePressed
 
-    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
+    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {                                      
 
         if(jTextField1.getText().equals("")){
             jTextField1.setText("+");
@@ -1876,6 +1894,7 @@ int clicked=0;
 
    
  String [] temp;
+ String [][]temp1;
 public void performAction(String x, String y, String z){
     String button=x;
     String text=y;
@@ -1901,10 +1920,27 @@ public void performAction(String x, String y, String z){
              
          }
          
+         
+         if(state.equals("rtepage2")){
+          String lineCap=jLabel52.getText();
+          if(lineCap.equals("----")==false){
+            
+          }
+           
+         }
+         
+         if(state.equals("rtepage1")){
+           
+           
+         }
+         
          if(state.equals("rtepagedep1")){
              if(sidSelected==null){
                  sidSelected=jLabel52.getText();
-                 System.out.println(jLabel52.getText());sidAndRunwayDisplayer();
+                sidAndRunwayDisplayer();
+                temp1=rtePagesStore.get(1);
+                temp1[0][1]=sidSelected;
+                rtePagesStore.replace(1,temp1);
                  
              }else {
                  
@@ -2064,6 +2100,13 @@ public void performAction(String x, String y, String z){
                  
              }
              
+             if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[1][0]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+           displayRTE();
+         }
+             
              
             
             break;
@@ -2098,6 +2141,16 @@ public void performAction(String x, String y, String z){
           }
              
          }
+              
+               if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[2][0]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+           displayRTE();
+         }
+              
+              
+              
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel53.getText().equals("")==false||jLabel53.getText().equals(null))==false){
               TransSelected=jLabel53.getText();   
@@ -2156,6 +2209,14 @@ public void performAction(String x, String y, String z){
              }
              
          }
+              if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[3][0]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+           displayRTE();
+         }
+             
+             
              
               if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
           if(starSelectedDep==null){
@@ -2225,6 +2286,8 @@ public void performAction(String x, String y, String z){
              
          }
              
+              
+             
               if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
           if(starSelectedDep==null){
            starSelectedDep=jLabel59.getText();
@@ -2272,7 +2335,12 @@ public void performAction(String x, String y, String z){
                  }
                  
              }
-             
+             if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[4][0]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+           displayRTE();
+         }
             break;
             
             case "Right1": if(state.equals("posinit")){}
@@ -2330,7 +2398,14 @@ public void performAction(String x, String y, String z){
                  runwaySelected=null;   
                  sidAndRunwayDisplayer();
                 }
+  
             }
+            if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[1][1]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+          displayRTE(); 
+         }
             break;
              case "Right3": if(state.equals("posinit")){}
           if(state.equals("rte")){panelSelector.writeProperty("coroute", "Not Implemented Yet");}
@@ -2348,6 +2423,13 @@ public void performAction(String x, String y, String z){
                  sidAndRunwayDisplayer();
                 }
             }
+            
+             if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[2][1]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+           displayRTE();
+         }
             break;
             
             case "Right4": if(state.equals("posinit")){}
@@ -2367,6 +2449,12 @@ public void performAction(String x, String y, String z){
                  sidAndRunwayDisplayer();
                 }
             }
+             if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[3][1]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+           displayRTE();
+         }
             break;
             case "Right5": if(state.equals("posinit")){panelSelector.writeProperty("irspos", text);jTextField1.setText("");}
           if(state.equals("rte")){}
@@ -2383,6 +2471,29 @@ public void performAction(String x, String y, String z){
                  sidAndRunwayDisplayer();
                 }
             }
+            
+             if(state.equals("rtepage2")){
+          temp1=rtePagesStore.get(activeRtePage);
+          temp1[4][1]=jTextField1.getText();
+          rtePagesStore.replace(activeRtePage,temp1);
+          if(temp1[4][1].equals("----")||temp1[4][1].equals("")||temp1[4][1].equals(null)==false){
+            String[][]temp2=new String[5][2];
+            temp2[0][0]="----";
+            temp2[0][1]="----";
+          rtePagesStore.putIfAbsent(activeRtePage+1,temp2);
+          
+          rtePages=rtePagesStore.size();
+          
+          }
+           displayRTE();
+         }
+            
+            
+           
+              
+              
+            
+            
             break;
         }
         
@@ -2507,7 +2618,7 @@ panelSelector.writeProperty("panelstate","rte");
     }//GEN-LAST:event_LSKL4MousePressed
 
     private void LSKL5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKL5MousePressed
- performAction("Left1",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));        // TODO add your handling code here:
+ performAction("Left5",jTextField1.getText(),panelSelector.retrieveProperty("panelstate"));        // TODO add your handling code here:
     }//GEN-LAST:event_LSKL5MousePressed
 
     private void LSKR1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LSKR1MousePressed
@@ -2556,10 +2667,26 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     displayLegs();
 }
 
+if(panelSelector.retrieveProperty("panelstate").equals("rtepage2")){
+  //TODO: ADD NEXT PAGE IMPLEMENTATION HERE.
+  if(activeRtePage==1){
+   panelSelector.writeProperty("panelstate","rte");
+  }else{
+  activeRtePage--;
+  displayRTE();
+  }
+  if(activeRtePage<=0){
+   activeRtePage=1; 
+  }
+  
+  
+  
+}
+
         // TODO add your handling code here:
     }//GEN-LAST:event_prevpageMousePressed
 
-    private void nextpageMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextpageMousePressed
+    private void nextpageMousePressed(java.awt.event.MouseEvent evt) {
 if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
     panelSelector.writeProperty("panelstate", "posref");
     
@@ -2580,8 +2707,19 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
     
 }
         
-// TODO add your handling code here:
-    }//GEN-LAST:event_nextpageMousePressed
+if(panelSelector.retrieveProperty("panelstate").equals("rte")){
+  displayRTE(); 
+}else if(panelSelector.retrieveProperty("panelstate").equals("rtepage2")){
+  //TODO: ADD NEXT PAGE IMPLEMENTATION HERE.
+  activeRtePage++;
+  if(activeRtePage>=rtePages){
+   activeRtePage=rtePages; 
+  }
+  displayRTE();
+  
+}
+
+    }
 
     private void deparr1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deparr1MousePressed
     
@@ -2604,6 +2742,43 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
         panelSelector.writeProperty("panelstate","posinit");
     }//GEN-LAST:event_InitRefMousePressed
     
+    public void getATS(){
+      Thread ats=new Thread(() ->{
+        
+        try(FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysFinal.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+          
+          airwaysList=(LinkedHashMap)ois.readObject();
+          ois.close();
+          fis.close();
+          
+        }catch(IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        
+        
+      });
+      
+      ats.start();
+    }
+    
+    public void getNav(){
+      
+      Thread ats=new Thread(() ->{
+        
+        try(FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/navaids.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+          
+          navaids=(LinkedListMultimap<String, Navaid>)ois.readObject();
+          ois.close();
+          fis.close();
+      
+        }catch(IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        
+        
+      });
+      
+      
+      
+    }
   
     
     
@@ -2628,7 +2803,116 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
       pullData.start();
     }
     
-  
+    public void updateText(){
+     
+      
+      
+      
+    }
+    
+    
+    public void retrieveWpts(){
+                               
+     Thread waypoints=new Thread(() -> {
+       
+       try(FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/waypoints.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+         wpts=(LinkedHashMap)ois.readObject();
+         
+         ois.close();
+         fis.close();
+       }catch(IOException e){e.printStackTrace();}
+       catch(ClassNotFoundException f){f.printStackTrace();}
+       
+       
+     });
+      
+      waypoints.start();
+      
+      rtePagesStore.put(1,new String[5][2]);
+      tempDisplay=rtePagesStore.get(1);
+      tempDisplay[0][0]="-----";
+      tempDisplay[0][1]="-----";
+      rtePagesStore.replace(1,tempDisplay);
+    }
+    
+    /***********************
+      * 
+      * W.I.P METHOD TO DISPLAY AND SELECT RTE
+      * 
+      * ***********************/
+    
+   HashMap<Integer,String[][]> rtePagesStore=new HashMap<>();
+    int activeRtePage=1;
+    String [][]tempDisplay;
+    private void displayRTE(){
+      panelSelector.writeProperty("panelstate","rtepage2");
+      tempDisplay=rtePagesStore.get(activeRtePage);
+      try{
+        jLabel51.setText("");
+        jLabel52.setText(tempDisplay[0][0]);
+      }catch(Exception e){e.printStackTrace(); jLabel51.setText("");
+        jLabel52.setText("");}
+      
+       try{
+        jLabel61.setText("");
+        jLabel62.setText(tempDisplay[0][1]);
+      }catch(Exception e){e.printStackTrace();jLabel61.setText("");
+        jLabel62.setText("");}
+      
+       try{
+        jLabel49.setText("");
+        jLabel50.setText(tempDisplay[1][0]);
+      }catch(Exception e){e.printStackTrace();jLabel49.setText("");
+        jLabel50.setText("");}
+      
+       try{
+        jLabel63.setText("");
+        jLabel64.setText(tempDisplay[1][1]);
+      }catch(Exception e){e.printStackTrace();jLabel63.setText("");
+        jLabel64.setText("");}
+      
+       try{
+        jLabel54.setText("");
+        jLabel53.setText(tempDisplay[2][0]);
+      }catch(Exception e){e.printStackTrace();jLabel54.setText("");
+        jLabel53.setText("");}
+      
+       try{
+        jLabel65.setText("");
+        jLabel66.setText(tempDisplay[2][1]);
+      }catch(Exception e){e.printStackTrace(); jLabel65.setText("");
+        jLabel66.setText("");}
+      
+       try{
+        jLabel55.setText("");
+        jLabel56.setText(tempDisplay[3][0]);
+      }catch(Exception e){e.printStackTrace(); jLabel55.setText("");
+        jLabel56.setText("");}
+      
+       try{
+        jLabel67.setText("");
+        jLabel68.setText(tempDisplay[3][1]);
+      }catch(Exception e){e.printStackTrace(); jLabel67.setText("");
+        jLabel68.setText("");}
+      
+       try{
+        jLabel58.setText("");
+        jLabel59.setText(tempDisplay[4][0]);
+      }catch(Exception e){e.printStackTrace();jLabel58.setText("");
+        jLabel59.setText("");}
+      
+       try{
+        jLabel69.setText("");
+        jLabel70.setText(tempDisplay[4][1]);
+      }catch(Exception e){e.printStackTrace();jLabel69.setText("");
+        jLabel70.setText("");}
+      
+      
+    
+    }
+    
+    
+    
   
   /***********************************
    * 
@@ -2674,6 +2958,10 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
       
       
     }*/
+    
+    
+    
+    
     
       if(listStarDep>=rawDataStars.size()){
        listStarDep-=5;   
@@ -3377,7 +3665,7 @@ latlongBearing++;
      }
   }
 
-     String [] location = getLocation.getLatLongIP();
+    String [] location; //= getLocation.getLatLongIP();
     int x=0;
     
     
@@ -3758,7 +4046,18 @@ latlongBearing++;
 
 
 
-
+    private void getAirways(){
+      Thread getATS=new Thread(() -> {
+        try(FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"/airwaysFinal.ser") ; ObjectInputStream ois=new ObjectInputStream(fis)){
+          airwaysList=(LinkedHashMap)ois.readObject();
+          
+        }catch (IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        
+      });
+      getATS.start();
+      
+    }
    
    
     
