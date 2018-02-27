@@ -43,3 +43,7 @@ TODO For Version 1.24:
 - Implement algorithms to draw routes using data entered.
 - Implement approaches and Star Transitions.
 - Start looking at ways to implement FMC into X-Plane 11.
+
+Changelog in V1.24.11
+
+Bug Fixed: Now all DCT Waypoints with duplicate identifiers have been added. 

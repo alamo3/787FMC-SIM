@@ -1,0 +1,93 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite0
+*.sdf
+*.opensdf
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+.Trashes
+.swp
+*.lock
+
+# Debug Files #
+###############
+*.ilk
+*.pdb
+*.exp
+*.lib
+*.tlog
+*.manifest
+*.manifest.res
+*.lastbuildstate
+*.obj
+*.rc
+*.idb
+
+# VS Files #
+#################
+bin/
+obj/
+Debug/
+Release/
+TestResults/
+ipch/
+*.suo
+*.user
+*.sdf
+*.sbr
+
+# XCode Files #
+###############
+*~.nib
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+xcuserdata
+*.moved-aside
+*.xccheckout
+
+# IntelliJ Files #
+##################
+/**/.idea/workspace.xml
+/**/.idea/tasks.xml
+/**/.idea/dictionaries/
+out/
+
+# MATLAB backup files #
+#######################
+*.m~
+
+# Reinclude XPLM SDK libraries #
+################################
+!XPLM.lib
+!XPLM_64.lib
+!XPWidgets.lib
+!XPWidgets_64.lib
+
+# Internal Docs #
+#################
+Docs/~$Capability Matrix.xlsx

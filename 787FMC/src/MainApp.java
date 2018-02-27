@@ -97,6 +97,11 @@ int rtePages=1;
       
         initComponents();
     panelSelector=new PropertiesChecker();
+    rtePagesStore.put(1,new String[5][2]);
+      tempDisplay=rtePagesStore.get(1);
+      tempDisplay[0][0]="-----";
+      tempDisplay[0][1]="-----";
+      rtePagesStore.replace(1,tempDisplay);
     intializePanel();
     panelSelector();
    getAirways();
@@ -1923,7 +1928,20 @@ public void performAction(String x, String y, String z){
          
          if(state.equals("rtepage2")){
           String lineCap=jLabel52.getText();
-          if(lineCap.equals("----")==false){
+          if(lineCap.equals("----")==true){
+            if(activeRtePage>=2){
+              temp1=rtePagesStore.get(activeRtePage);
+              if(airwaysList.containsKey(jTextField1.getText())==true){
+                 
+              temp1[0][0]=jTextField1.getText();
+              }else{
+                jTextField1.setText("Airway Not Found");
+              }
+             
+              rtePagesStore.replace(activeRtePage,temp1);
+              
+            }
+            
             
           }
            
@@ -1938,22 +1956,23 @@ public void performAction(String x, String y, String z){
              if(sidSelected==null){
                  sidSelected=jLabel52.getText();
                 sidAndRunwayDisplayer();
-                temp1=rtePagesStore.get(1);
-                temp1[0][1]=sidSelected;
-                rtePagesStore.replace(1,temp1);
+               updateRTE();               
                  
              }else {
                  
               sidSelected=null;
               sidAndRunwayDisplayer();
+               updateRTE();
              }
              
          }
          
          if(state.equals("transselect")){
+
           sidSelected=null;
            panelSelector.writeProperty("runwaydep","----");
           sidAndRunwayDisplayer();
+         
          
          }
          
@@ -2102,7 +2121,14 @@ public void performAction(String x, String y, String z){
              
              if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
-          temp1[1][0]=jTextField1.getText();
+          
+          if(airwaysList.containsKey(jTextField1.getText())==true){
+                 
+              temp1[1][0]=jTextField1.getText();
+              }else{
+                jTextField1.setText("Airway Not Found");
+              }
+         
           rtePagesStore.replace(activeRtePage,temp1);
            displayRTE();
          }
@@ -2144,7 +2170,13 @@ public void performAction(String x, String y, String z){
               
                if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
-          temp1[2][0]=jTextField1.getText();
+          if(airwaysList.containsKey(jTextField1.getText())==true){
+                 
+              temp1[2][0]=jTextField1.getText();
+              }else{
+                jTextField1.setText("Airway Not Found");
+              }
+          
           rtePagesStore.replace(activeRtePage,temp1);
            displayRTE();
          }
@@ -2211,7 +2243,13 @@ public void performAction(String x, String y, String z){
          }
               if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
-          temp1[3][0]=jTextField1.getText();
+          if(airwaysList.containsKey(jTextField1.getText())==true){
+                 
+              temp1[3][0]=jTextField1.getText();
+              }else{
+                jTextField1.setText("Airway Not Found");
+              }
+          
           rtePagesStore.replace(activeRtePage,temp1);
            displayRTE();
          }
@@ -2337,13 +2375,47 @@ public void performAction(String x, String y, String z){
              }
              if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
-          temp1[4][0]=jTextField1.getText();
+          if(airwaysList.containsKey(jTextField1.getText())==true){
+                 
+              temp1[4][0]=jTextField1.getText();
+              }else{
+                jTextField1.setText("Airway Not Found");
+              }
+         
           rtePagesStore.replace(activeRtePage,temp1);
            displayRTE();
          }
             break;
             
             case "Right1": if(state.equals("posinit")){}
+            
+            
+            
+            if(state.equals("rtepage2")){
+          String lineCap=jLabel52.getText();
+          if(lineCap.equals("----")==true){
+            if(activeRtePage>=2){
+              temp1=rtePagesStore.get(activeRtePage);
+              temp1[0][0]=jTextField1.getText();
+              rtePagesStore.replace(activeRtePage,temp1);
+              
+              if(temp1[0][1].equals("----")==false){
+                if(temp1[1][0]==null||temp1[1][1]==null){
+                 temp1[1][0]="----";
+                 temp1[1][1]="----";
+                }
+                
+              }
+              
+            }
+            
+            
+          }
+           
+         }
+            
+            
+            
          
           if(state.equals("rte")){
               
@@ -2401,9 +2473,26 @@ public void performAction(String x, String y, String z){
   
             }
             if(state.equals("rtepage2")){
+              
           temp1=rtePagesStore.get(activeRtePage);
-          temp1[1][1]=jTextField1.getText();
+          
+          Collection<Navaid> optionsNav=navaids.get(jTextField1.getText());
+          
+          if(temp1[1][0].equals("----")){
+            
+          }
+//          temp1[1][1]=jTextField1.getText();
           rtePagesStore.replace(activeRtePage,temp1);
+          
+          if(temp1[1][1].equals("----")==false){
+            if(temp1[2][0]==null&&temp1[2][1]==null){
+              temp1[2][0]="----";
+              temp1[2][1]="----";
+              rtePagesStore.replace(activeRtePage,temp1);
+            }
+            
+          }
+          
           displayRTE(); 
          }
             break;
@@ -2428,6 +2517,16 @@ public void performAction(String x, String y, String z){
           temp1=rtePagesStore.get(activeRtePage);
           temp1[2][1]=jTextField1.getText();
           rtePagesStore.replace(activeRtePage,temp1);
+          
+          if(temp1[2][1].equals("----")==false){
+            if(temp1[3][0]==null&&temp1[3][1]==null){
+              temp1[3][0]="----";
+              temp1[3][1]="----";
+              rtePagesStore.replace(activeRtePage,temp1);
+            }
+            
+          }
+          
            displayRTE();
          }
             break;
@@ -2453,6 +2552,16 @@ public void performAction(String x, String y, String z){
           temp1=rtePagesStore.get(activeRtePage);
           temp1[3][1]=jTextField1.getText();
           rtePagesStore.replace(activeRtePage,temp1);
+          
+          if(temp1[3][1].equals("----")==false){
+            if(temp1[4][0]==null&&temp1[4][1]==null){
+              temp1[4][0]="----";
+              temp1[4][1]="----";
+              rtePagesStore.replace(activeRtePage,temp1);
+            }
+            
+          }
+          
            displayRTE();
          }
             break;
@@ -2652,6 +2761,8 @@ if(panelSelector.retrieveProperty("panelstate").equals("posref")){
  panelSelector.writeProperty("panelstate", "posinit");   
     
 }
+
+
 if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSelector.retrieveProperty("panelstate").equals("transselect")){
     listing-=5;
     listrun-=5;
@@ -2670,9 +2781,11 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
 if(panelSelector.retrieveProperty("panelstate").equals("rtepage2")){
   //TODO: ADD NEXT PAGE IMPLEMENTATION HERE.
   if(activeRtePage==1){
+    pagenumber.setText("Page 1/"+Integer.toString(rtePages+1));
    panelSelector.writeProperty("panelstate","rte");
   }else{
   activeRtePage--;
+  pagenumber.setText("Page "+Integer.toString(activeRtePage+1)+"/"+Integer.toString(rtePages+1));
   displayRTE();
   }
   if(activeRtePage<=0){
@@ -2708,10 +2821,13 @@ if(panelSelector.retrieveProperty("panelstate").equals("legspage")){
 }
         
 if(panelSelector.retrieveProperty("panelstate").equals("rte")){
+  pagenumber.setText("Page 2/"+Integer.toString(rtePages+1));
   displayRTE(); 
+  
 }else if(panelSelector.retrieveProperty("panelstate").equals("rtepage2")){
   //TODO: ADD NEXT PAGE IMPLEMENTATION HERE.
   activeRtePage++;
+  pagenumber.setText("Page "+Integer.toString(activeRtePage+1)+"/"+Integer.toString(rtePages+1));
   if(activeRtePage>=rtePages){
    activeRtePage=rtePages; 
   }
@@ -2828,11 +2944,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
       
       waypoints.start();
       
-      rtePagesStore.put(1,new String[5][2]);
-      tempDisplay=rtePagesStore.get(1);
-      tempDisplay[0][0]="-----";
-      tempDisplay[0][1]="-----";
-      rtePagesStore.replace(1,tempDisplay);
+      
     }
     
     /***********************
@@ -2911,7 +3023,35 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
     
     }
     
+    /**********************
+      * METHOD TO GET SIDS AND TRANSITIONS INTO RTE DISPLAY ARRAY
+      * 
+      * ********************/
     
+    
+    private void updateRTE(){
+      if(sidSelected!=null){
+        temp1=rtePagesStore.get(1);
+       temp1[0][0]=sidSelected;
+       temp1[1][0]="----";
+       temp1[1][1]="----";
+       rtePagesStore.replace(1,temp1);
+       if(TransSelected!=null){
+          temp1=rtePagesStore.get(1);
+        temp1[0][0]=sidSelected+"."+TransSelected;
+        temp1[1][0]="----";
+        temp1[1][1]="----";
+        rtePagesStore.replace(1,temp1);
+       }
+        
+      }else if(sidSelected==null){
+         temp1=rtePagesStore.get(1);
+      temp1[0][0]="----";
+      temp1[0][1]="----";
+      rtePagesStore.replace(1,temp1);
+      
+      }
+    }
     
   
   /***********************************
@@ -3700,6 +3840,8 @@ latlongBearing++;
      
     public void sidAndRunwayDisplayer() {
       
+       updateRTE();
+      
       runwaySelected=(panelSelector.retrieveProperty("runwaydep").equals("----")) ? null : panelSelector.retrieveProperty("runwaydep");
 
         if (listing <= 0) {
@@ -4216,7 +4358,7 @@ latlongBearing++;
              jLabel51.setText("FMC (GPS)");
       
        
-             jLabel52.setText(location[0] +" " +location [1]);
+             jLabel52.setText("LOCATION N/A");
              jLabel49.setText("IRU L ");
              jLabel50.setText("INOP");
              jLabel54.setText("GPS - IRU L");

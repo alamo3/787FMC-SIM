@@ -3,82 +3,31 @@ import java.util.*;
 import java.lang.*;
 import com.google.common.collect.*;
 
-
+   @SuppressWarnings("unchecked")
 class TestFile{
   
-  
+ 
 static WaypoimtAccess navDataPull=new WaypoimtAccess();
 static FMCLogicTest accessLogic=new FMCLogicTest();
   public static void main(String [] args){
     TestFile obj1=new TestFile();
+    @SuppressWarnings("unchecked conversion")
+    Map<String,Waypoints> wpts=new LinkedHashMap<>();
 
-
-//lets see how multimap works
- List<String> lines=obj1.readLines();   
+    try(FileInputStream fos=new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/waypoints.ser"); ObjectInputStream ois=new ObjectInputStream(fos)){
+       
+      wpts=(LinkedHashMap) ois.readObject();
+      
+    }catch(IOException e){e.printStackTrace();}
+    catch(ClassNotFoundException f){f.printStackTrace();}
     
-    String[]temp;
-Multimap<String, Navaid> multimap = LinkedListMultimap.create();
-String line="";
-for(int i=0;i<lines.size();i++){
-  line=lines.get(i);
-  temp=splitString(line,',');
-  try{
-  if(((temp[3].equals("0"))||(temp[3].equals("1")))&&((temp[4].equals("0"))||(temp[4].equals("1")))&&(temp[1].contains("ILS/")==false)){
-    if(temp[3].equals("0")&&temp[4].equals("1")){
-     multimap.put(temp[0],new Navaid(temp[1],temp[0],"DME",temp[2],temp[6],temp[7])); 
-      
-    }else if(temp[3].equals("0")&&temp[4].equals("0")){
-      
-       multimap.put(temp[0],new Navaid(temp[1],temp[0],"NDB",temp[2],temp[6],temp[7]));
-      
-    }else if(temp[3].equals("1")&&temp[4].equals("1")){
-      
-       multimap.put(temp[0],new Navaid(temp[1],temp[0],"VOR",temp[2],temp[6],temp[7]));
-    }
+    
+    System.out.println(wpts.get("ILRAP").getName()+" : "+wpts.get("ILRAP").getLatitude()+" : "+wpts.get("ILRAP").getLongitude());
+    
     
   }
-  }catch(ArrayIndexOutOfBoundsException e){e.printStackTrace(); System.out.println(line);}
   
-  
-  
-  
-  
-  
-}
-
-   Collection<Navaid> navaids=multimap.get("BK");
-   List<Navaid> collectnav=new LinkedList<>();
-   collectnav.addAll(navaids);
-   
-   List<String> names=new ArrayList<>();
-   List<String> ident=new ArrayList<>();
-   List<String> freq=new ArrayList<>();
-   List<String> lat=new ArrayList<>();
-   List<String> longColl=new ArrayList<>();
-   List<String> type=new ArrayList<>();
-   for(int i=0;i<collectnav.size();i++){
-    names.add(collectnav.get(i).getName());
-    ident.add(collectnav.get(i).getIdent());
-    freq.add(collectnav.get(i).getFreq());
-    lat.add(collectnav.get(i).getLatitude());
-    longColl.add(collectnav.get(i).getLongitude());
-    type.add(collectnav.get(i).getType());
-     
-   }
-   for(int i=0;i<collectnav.size();i++){
-    System.out.println(names.get(i)+" Ident:"+ident.get(i)+" Type: "+type.get(i)+" Frequency:"+freq.get(i)+" Latitude:"+lat.get(i)+" Longitude:"+longColl.get(i)); 
-   }
-    
-   
-   try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/navaids.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
-   oos.writeObject(multimap);
-     
-     
-   }catch(IOException e){e.printStackTrace();}
-  
-  }
-  
-  
+ 
   
     
     
@@ -157,7 +106,7 @@ for(int i=0;i<lines.size();i++){
     public List<String> readLines(){
      List<String> linesRead=new LinkedList<>();
      
-     String directory=System.getProperty("user.dir")+"/navdata/navdata/Navaids.txt";
+     String directory=System.getProperty("user.dir")+"/navdata/navdata/Waypoints.txt";
      String line="";
      try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
        while((line=br.readLine())!=null){

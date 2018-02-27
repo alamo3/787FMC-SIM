@@ -11,32 +11,30 @@ static WaypoimtAccess navDataPull=new WaypoimtAccess();
 static FMCLogicTest accessLogic=new FMCLogicTest();
   public static void main(String [] args){
     TestFile obj1=new TestFile();
-    @SuppressWarnings("unchecked conversion")
-    Map<String,Waypoints> wpts=new LinkedHashMap<>();
+    
+    Multimap<String,Waypoints> wpts= LinkedListMultimap.create();
 
-    try(FileInputStream fos=new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/waypoints.ser"); ObjectInputStream ois=new ObjectInputStream(fos)){
-       
-      wpts=(LinkedHashMap) ois.readObject();
-      
-    }catch(IOException e){e.printStackTrace();}
-    catch(ClassNotFoundException f){f.printStackTrace();}
-    
-    
-    System.out.println(wpts.get("ILRAP").getName()+" : "+wpts.get("ILRAP").getLatitude()+" : "+wpts.get("ILRAP").getLongitude());
+  String []temp;
+  List<String> wptsRaw=obj1.readLines();
+  
+  System.out.println(wptsRaw.size());
+  
+  for(int i=0;i<wptsRaw.size();i++){
+    temp=splitString(wptsRaw.get(i),',');
+   
+    wpts.put(temp[0],new Waypoints(temp[0],temp[1],temp[2]));
     
     
   }
   
- 
+  try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/waypoints.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+  oos.writeObject(wpts);
+    oos.close();
+    fos.close();
+  }catch(IOException e){e.printStackTrace();}
   
-    
-    
-    
   
-  String []temp;
-  List<String> navaids=readLines();
-  
-
+  }
   public static String[] latlongDep;
   public static String[] latlongArr;
   public static Double bearing1;
