@@ -873,3 +873,138 @@ ois.close();
 }
   
   }
+         
+         
+  String[]temp;
+Multimap<String, Navaid> multimap = LinkedListMultimap.create();
+String line="";
+for(int i=0;i<lines.size();i++){
+  line=lines.get(i);
+  temp=splitString(line,',');
+  try{
+  if(((temp[3].equals("0"))||(temp[3].equals("1")))&&((temp[4].equals("0"))||(temp[4].equals("1")))&&(temp[1].contains("ILS/")==false)){
+    if(temp[3].equals("0")&&temp[4].equals("1")){
+     multimap.put(temp[0],new Navaid(temp[1],temp[0],"DME",temp[2],temp[6],temp[7])); 
+      
+    }else if(temp[3].equals("0")&&temp[4].equals("0")){
+      
+       multimap.put(temp[0],new Navaid(temp[1],temp[0],"NDB",temp[2],temp[6],temp[7]));
+      
+    }else if(temp[3].equals("1")&&temp[4].equals("1")){
+      
+       multimap.put(temp[0],new Navaid(temp[1],temp[0],"VOR",temp[2],temp[6],temp[7]));
+    }
+    
+  }
+  }catch(ArrayIndexOutOfBoundsException e){e.printStackTrace(); System.out.println(line);}
+  
+  
+  
+  
+  
+  
+}
+
+   Collection<Navaid> navaids=multimap.get("BK");
+   List<Navaid> collectnav=new LinkedList<>();
+   collectnav.addAll(navaids);
+   
+   List<String> names=new ArrayList<>();
+   List<String> ident=new ArrayList<>();
+   List<String> freq=new ArrayList<>();
+   List<String> lat=new ArrayList<>();
+   List<String> longColl=new ArrayList<>();
+   List<String> type=new ArrayList<>();
+   for(int i=0;i<collectnav.size();i++){
+    names.add(collectnav.get(i).getName());
+    ident.add(collectnav.get(i).getIdent());
+    freq.add(collectnav.get(i).getFreq());
+    lat.add(collectnav.get(i).getLatitude());
+    longColl.add(collectnav.get(i).getLongitude());
+    type.add(collectnav.get(i).getType());
+     
+   }
+   for(int i=0;i<collectnav.size();i++){
+    System.out.println(names.get(i)+" Ident:"+ident.get(i)+" Type: "+type.get(i)+" Frequency:"+freq.get(i)+" Latitude:"+lat.get(i)+" Longitude:"+longColl.get(i)); 
+   }
+    
+   
+   try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/navaids.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+   oos.writeObject(multimap);
+     
+     
+   }catch(IOException e){e.printStackTrace();}
+   
+   
+   
+   
+   
+   
+ List<String> lines=obj1.readLines();   
+    
+ Map<String,Waypoints> wpts=new LinkedHashMap<>();
+ 
+  String [] temp;
+  File file=new File(System.getProperty("user.dir")+"/navdata/navdata/waypointsdata.txt");
+  
+  
+  for(int i=0;i<lines.size();i++){
+  temp=splitString(lines.get(i),',');
+  try(FileWriter fw=new FileWriter(file);BufferedWriter bw=new BufferedWriter(fw)){
+    if(file.exists()==false){
+     file.createNewFile(); 
+    }
+   bw.write(i +": "+lines.get(i));
+  }catch(IOException f){f.printStackTrace();}
+ 
+  wpts.put(temp[0],new Waypoints(temp[0],temp[1],temp[2]));
+  if(i==60768){
+   System.out.println("Almost done"); 
+  }
+    
+  }
+  
+  try(FileOutputStream fos=new FileOutputStream(System.getProperty("user.dir")+"/navdata/navdata/waypoints.ser"); ObjectOutputStream oos=new ObjectOutputStream(fos)){
+ oos.writeObject(wpts);
+ 
+  }catch(IOException e){e.printStackTrace();}
+   System.out.println(wpts.get("DOAME").getName()+" : "+wpts.get("DOAME").getLatitude()+" : "+wpts.get("DOAME").getLongitude());
+   
+   
+   
+   
+   
+   //////////WHAT I REMOVED FROM GET RTE METHOD FOR THE NEW IMPLEMENTATION 
+   
+   if(sidSelected==null){
+       jLabel51.setText("");
+       jLabel52.setText("----");
+       jLabel61.setText("");
+       jLabel62.setText("----");
+        jLabel49.setText("");
+        jLabel50.setText("");
+        jLabel63.setText("");
+        jLabel64.setText("");
+        jLabel54.setText("");
+        jLabel65.setText("");
+        jLabel66.setText("");
+        jLabel55.setText("");
+        jLabel56.setText("");
+        jLabel67.setText("");
+        jLabel68.setText("");
+        jLabel58.setText("");
+        jLabel59.setText("");
+        jLabel69.setText("");
+        jLabel70.setText("");
+      }else{
+        if(TransSelected!=null){
+          jLabel51.setText("");
+       jLabel52.setText(sidSelected+"."+TransSelected);
+        }else{
+         jLabel51.setText("");
+       jLabel52.setText(sidSelected+"."+panelSelector.retrieveProperty("runwaydep")); 
+        }
+        
+        
+        
+      }

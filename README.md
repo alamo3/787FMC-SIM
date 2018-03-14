@@ -47,3 +47,15 @@ TODO For Version 1.24:
 Changelog in V1.24.11
 
 Bug Fixed: Now all DCT Waypoints with duplicate identifiers have been added. 
+
+Changelog in V1.24:
+
+- Implemented Direct Waypoints and NavAids into GUI
+- Implemented Approaches and Stars into GUI for Departure Airport
+- Basic connection to X-Plane 11 made using nasaXpConnect
+
+TODO For Version 1.25:
+
+- Implement Stars and Approaches for Arrival Airport
+- Fix issues with GUI
+- Start looking into performance tables for 787-9

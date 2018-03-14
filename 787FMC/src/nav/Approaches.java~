@@ -1,0 +1,26 @@
+package nav;
+
+import java.util.*;
+import java.io.*;
+
+
+public class Approaches{
+ 
+  private final String NAME;
+  private final List<String> TRANSITIONS;
+  
+  
+  public Approaches(String name, List<String> trans){
+  this.NAME=name;
+  this.TRANSITIONS=trans;
+  
+  }
+  
+  public String getIdent(){
+   return this.NAME; 
+  }
+  public List<String> getTrans(){
+   return this.TRANSITIONS; 
+  }
+  
+}

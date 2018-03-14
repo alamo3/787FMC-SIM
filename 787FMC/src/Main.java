@@ -1,0 +1,54 @@
+//package gov.nasa.xpc.ex;
+
+import nasaConnect.XPlaneConnect;
+
+import java.io.IOException;
+
+/**
+ * An example program demonstrating the use of X-PlaneConnect in a continuous loop.
+ *
+ * @author Jason Watkins
+ * @version 1.0
+ * @since 2015-06-19
+ */
+public class Main
+{
+    public static void main(String[] args)
+    {
+        try (XPlaneConnect xpc = new XPlaneConnect("127.0.0.1",49009,49000))
+        {
+            int aircraft = 0;
+//            while(true)
+//            {
+////                float[] posi = xpc.getPOSI(aircraft);
+//                float[] ctrl = xpc.getCTRL(aircraft);
+//
+//                System.out.format("Loc: Aileron:%2f Elevator:%2f Rudder:%2f\n",
+//                         ctrl[1], ctrl[0], ctrl[2]);
+////posi[0], posi[1], posi[2],
+//                try
+//                {
+//                    Thread.sleep(100);
+//                }
+//                catch (InterruptedException ex) {}
+//
+//                if(System.in.available() > 0)
+//                {
+//                    break;
+//                }
+//            }
+//            
+////            float values[] = { 37.524F, -122.06899F, 2500, 0, 0, 0, 1 };
+////    xpc.sendPOSI(values, 0);
+            
+            xpc.sendTEXT("Hello from Java", 100, -1);
+            
+            
+        }
+        catch(IOException ex)
+        {
+            System.out.println("Error:");
+            System.out.println(ex.getMessage());
+        }
+    }
+}

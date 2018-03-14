@@ -640,22 +640,7 @@ SOME MORE JUNK CODE
     fos.close();
   }catch(IOException e){e.printStackTrace();}
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   /********************
     * 
     * HERE IS THE FINAL CODE THAT I TRASHED AFTER I SUCCESSFULLY CREATED THE AIRWAYSFINAL OBJECT :)
@@ -1008,3 +993,94 @@ for(int i=0;i<lines.size();i++){
         
         
       }
+      
+      
+      //          else if(starSelectedDep!=null){
+//              
+//              
+//              
+//               String text="";
+//                panelSelector.writeProperty("panelstate", "transSelectDepStar");
+//                
+//                 if(starsDep.get(starSelectedDep).getRunways().size()<=5){
+//                    System.out.println(starsDep.get(starSelectedDep).getRunways());
+//                    try{
+//                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(0));
+//                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
+//                     try{
+//                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(1));
+//                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
+//                try{
+//                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(2));
+//                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
+//                 try{
+//                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(3));
+//                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
+//                  try{
+//                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(4));
+//                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
+//     
+//                
+//                }else if(starsDep.get(starSelectedDep).getRunways().size()>5){
+//                    
+//                     try{
+//                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(listRun));
+//                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
+//                     try{
+//                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+1));
+//                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
+//                try{
+//                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+2));
+//                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
+//                 try{
+//                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+3));
+//                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
+//                  try{
+//                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+4));
+//                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
+//                    
+//                    
+//                }
+//                
+//                
+      //      displayApproaches();
+    
+    
+
+    
+
+    /*if(starsTransition==null||starsTransition.isEmpty()||runwayAvail==null||starsDep.isEmpty()||starsDep==null||starsDep.isEmpty()){
+    for(int i=0;i<rawDataStars.size();i++){
+      if(starsTransition==null||starsTransition.isEmpty()){
+     starsTransition= accessLogic.getTransition(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
+       
+      }
+      if(runwayAvail==null||starsDep.isEmpty()){
+      runwayAvail= accessLogic.getProcstoRunways(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
+      }
+      if(starsDep==null||starsDep.isEmpty()){
+     
+     starsDep.put(rawDataStars.get(i),new Stars(panelSelector.retrieveProperty("origin"),rawDataStars.get(i),starsTransition,runwayAvail));
+      }
+   
+      
+    }
+    }*/
+      
+  /* Map<String,Stars> starsArr=new LinkedHashMap<>();
+    List<String> rawDataStars1=accessLogic.getStars(panelSelector.retrieveProperty("dest"));
+     List<String> starsTransitionArr;
+    List<String> runwayAvailArr;
+      for(int i=0;i<rawDataStars1.size();i++){
+    
+     starsTransitionArr= accessLogic.getTransition(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
+     runwayAvailArr=accessLogic.getProcstoRunways(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
+      starsArr.put(rawDataStars1.get(i),new Stars(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i),starsTransitionArr,runwayAvailArr));
+      
+      
+    }*/
+    
+    
+    
+    
+    
