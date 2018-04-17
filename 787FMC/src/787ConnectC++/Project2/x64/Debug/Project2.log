@@ -1,0 +1,11 @@
+﻿  Source.cpp
+c:\users\omer\source\repos\project2\project2\source.cpp(132): warning C4101: 'recv_len': unreferenced local variable
+c:\users\omer\source\repos\project2\project2\source.cpp(281): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\omer\source\repos\project2\project2\source.cpp(282): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\omer\source\repos\project2\project2\source.cpp(283): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+Source.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+     Creating library C:\Users\omer\source\repos\Project2\x64\Debug\win.lib and object C:\Users\omer\source\repos\Project2\x64\Debug\win.exp
+  Project2.vcxproj -> C:\Users\omer\source\repos\Project2\x64\Debug\win.xpl

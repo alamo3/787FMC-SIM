@@ -177,32 +177,7 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
  
  return nd_hdg;
 }
-    
-    
-    //WIP method.
-    public List<String> returnWaypoint(String x, String y) throws IOException
-    {
-    List<String> waypoints=new ArrayList<String>();
-    String airway=x;
-    String exitAirway=y;
-     String directory=file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/PROC/"+icao+".txt";
-        String lineCapture="";
-     try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
-       while((lineCapture=br.readLine())!=null){
-         
-         
-         
-       }
-       
-       
-     }
-    
-    
-    
-    
-    
-    return waypoints;
-    }
+
     
     
     //Gets data for runway selected at specific airport. Specifically the lat and long

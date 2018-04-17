@@ -1,0 +1,22 @@
+package fmcConnect;
+
+import nasaConnect.*;
+
+public class Right6{
+  
+  
+  public void performAction(panelState obj1, String value){
+ 
+   if(value!=null){
+  
+     
+     
+   }else{
+    obj1.display(); 
+     
+   }
+  
+ }
+   
+  
+}

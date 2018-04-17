@@ -1,5 +1,5 @@
 # 787FMC-SIM
-I am trying to imitate a 787 FMC using java programming
+Project to make an accurate close to life FMC for Magknight's 787-9 using Java, C++ and lua
 
 Current Changes V1.19:
 
@@ -59,3 +59,18 @@ TODO For Version 1.25:
 - Implement Stars and Approaches for Arrival Airport
 - Fix issues with GUI
 - Start looking into performance tables for 787-9
+
+
+Changelog in V1.25 (4/17/2018):
+
+I KNOW ITS BEEN LONG BUT A LOT OF WORK WAS DONE:
+
+- FMC texture and module inside actual plane has been revamped to be more realistic
+- Implement a working FMC Module inside the ACTUAL X-PLANE MODEL
+- Implemented a UDP server in C++ that sends data over to the JVM Module
+- Modified .acf file to add click buttons for the new FMC
+- Added commands for each FMC Button
+- Implemented Java UDP Server
+- POSINIT and IDENT PAGES functional in FMC now
+- Implemented SASL OpenGL drawing inside the 787
+- Added Datarefs for FMC into X-Plane

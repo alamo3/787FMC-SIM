@@ -42,7 +42,7 @@ findGpsPosition getLocation=new findGpsPosition();
 
 // ALL BOOLEANS
 boolean airportCachedOnceDep=false;
-
+boolean airportCachedOnceArr=false;
 
 //ALL LISTS , HASHMAPS and ARRAYS
 public static List<String> sids;
@@ -61,7 +61,9 @@ public static Multimap<String, Navaid> navaids = LinkedListMultimap.create();
 public static Map<Integer,Waypoints> wptRTE=new LinkedHashMap<>();   
 public static  HashMap<Integer,String[][]> rtePagesStore=new HashMap<>();
 Map<Integer,Approaches> appr=new LinkedHashMap<>();
-    
+public static Map<Integer,Approaches> apprArr=new LinkedHashMap();
+public static List<String> rawStarsArr=new LinkedList<>();
+public static Map<String,Stars> starsArr=new LinkedHashMap<>();
     
 
 // ALL STRING VARIABLES
@@ -71,13 +73,15 @@ String arrivalTransDep;
 String arrivalApproachDep;
 String arrivalTransArr;
 String arrivalApproachArr;
+String starSelectedArr="";
 public String runwaySelected;
 public static String TransSelected;
 String cacheAirportDep="";
 public static String sidSelected;
-String buttonPressed="";
 String arrivalApprDep="";
 String arrivalApprTransDep="";
+String arrivalApprTransArr="";
+String cacheAirportArrival="";
 
 //ALL INT VARIABLES
 int listStarDep=0;
@@ -95,6 +99,8 @@ public static int numWpt=0;
 public static int activeRtePage=1;
 int key=0;
 int listApprDepTrans=0;
+int buttonP=1;
+int listApprArrTrans=0;
 ////////////////////////////////////END OF VARIABLES LISTED 
 
 
@@ -1997,6 +2003,19 @@ public void performAction(String x, String y, String z){
            displayStarsandRunways();
           }else if(starSelectedDep!=null){
            starSelectedDep=null;
+           arrivalTransDep="";
+           displayStarsandRunways();
+          }
+             
+         }
+         
+         if(panelSelector.retrieveProperty("panelstate").equals("stararr")||panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
+           starSelectedArr=jLabel52.getText();
+           displayStarsandRunways();
+          }else if(starSelectedArr!=null||starSelectedArr.equals("")==false){
+           starSelectedArr=null;
+           arrivalTransArr="";
            displayStarsandRunways();
           }
              
@@ -2083,10 +2102,45 @@ public void performAction(String x, String y, String z){
           }
              
          }
+             
+             if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
+           starSelectedArr=jLabel50.getText();
+           displayStarsandRunways();
+          }else{
+            if(state.equals("transSelectStarArr")==false){
+           starSelectedArr=null;
+           displayStarsandRunways();
+            }
+          }
+             
+         }
+             
              if(state.equals("transSelectDepStar")){
+               
+               if(arrivalTransDep==null||arrivalTransDep.equals("")){
                arrivalTransDep=jLabel50.getText();
+               }else{
+                arrivalTransDep=""; 
+               }
+               displayStarsandRunways();
              }
+             
+              if(state.equals("transSelectStarArr")){
+               
+               if(arrivalTransArr==null||arrivalTransArr.equals("")){
+               arrivalTransArr=jLabel50.getText();
+               }else{
+                arrivalTransArr=""; 
+               }
+               displayStarsandRunways();
+             }
+             
+             
+             
             
+             
+             
              if(state.equals("rtepagedep1")){
                  
              if(sidSelected==null){
@@ -2102,42 +2156,17 @@ public void performAction(String x, String y, String z){
              
          }
              if(state.equals("transselect")){
-                 if(TransSelected==null&&(jLabel50.getText().equals("")==false||jLabel50.getText().equals(null))==false){
+                 if(TransSelected==null||TransSelected.equals("")){
+                   if(jLabel50.getText().equals("")==false){
               TransSelected=jLabel50.getText();   
-                 jLabel50.setText(jLabel50.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel50.getText();   
-                 jLabel50.setText(jLabel50.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected!=null){
-                     if(jLabel50.getText().contains("<SEL>")){
-                       String text1=jLabel50.getText().replaceAll("<SEL>","");
-                       jLabel50.setText(text1);
-                       
-                     TransSelected=null;
-                     
-                     }else if((jLabel50.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel50.getText(); 
-                       jLabel50.setText(jLabel50.getText()+"<SEL>");
-                       
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                     }
-                  
-                     
-                     
+                   }
+                 }else{
+                  TransSelected=null;
+                 }
+                  sidAndRunwayDisplayer();   
                  }
                  
-             }
+             
              
              if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
@@ -2189,10 +2218,34 @@ public void performAction(String x, String y, String z){
              
          }
               
+               if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
+           starSelectedArr=jLabel53.getText();
+           displayStarsandRunways();
+          }else{
+            if(state.equals("transSelectStarArr")==false){
+           starSelectedArr=null;
+           displayStarsandRunways();
+            }
+          }
+             
+         }
+              
                 if(state.equals("transSelectDepStar")){
+                  if(arrivalTransDep==null||arrivalTransDep.equals("")){
                arrivalTransDep=jLabel53.getText();
+                  }
+                  displayStarsandRunways();
              }
               
+                if(state.equals("transSelectStarArr")){
+                  if(arrivalTransArr==null||arrivalTransArr.equals("")){
+               arrivalTransArr=jLabel53.getText();
+                  }
+                  displayStarsandRunways();
+             }
+                
+                
                if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
           if(airwaysList.containsKey(jTextField1.getText())==true){
@@ -2211,39 +2264,9 @@ public void performAction(String x, String y, String z){
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel53.getText().equals("")==false||jLabel53.getText().equals(null))==false){
               TransSelected=jLabel53.getText();   
-                 jLabel53.setText(jLabel53.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel53.getText();   
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText()+"<SEL>");
-                 }else if(TransSelected!=null){
-                     if(jLabel53.getText().contains("<SEL>")){
-                       String text1=jLabel53.getText().replaceAll("<SEL>","");
-                       jLabel53.setText(text1);
-                       
-                     TransSelected=null;
-                     
-                     }else if((jLabel53.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel53.getText(); 
-                       jLabel53.setText(jLabel53.getText()+"<SEL>");
-                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-             
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                     }
-                  
-                     
-                     
+
                  }
-                 
+                 sidAndRunwayDisplayer();
              }
              
              
@@ -2294,47 +2317,38 @@ public void performAction(String x, String y, String z){
              
          }
               
+               if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
+           starSelectedArr=jLabel56.getText();
+           displayStarsandRunways();
+          }else{
+            if(state.equals("transSelectStarArr")==false){
+           starSelectedArr=null;
+           displayStarsandRunways();
+            }
+          }
+             
+         }
+              
                 if(state.equals("transSelectDepStar")){
+                  if(arrivalTransDep==null||arrivalTransDep.equals("")){
                arrivalTransDep=jLabel56.getText();
+                  }
+                  displayStarsandRunways();
+             }
+                if(state.equals("transSelectStarArr")){
+                  if(arrivalTransArr==null||arrivalTransArr.equals("")){
+               arrivalTransArr=jLabel56.getText();
+                  }
+                  displayStarsandRunways();
              }
               
             
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel56.getText().equals("")==false||jLabel56.getText().equals(null))==false){
               TransSelected=jLabel56.getText();   
-                 jLabel56.setText(jLabel56.getText()+"<SEL>");
-                 
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel56.getText();   
-                 jLabel56.setText(jLabel56.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected!=null){
-                     if(jLabel56.getText().contains("<SEL>")){
-                       String text1=jLabel56.getText().replaceAll("<SEL>","");
-                       jLabel56.setText(text1);
-                       
-                     TransSelected=null;
-                     
-                     }else if((jLabel56.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel56.getText(); 
-                       jLabel56.setText(jLabel56.getText()+"<SEL>");
-                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                     }
-                  
-                     
-                     
                  }
-                 
+                 sidAndRunwayDisplayer();
              }
              
             break;
@@ -2370,46 +2384,39 @@ public void performAction(String x, String y, String z){
           }
              
          }
-               if(state.equals("transSelectDepStar")){
-               arrivalTransDep=jLabel59.getText();
-             }
               
+              if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
+           starSelectedArr=jLabel59.getText();
+           displayStarsandRunways();
+          }else{
+            if(state.equals("transSelectDArrStar")){
+           starSelectedArr=null;
+           displayStarsandRunways();
+            }
+          }
+             
+         }
+              
+               if(state.equals("transSelectDepStar")){
+                 if(arrivalTransDep==null||arrivalTransDep.equals("")){
+               arrivalTransDep=jLabel59.getText();
+                 }
+                 displayStarsandRunways();
+             }
+              if(state.equals("transSelectStarArr")){
+                  if(arrivalTransArr==null||arrivalTransArr.equals("")){
+               arrivalTransArr=jLabel59.getText();
+                  }
+                  displayStarsandRunways();
+             }
               
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel59.getText().equals("")==false||jLabel59.getText().equals(null))==false){
               TransSelected=jLabel59.getText();   
-                 jLabel59.setText(jLabel59.getText()+"<SEL>");
-                 jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel59.getText();   
-                 jLabel59.setText(jLabel59.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected!=null){
-                     if(jLabel59.getText().contains("<SEL>")){
-                       String text1=jLabel59.getText().replaceAll("<SEL>","");
-                       jLabel59.setText(text1);
-                       
-                     TransSelected=null;
-                      
-                     }else if((jLabel59.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel59.getText(); 
-                       jLabel59.setText(jLabel59.getText()+"<SEL>");
-                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 
-                     }
-                  
-                     
-                     
+
                  }
-                 
+                 sidAndRunwayDisplayer();
              }
              if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
@@ -2437,6 +2444,14 @@ public void performAction(String x, String y, String z){
               }
               
             }
+         if(panelSelector.retrieveProperty("column2").equals("selectTransApprArr")){
+              if(arrivalApproachArr!=null||arrivalApproachArr.equals("")==false){
+             arrivalApproachArr="";
+             done=true;
+             displayApproaches();
+              }
+              
+            }
             
             if(panelSelector.retrieveProperty("column2").equals("selectApprDep")){
               if(done==false){
@@ -2446,6 +2461,19 @@ public void performAction(String x, String y, String z){
               }else if(arrivalApprDep!=null||arrivalApprDep.equals("")==false){
                 arrivalApprTransDep="";
                arrivalApprDep="";
+               displayApproaches();
+              }
+              
+              }
+            }
+             if(panelSelector.retrieveProperty("column2").equals("selectApprArr")){
+              if(done==false){
+              if(arrivalApproachArr==null||arrivalApproachArr.equals("")){
+                arrivalApproachArr=jLabel62.getText();
+                displayApproaches();
+              }else if(arrivalApproachArr!=null||arrivalApproachArr.equals("")==false){
+                arrivalApprTransArr="";
+               arrivalApproachArr="";
                displayApproaches();
               }
               
@@ -2491,6 +2519,28 @@ public void performAction(String x, String y, String z){
              
              
              panelSelector.writeProperty("dest", text);jTextField1.setText("");
+             
+             if(airportCachedOnceArr==false){
+                cacheAirportDep=panelSelector.retrieveProperty("dest");
+                 airportCachedOnceArr=true;
+                 getDataStarsArr();
+                 
+             } 
+               if(airportCachedOnceArr==true){
+               if(cacheAirportArrival.equals(panelSelector.retrieveProperty("dest"))==false){
+                 cacheAirportArrival=panelSelector.retrieveProperty("dest");
+                 if(rawStarsArr!=null||rawStarsArr.isEmpty()==false){
+                 rawStarsArr.clear();
+                 }
+                 if(starsTransition!=null||starsTransition.isEmpty()==false){
+                 starsTransition.clear();
+                 }
+          
+                 getDataStarsArr();
+               }
+             }
+             
+             
              }else{
                  jTextField1.setText("Entry Invalid - Airport Not Found");
              }
@@ -2517,8 +2567,10 @@ public void performAction(String x, String y, String z){
                 }
             }
              if(state.equals("deparr")){
+               buttonP=1;
                  panelSelector.writeProperty("panelstate", "stardep");
              displayStarsandRunways();
+             displayApproaches();
              
          }
             break;
@@ -2544,7 +2596,33 @@ public void performAction(String x, String y, String z){
               
             }
             
+             if(panelSelector.retrieveProperty("column2").equals("selectTransApprArr")){
+              if(arrivalApprTransArr==null||arrivalApprTransArr.equals("")){
+             arrivalApprTransArr=jLabel64.getText(); 
+              }else{
+               arrivalApprTransArr=""; 
+              }
+              displayApproaches();
+            }
             
+            if(panelSelector.retrieveProperty("column2").equals("selectApprArr")){    //
+              if(arrivalApproachArr==null||arrivalApproachArr.equals("")){
+               arrivalApproachArr=jLabel64.getText();
+              }else{
+//               arrivalApprTransDep=jLabel64.getText();
+              }
+               displayApproaches();
+              
+              
+            }
+            
+             if(state.equals("deparr")){
+               buttonP=2;
+                 panelSelector.writeProperty("panelstate", "stararr");
+             displayStarsandRunways();
+             displayApproaches();
+             
+         }
             
           if(state.equals("rte")){panelSelector.writeProperty("fltno", text);jTextField1.setText("");}
             if(state.equals("index")){}
@@ -2618,6 +2696,25 @@ displayApproaches();
               
             }
              
+              if(panelSelector.retrieveProperty("column2").equals("selectTransApprArr")){
+              if(arrivalApprTransArr==null||arrivalApprTransArr.equals("")){
+             arrivalApprTransArr=jLabel66.getText(); 
+              }else{
+               arrivalApprTransDep=""; 
+              }
+              displayApproaches();
+            }             
+             
+             if(panelSelector.retrieveProperty("column2").equals("selectApprArr")){
+              if(arrivalApproachArr==null||arrivalApproachArr.equals("")){
+                arrivalApproachArr=jLabel66.getText();
+              }else{
+//                arrivalApprTransDep=jLabel66.getText();
+              }
+displayApproaches();
+              
+            }
+             
              
              
           if(state.equals("rte")){panelSelector.writeProperty("coroute", "Not Implemented Yet");}
@@ -2677,10 +2774,29 @@ displayApproaches();
               }
               displayApproaches();
             }
+            if(panelSelector.retrieveProperty("column2").equals("selectTransApprArr")){
+              if(arrivalApprTransArr==null||arrivalApprTransArr.equals("")){
+             arrivalApprTransArr=jLabel68.getText(); 
+              }else{
+               arrivalApprTransArr=""; 
+              }
+              displayApproaches();
+            }
             
             if(panelSelector.retrieveProperty("column2").equals("selectApprDep")){
               if(arrivalApprDep==null||arrivalApprDep.equals("")){
                 arrivalApprDep=jLabel68.getText();
+              }else{
+//                
+//                arrivalApprTransDep=jLabel68.getText();
+              }
+              displayApproaches();
+              
+            }
+            
+            if(panelSelector.retrieveProperty("column2").equals("selectApprArr")){
+              if(arrivalApproachArr==null||arrivalApproachArr.equals("")){
+                arrivalApproachArr=jLabel68.getText();
               }else{
 //                
 //                arrivalApprTransDep=jLabel68.getText();
@@ -2844,6 +2960,8 @@ private void displayDuplicates(String text){
   List<String> Frequencies=new ArrayList<>();
   List<String> wptType=new ArrayList<>();
   
+  
+//  navListF.forEach((v) -> {wptsLatLong.add(v.getLatitude()) ; wptsLatLong.add(v.getLongitude());});
   
   for(int i=0;i<navList.size();i++){
   wptsLatLong.add(navListF.get(i).getLatitude());
@@ -3113,7 +3231,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSele
     
 }
 
-if(panelSelector.retrieveProperty("column2").equals("selectApprDep")){
+if(panelSelector.retrieveProperty("column2").equals("selectApprDep")||panelSelector.retrieveProperty("column2").equals("selectApprArr")){
  listRun=0; 
  
 }
@@ -3121,13 +3239,65 @@ if(panelSelector.retrieveProperty("column2").equals("selectApprDep")){
 
 if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
  listStarDep-=5;
+ listTransStarDep=0;
+ 
+  if(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar"))){
  if(listRun-5==listStarDep){
  listRun-=5;
+ displayApproaches();
+}
+ }
+
+ displayStarsandRunways();
+}
+
+if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+ listStarArr-=5;
+ listTransStarArr=0;
+ 
+  if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr"))){
+ if(listRun-5==listStarArr){
+ listRun-=5;
+ displayApproaches();
+}
+ }
+
+ displayStarsandRunways();
+}
+
+if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
+  listTransStarArr-=4;
+  if(listTransStarArr<=0){
+   listTransStarArr=0; 
+  }
+ listRun-=5;
+    if(listRun<0){
+     listRun=0; 
+    }
+ 
+ displayApproaches();
+displayStarsandRunways();
 }
 
 
+if(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
+  listTransStarDep-=4;
+ listRun-=5;
+    if(listRun<0){
+     listRun=0; 
+    }
  
- displayStarsandRunways();
+ displayApproaches();
+
+}
+
+ if(panelSelector.retrieveProperty("column2").equals("selectTransApprArr")){
+  if(listApprArrTrans<=0){
+  listApprArrTrans=0;
+ }else{
+    listApprArrTrans-=4;
+  }
+ displayApproaches();
 }
 
  if(panelSelector.retrieveProperty("column2").equals("selectTransApprDep")){
@@ -3177,24 +3347,73 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
 }
 if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSelector.retrieveProperty("panelstate").equals("transselect")){
     listing+=5;
-    
+    if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+      if(listrun+5<sidsDep.get(sidSelected).getRunways().size()){
+    listrun+=5;
+      }
+    }
     sidAndRunwayDisplayer();
     
 }
+
 if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
  listStarDep+=5;
+ listTransStarDep=0;
+ if(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar"))){
  if(listRun<appr.size()+5){
  listRun+=5;
+ displayApproaches();
 }
+ }
  displayStarsandRunways();
 }
+
+if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+ listStarArr+=5;
+ listTransStarArr=0;
+ if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr"))){
+ if(listRun<apprArr.size()+5){
+ listRun+=5;
+ displayApproaches();
+}
+ }
+ displayStarsandRunways();
+}
+
+if(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
+  listTransStarDep+=4;
+  if(listRun<appr.size()+5){
+ listRun+=5;
+ displayApproaches();
+}
+}
+
+if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
+  listTransStarArr+=4;
+  if(listTransStarArr>starsArr.get(starSelectedArr).getTrans().size()){
+   listTransStarArr-=4; 
+  }
+  if(listRun<apprArr.size()+5){
+ listRun+=5;
+ displayApproaches();
+}
+  displayStarsandRunways();
+}
+
 if(panelSelector.retrieveProperty("column2").equals("selectTransApprDep")){
   if(listApprDepTrans<appr.get(key).getTrans().length){
  listApprDepTrans+=4;
  } 
   displayApproaches();
 }
-if(panelSelector.retrieveProperty("column2").equals("selectApprDep")){
+if(panelSelector.retrieveProperty("column2").equals("selectTransApprArr")){
+  if(listApprDepTrans<apprArr.get(key).getTrans().length){
+ listApprArrTrans+=4;
+ } 
+  displayApproaches();
+}
+
+if(panelSelector.retrieveProperty("column2").equals("selectApprDep")||panelSelector.retrieveProperty("column2").equals("selectApprArr")){
  listRun=0; 
 
 }
@@ -3225,7 +3444,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
     }
 
     private void deparr1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deparr1MousePressed
-    
+    panelSelector.writeProperty("column2","nulll");
         if(panelSelector.retrieveProperty("origin").equals("----")==false  &&panelSelector.retrieveProperty("dest").equals("----")==false){
         panelSelector.writePanelState("deparr");
         }
@@ -3245,7 +3464,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
        
         panelSelector.writeProperty("panelstate","posinit");
         
-        calcWpts("P155","UMBAG");
+       // calcWpts("P155","UMBAG");
     }//GEN-LAST:event_InitRefMousePressed
     
     public void getATS(){
@@ -3290,6 +3509,20 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
   
     
     
+    private void getDataStarsArr(){
+      Thread pullData=new Thread(() ->  {
+        rawStarsArr=accessLogic.getStars(panelSelector.retrieveProperty("dest"));
+        for(int i=0;i<rawStarsArr.size();i++){
+        starsTransition=accessLogic.getTransition(panelSelector.retrieveProperty("dest"),rawStarsArr.get(i));
+        starsArr.put(rawStarsArr.get(i),new Stars(panelSelector.retrieveProperty("dest"),rawStarsArr.get(i),starsTransition));
+        }
+        
+        apprArr=accessLogic.getApprRun(panelSelector.retrieveProperty("dest"));
+      });
+      pullData.start();
+    }
+    
+    
     private void getDataStars(){
      
       Thread pullData=new Thread(() -> {
@@ -3304,8 +3537,8 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
             }
             
          appr=accessLogic.getApprRun(panelSelector.retrieveProperty("origin"));
-         System.out.println(appr);
-          System.out.println(appr==null);
+//         System.out.println(appr);
+//          System.out.println(appr==null);
         }
         
       );
@@ -3455,6 +3688,8 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
       * *********************/
     
     public void displayApproaches(){
+      
+      if(buttonP==1){
       if(appr!=null){ 
         
         if(arrivalApprDep==null||arrivalApprDep==""){
@@ -3470,16 +3705,16 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
                     }catch(Exception e){jLabel62.setText("");}
                      try{
                 jLabel64.setText(appr.get(1).getIdent());
-                    }catch(ArrayIndexOutOfBoundsException e){jLabel64.setText("");}
+                    }catch(Exception e){jLabel64.setText("");}
                 try{
                 jLabel66.setText(appr.get(2).getIdent());
-                    }catch(ArrayIndexOutOfBoundsException e){jLabel66.setText("");}      
+                    }catch(Exception e){jLabel66.setText("");}      
                  try{
                 jLabel68.setText(appr.get(3).getIdent());
-                    }catch(ArrayIndexOutOfBoundsException e){jLabel68.setText("");}
+                    }catch(Exception e){jLabel68.setText("");}
                   try{
                 jLabel70.setText(appr.get(4).getIdent());
-                    }catch(ArrayIndexOutOfBoundsException e){jLabel70.setText("");}
+                    }catch(Exception e){jLabel70.setText("");}
      
                 
                 }else if(appr.size()>5){
@@ -3526,10 +3761,18 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
          jLabel62.setText("<SEL>"+arrivalApprDep);
          if(appr.get(key).getTrans().length<=4){
            panelSelector.writeProperty("column2","selectTransApprDep");
+           try{
           jLabel64.setText(appr.get(key).getTrans()[0]);
+           }catch(Exception e){jLabel64.setText("");}
+           try{
           jLabel66.setText(appr.get(key).getTrans()[1]);
+           }catch(Exception e){jLabel66.setText("");}
+           try{
           jLabel68.setText(appr.get(key).getTrans()[2]);
+           }catch(Exception e){jLabel68.setText("");}
+           try{
           jLabel70.setText(appr.get(key).getTrans()[3]);
+           }catch(Exception e){jLabel70.setText("");}
          }else{
            try{
              panelSelector.writeProperty("column2","selectTransApprDep");
@@ -3558,6 +3801,117 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
           }
         }
     }
+      }else if(buttonP==2){
+        if(arrivalApproachArr==null||arrivalApproachArr==""){
+          
+          panelSelector.writeProperty("column2","selectApprArr");
+        
+        
+       if(apprArr.size()<=5){
+                    jLabel61.setText("APPROACHES");
+                    jLabel63.setText("");
+                    try{
+                jLabel62.setText(apprArr.get(0).getIdent());
+                    }catch(Exception e){jLabel62.setText("");}
+                     try{
+                jLabel64.setText(apprArr.get(1).getIdent());
+                    }catch(Exception e){jLabel64.setText("");}
+                try{
+                jLabel66.setText(apprArr.get(2).getIdent());
+                    }catch(Exception e){jLabel66.setText("");}      
+                 try{
+                jLabel68.setText(apprArr.get(3).getIdent());
+                    }catch(Exception e){jLabel68.setText("");}
+                  try{
+                jLabel70.setText(apprArr.get(4).getIdent());
+                    }catch(Exception e){jLabel70.setText("");}
+     
+                
+                }else if(apprArr.size()>5){
+                    jLabel61.setText("APPROACHES");
+                    jLabel63.setText("");
+                     try{
+                jLabel62.setText(apprArr.get(listRun).getIdent());
+                     }catch(Exception e){jLabel62.setText((listRun<0 || listRun==0) ? apprArr.get(0).getIdent() : "" );}
+                     try{
+                jLabel64.setText(apprArr.get(listRun+1).getIdent());
+                    }catch(ArrayIndexOutOfBoundsException e){jLabel64.setText("");}
+                    catch(NullPointerException e){jLabel64.setText((listRun<0 || listRun==0) ? apprArr.get(1).getIdent() : "");}
+                try{
+                jLabel66.setText(apprArr.get(listRun+2).getIdent());
+                    }catch(ArrayIndexOutOfBoundsException e){jLabel66.setText("");}  
+                    catch(NullPointerException e){jLabel66.setText((listRun<0 || listRun==0) ? apprArr.get(2).getIdent() : "");}
+                 try{
+                jLabel68.setText(apprArr.get(listRun+3).getIdent());
+                    }catch(ArrayIndexOutOfBoundsException e){jLabel68.setText("");}
+                    catch(NullPointerException e){jLabel68.setText((listRun<0 || listRun==0) ? apprArr.get(3).getIdent() : "");}
+                  try{
+                jLabel70.setText(apprArr.get(listRun+4).getIdent());
+                    }catch(ArrayIndexOutOfBoundsException e){jLabel70.setText("");}
+                    catch(NullPointerException e){jLabel70.setText((listRun<0 || listRun==0) ? apprArr.get(4).getIdent() : "");}
+                    
+                    if(listRun<0 || listRun==0){
+                    listRun=0;
+                    }
+                }
+      
+      
+        }else{
+          if(arrivalApprTransArr.equals("")||arrivalApprTransArr==null){
+            
+          for (HashMap.Entry<Integer, Approaches> entry : apprArr.entrySet()) {
+        if (entry.getValue().getIdent().equals(arrivalApproachArr)) {
+         key=entry.getKey();
+         
+        }
+    }
+          jLabel61.setText("APPROACHES");
+          jLabel63.setText("TRANS");
+         jLabel62.setText("<SEL>"+arrivalApproachArr);
+         if(apprArr.get(key).getTrans().length<=4){
+           panelSelector.writeProperty("column2","selectTransApprArr");
+           try{
+          jLabel64.setText(apprArr.get(key).getTrans()[0]);
+           }catch(Exception e){jLabel64.setText("");}
+           try{
+          jLabel66.setText(apprArr.get(key).getTrans()[1]);
+           }catch(Exception e){jLabel66.setText("");}
+           try{
+          jLabel68.setText(apprArr.get(key).getTrans()[2]);
+           }catch(Exception e){jLabel68.setText("");}
+           try{
+          jLabel70.setText(apprArr.get(key).getTrans()[3]);
+           }catch(Exception e){jLabel70.setText("");}
+         }else{
+           try{
+             panelSelector.writeProperty("column2","selectTransApprArr");
+         jLabel64.setText(apprArr.get(key).getTrans()[listApprArrTrans+0]);
+           }catch(Exception e){jLabel64.setText("");}
+           try{
+          jLabel66.setText(apprArr.get(key).getTrans()[listApprArrTrans+1]);
+         }catch(Exception e){jLabel66.setText("");}
+         try{
+          jLabel68.setText(apprArr.get(key).getTrans()[listApprArrTrans+2]);
+         }catch(Exception e){jLabel68.setText("");}
+         try{
+          jLabel70.setText(apprArr.get(key).getTrans()[listApprArrTrans+3]);
+         }catch(Exception e){jLabel70.setText("");}
+         }
+          }else if(arrivalApprTransDep.equals("")==false||arrivalApprTransDep!=null){
+            panelSelector.writeProperty("column2","selectTransApprArr");
+              jLabel61.setText("APPROACHES");
+          jLabel62.setText("<SEL>"+arrivalApproachArr);
+          jLabel63.setText("TRANS");
+          jLabel64.setText("<SEL>"+arrivalApprTransArr);
+          jLabel66.setText("");
+          jLabel68.setText("");
+          jLabel70.setText("");
+          
+          }
+          
+        }
+      }
+        
     }
     
     
@@ -3569,55 +3923,20 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
    */
   
   public void displayStarsandRunways(){
-   
-      displayApproaches();
-    
-    
+  
 
-    
-
-    /*if(starsTransition==null||starsTransition.isEmpty()||runwayAvail==null||starsDep.isEmpty()||starsDep==null||starsDep.isEmpty()){
-    for(int i=0;i<rawDataStars.size();i++){
-      if(starsTransition==null||starsTransition.isEmpty()){
-     starsTransition= accessLogic.getTransition(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
-       
-      }
-      if(runwayAvail==null||starsDep.isEmpty()){
-      runwayAvail= accessLogic.getProcstoRunways(panelSelector.retrieveProperty("origin"),rawDataStars.get(i));
-      }
-      if(starsDep==null||starsDep.isEmpty()){
-     
-     starsDep.put(rawDataStars.get(i),new Stars(panelSelector.retrieveProperty("origin"),rawDataStars.get(i),starsTransition,runwayAvail));
-      }
-   
-      
-    }
-    }*/
-      
-  /* Map<String,Stars> starsArr=new LinkedHashMap<>();
-    List<String> rawDataStars1=accessLogic.getStars(panelSelector.retrieveProperty("dest"));
-     List<String> starsTransitionArr;
-    List<String> runwayAvailArr;
-      for(int i=0;i<rawDataStars1.size();i++){
-    
-     starsTransitionArr= accessLogic.getTransition(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
-     runwayAvailArr=accessLogic.getProcstoRunways(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i));
-      starsArr.put(rawDataStars1.get(i),new Stars(panelSelector.retrieveProperty("dest"),rawDataStars1.get(i),starsTransitionArr,runwayAvailArr));
-      
-      
-    }*/
-    
-    
-    
-    
-    
       if(listStarDep>=rawDataStars.size()){
        listStarDep-=5;   
+      }
+      if(listStarArr>=rawStarsArr.size()){
+       listStarArr-=5;   
       }
       if(listStarDep<=0){
        listStarDep=0; 
       }
-      
+      if(listStarArr<=0){
+       listStarArr=0; 
+      }
       if(panelSelector.retrieveProperty("panelstate").equals("stardep")||panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
       if(rawDataStars.size()<=5){
           if(starSelectedDep==null){
@@ -3655,93 +3974,60 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
               
                String text="";
                 panelSelector.writeProperty("panelstate", "transSelectDepStar");
-//                if(appr.size()<=5){
-//                    
-//                    try{
-//                jLabel62.setText(appr.get(0).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel62.setText("");}
-//                     try{
-//                jLabel64.setText(appr.get(1).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel64.setText("");}
-//                try{
-//                jLabel66.setText(appr.get(2).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel66.setText("");}      
-//                 try{
-//                jLabel68.setText(appr.get(3).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel68.setText("");}
-//                  try{
-//                jLabel70.setText(appr.get(4).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel70.setText("");}
-//     
-//                
-//                }else if(appr.size()>5){
-//                    
-//                     try{
-//                jLabel62.setText(appr.get(listRun).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel62.setText("");}
-//                     try{
-//                jLabel64.setText(appr.get(listRun+1).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel64.setText("");}
-//                try{
-//                jLabel66.setText(appr.get(listRun+2).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel66.setText("");}      
-//                 try{
-//                jLabel68.setText(appr.get(listRun+3).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel68.setText("");}
-//                  try{
-//                jLabel70.setText(appr.get(listRun+4).getIdent());
-//                    }catch(ArrayIndexOutOfBoundsException e){jLabel70.setText("");}
-//                    
-//                    
-//                }
+   jLabel51.setText("STARS");
+           jLabel52.setText(starSelectedDep+"<SEL>");   
+              jLabel49.setText("TRANS");
                 
-                
+              if(arrivalTransDep==null||arrivalTransDep.equals("")){
               if(starsDep.get(starSelectedDep).getTrans().size()<=4){
                  
                  
-              jLabel51.setText("STAR");
-           jLabel52.setText(starSelectedDep+"<SEL>");   
-              jLabel49.setText("TRANS");
+           
               try{
-                  text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(0);
+                  text= starsDep.get(starSelectedDep).getTrans().get(0);
               jLabel50.setText(text);
               }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
               try{
-                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(1);
+                   text=starsDep.get(starSelectedDep).getTrans().get(1);
                jLabel53.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
               try{
-                   text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(2);
+                   text=starsDep.get(starSelectedDep).getTrans().get(2);
                 jLabel56.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
               try{
-                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(4);
+                   text= starsDep.get(starSelectedDep).getTrans().get(4);
                  jLabel59.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
               
           } else if(starsDep.get(starSelectedDep).getTrans().size()>4){
-            
-               jLabel51.setText("STAR");
-           jLabel52.setText(starSelectedDep+"<SEL>");   
-              jLabel49.setText("Transitions");
+           
               try{
                 
-                   text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep);
+                   text=starsDep.get(starSelectedDep).getTrans().get(listTransStarDep);
               jLabel50.setText(text);
               }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
               try{
-                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+1);
+                   text=starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+1);
                jLabel53.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
               try{
-                    text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
+                    text=starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
                 jLabel56.setText(starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2));
               }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
               try{
-                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
+                   text=starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
                  jLabel59.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
           }
+              }else{
+               jLabel50.setText(arrivalTransDep+"<SEL>"); 
+                jLabel53.setText("");
+                jLabel56.setText("");
+                jLabel59.setText("");
+              }
+          
+          //
                 
           }
           
@@ -3780,108 +4066,126 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
           jLabel59.setText(rawDataStars.get(listStarDep+4));
           }catch(IndexOutOfBoundsException e){jLabel58.setText(""); jLabel59.setText("");}
           }
-//          else if(starSelectedDep!=null){
-//              
-//              
-//              
-//               String text="";
-//                panelSelector.writeProperty("panelstate", "transSelectDepStar");
-//                
-//                 if(starsDep.get(starSelectedDep).getRunways().size()<=5){
-//                    System.out.println(starsDep.get(starSelectedDep).getRunways());
-//                    try{
-//                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(0));
-//                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
-//                     try{
-//                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(1));
-//                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
-//                try{
-//                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(2));
-//                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
-//                 try{
-//                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(3));
-//                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
-//                  try{
-//                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(4));
-//                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
-//     
-//                
-//                }else if(starsDep.get(starSelectedDep).getRunways().size()>5){
-//                    
-//                     try{
-//                jLabel62.setText(starsDep.get(starSelectedDep).getRunways().get(listRun));
-//                    }catch(IndexOutOfBoundsException e){jLabel62.setText("");}
-//                     try{
-//                jLabel64.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+1));
-//                    }catch(IndexOutOfBoundsException e){jLabel64.setText("");}
-//                try{
-//                jLabel66.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+2));
-//                    }catch(IndexOutOfBoundsException e){jLabel66.setText("");}      
-//                 try{
-//                jLabel68.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+3));
-//                    }catch(IndexOutOfBoundsException e){jLabel68.setText("");}
-//                  try{
-//                jLabel70.setText(starsDep.get(starSelectedDep).getRunways().get(listRun+4));
-//                    }catch(IndexOutOfBoundsException e){jLabel70.setText("");}
-//                    
-//                    
-//                }
-//                
-//                
+
           else if(starSelectedDep!=null){
-              if(starsDep.get(starSelectedDep).getTrans().size()<=4){
-                 String text="";
+             String text="";
                   panelSelector.writeProperty("panelstate", "transSelectDepStar");
               jLabel51.setText("STARS");
            jLabel52.setText(starSelectedDep+"<SEL>");   
               jLabel49.setText("Transitions");
+              if(arrivalTransDep==null||arrivalTransDep.equals("")){
+              if(starsDep.get(starSelectedDep).getTrans().size()<=4){
+                
+              
+              
               try{
-                  text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(0);
+                  text=starsDep.get(starSelectedDep).getTrans().get(0);
               jLabel50.setText(text);
               }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
               try{
-                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(1);
+                   text=starsDep.get(starSelectedDep).getTrans().get(1);
                jLabel53.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
               try{
-                   text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(2);
+                   text=starsDep.get(starSelectedDep).getTrans().get(2);
                 jLabel56.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
               try{
-                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(4);
+                   text=starsDep.get(starSelectedDep).getTrans().get(4);
                  jLabel59.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
               
           } else if(starsDep.get(starSelectedDep).getTrans().size()>4){
-            String text="";
+           // String text="";
               panelSelector.writeProperty("panelstate", "transSelectDepStar");
                jLabel51.setText("STAR");
            jLabel52.setText(starSelectedDep+"<SEL>");   
               jLabel49.setText("Transitions");
               try{
                 
-                   text= jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep);
+                   text= starsDep.get(starSelectedDep).getTrans().get(listTransStarDep);
               jLabel50.setText(text);
               }catch(IndexOutOfBoundsException e){ jLabel50.setText("");}
               try{
-                   text= jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+1);
+                   text=starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+1);
                jLabel53.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel53.setText("");}
               try{
-                    text= jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
+                    text= starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+2);
                 jLabel56.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel56.setText("");}
               try{
-                   text= jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
+                   text=starsDep.get(starSelectedDep).getTrans().get(listTransStarDep+3);
                  jLabel59.setText(text);
               }catch(IndexOutOfBoundsException e){jLabel59.setText("");}
           }
+          
+              }else{
+                jLabel50.setText(arrivalTransDep+"<SEL>");
+                jLabel53.setText("");
+                jLabel56.setText("");
+                jLabel59.setText("");
+                
+              }
+          
           }
           }
           
       }
-      else if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+      else if(panelSelector.retrieveProperty("panelstate").equals("stararr")||panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
+        if(starSelectedArr==null||starSelectedArr.equals("")){
+            panelSelector.writeProperty("panelstate", "stararr");
+            jLabel51.setText("STARS");
+            
+           try{
+              
+          jLabel52.setText(rawStarsArr.get(listStarArr));
+          }catch(IndexOutOfBoundsException e){  jLabel52.setText("");}
+          
+           try{
+              jLabel49.setText("");
+          jLabel50.setText(rawStarsArr.get(listStarArr+1));
+          }catch(IndexOutOfBoundsException e){jLabel49.setText(""); jLabel50.setText("");}
+           
+            try{
+              jLabel54.setText("");
+          jLabel53.setText(rawStarsArr.get(listStarArr+2));
+          }catch(IndexOutOfBoundsException e){jLabel54.setText(""); jLabel53.setText("");}
+          
       
+      try{
+              jLabel55.setText("");
+          jLabel56.setText(rawStarsArr.get(listStarArr+3));
+          }catch(IndexOutOfBoundsException e){jLabel55.setText(""); jLabel56.setText("");}
+       try{
+              jLabel58.setText("");
+          jLabel59.setText(rawStarsArr.get(listStarArr+4));
+          }catch(IndexOutOfBoundsException e){jLabel58.setText(""); jLabel59.setText("");}
+        }else{
+          panelSelector.writeProperty("panelstate", "transSelectStarArr");
+          jLabel51.setText("STARS");
+          jLabel52.setText(starSelectedArr+"<SEL>");
+          jLabel49.setText("TRANS");
+          if(arrivalTransArr==null||arrivalTransArr.equals("")){
+          try{
+          jLabel50.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr));
+        }catch(Exception e){jLabel50.setText("");}
+        try{
+          jLabel53.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr+1));
+        }catch(Exception e){jLabel53.setText("");}
+        try{
+          jLabel56.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr+2));
+        }catch(Exception e){jLabel56.setText("");}
+          try{
+          jLabel59.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr+3));
+        }catch(Exception e){jLabel59.setText("");}
+          }else{
+          jLabel50.setText(arrivalTransArr+"<SEL>");
+          jLabel53.setText("");
+          jLabel56.setText("");
+          jLabel59.setText("");
+          }
+        }
       
       }
   }
@@ -4542,6 +4846,7 @@ latlongBearing++;
                     
                     
                     if(runwaySelected==null){
+                       jLabel61.setText("RUNWAYS");
                       try{
                        jLabel62.setText(sidsDep.get(sidSelected).getRunways().get(listrun)); 
                       }catch(Exception e){}
@@ -4568,23 +4873,26 @@ latlongBearing++;
                      jLabel70.setText("");
                     }
                     
-                    
+                    if(TransSelected==null){
+                      jLabel52.setText(sidSelected + "<SEL>");
+                        jLabel49.setText("TRANS");
+                        panelSelector.writeProperty("panelstate", "transselect");
                     if (Transitions.size() <= 4) {
-                        jLabel52.setText(sidSelected + "<SEL>");
+                        
                         try {
-                            String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() :sidsDep.get(sidSelected).getTransitions().get(0);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(0);
                             jLabel50.setText(text);
                         } catch (Exception e) {
                             jLabel50.setText("");
                         }
                         try {
-                            String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() :sidsDep.get(sidSelected).getTransitions().get(1);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(1);
                             jLabel53.setText(text);
                         } catch (Exception e) {
                             jLabel53.setText("");
                         }
                         try {
-                            String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : sidsDep.get(sidSelected).getTransitions().get(2);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(2);
                             jLabel56.setText(text);
 
 
@@ -4592,7 +4900,7 @@ latlongBearing++;
                             jLabel56.setText("");
                         }
                         try {
-                            String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : sidsDep.get(sidSelected).getTransitions().get(3);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(3);
                             jLabel59.setText(text);
 
 
@@ -4601,22 +4909,22 @@ latlongBearing++;
                         }
                     }
                     if (Transitions.size() > 4) {
-                        jLabel52.setText(sidSelected + "<SEL>");
-                        panelSelector.writeProperty("panelstate", "transselect");
+                        
+                        
                         try {
-                            String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(listtrans);
                             jLabel50.setText(text);
                         } catch (Exception e) {
                             jLabel50.setText("");
                         }
                         try {
-                            String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans+1);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(listtrans+1);
                             jLabel53.setText(text);
                         } catch (Exception e) {
                             jLabel53.setText("");
                         }
                         try {
-                            String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans+2);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(listtrans+2);
                             jLabel56.setText(text);
 
 
@@ -4624,13 +4932,23 @@ latlongBearing++;
                             jLabel56.setText("");
                         }
                         try {
-                            String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans+3);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(listtrans+3);
                             jLabel59.setText(text);
 
 
                         } catch (Exception e) {
                             jLabel59.setText("");
                         }
+                    }
+                    }else{
+                      jLabel51.setText("SIDS");
+                      jLabel52.setText(sidSelected+"<SEL>");
+                      jLabel49.setText("TRANS");
+                      jLabel50.setText(TransSelected+"<SEL>");
+                      jLabel53.setText("");
+                      jLabel56.setText("");
+                      jLabel59.setText("");
+                      
                     }
                 
 
@@ -4682,8 +5000,9 @@ latlongBearing++;
             //    System.out.println("NO SID HERE");
             }
             if (sidSelected != null) {
-              
+              panelSelector.writeProperty("panelstate", "transselect");
               if(runwaySelected==null){
+                jLabel61.setText("RUNWAYS");
                   try{
                        jLabel62.setText(sidsDep.get(sidSelected).getRunways().get(listrun)); 
                       }catch(Exception e){e.printStackTrace();}
@@ -4710,26 +5029,26 @@ latlongBearing++;
                      jLabel70.setText("");
                     }
                     
-            
+              if(TransSelected==null){
                 if (Transitions.size() <= 4) {
                     panelSelector.writeProperty("panelstate", "transselect");
                     jLabel51.setText("SIDS");
                     jLabel52.setText(sidSelected + "<SEL>");
                     jLabel49.setText("TRANS");
                     try {
-                        String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : sidsDep.get(sidSelected).getTransitions().get(0);
+                        String text =  sidsDep.get(sidSelected).getTransitions().get(0);
                         jLabel50.setText(text);
                     } catch (Exception e) {
                         jLabel50.setText("");
                     }
                     try {
-                        String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : sidsDep.get(sidSelected).getTransitions().get(1);
+                        String text =sidsDep.get(sidSelected).getTransitions().get(1);
                         jLabel53.setText(text);
                     } catch (Exception e) {
                         jLabel53.setText("");
                     }
                     try {
-                        String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : sidsDep.get(sidSelected).getTransitions().get(2);
+                        String text =sidsDep.get(sidSelected).getTransitions().get(2);
                         jLabel56.setText(text);
 
 
@@ -4737,7 +5056,7 @@ latlongBearing++;
                         jLabel56.setText("");
                     }
                     try {
-                        String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : sidsDep.get(sidSelected).getTransitions().get(3);
+                        String text =sidsDep.get(sidSelected).getTransitions().get(3);
                         jLabel59.setText(text);
 
 
@@ -4780,7 +5099,18 @@ latlongBearing++;
                         jLabel59.setText("");
                     }
                 }
+            }else{
+                      jLabel51.setText("SIDS");
+                      jLabel52.setText(sidSelected+"<SEL>");
+                      jLabel49.setText("TRANS");
+                      jLabel50.setText(TransSelected+"<SEL>");
+                      jLabel53.setText("");
+                      jLabel56.setText("");
+                      jLabel59.setText("");
+                      
+                    }
             }
+            
 
         }
     }

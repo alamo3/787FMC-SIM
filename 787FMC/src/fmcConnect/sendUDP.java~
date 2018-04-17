@@ -1,0 +1,29 @@
+package fmcConnect;
+
+
+import java.net.*;
+
+class sendUDP{
+  
+ byte [] sendData;
+ InetAddress udpServer;
+ const int PORT;
+ DatagramSocket sendSocket;
+ 
+ sendUDP(){
+    sendData = new byte[1024];
+    udpServer = InetAddress.getByName("127.0.0.1");
+    PORT=52000;
+    sendSocket = new DatagramSocket(PORT);
+ }
+ 
+ public void sendString(String data){
+   sendData= data.getBytes();
+  DatagramPacket packet = new DatagramPacket(sendData,sendData.length,udpServer,PORT);
+  sendSocket.send(packet);
+   
+ }
+ 
+ 
+ 
+}

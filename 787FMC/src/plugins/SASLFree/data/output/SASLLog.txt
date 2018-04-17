@@ -1,0 +1,9 @@
+[787FMC INFO]: Path to module: C:\X-Plane 11/Aircraft/Laminar Research/B7879_XP11 - Copy/plugins/SASLFree/data/modules/main.lua
+[787FMC INFO]: Loading module...
+[787FMC INFO]:  [LUA]: loading	module
+[787FMC INFO]:  [LUA]: loading	FMS
+[787FMC INFO]:  [LUA]: "FMS"	FMS
+[787FMC INFO]:  [LUA]: "FMS"	Lua 5.1
+[787FMC INFO]:  [LUA]: "FMS"	I'm here 1
+[787FMC INFO]: Loading cursors...
+[787FMC INFO]: Module loaded

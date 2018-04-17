@@ -1,0 +1,42 @@
+package fmcConnect;
+
+
+import nasaConnect.*;
+import logic.*;
+import nav.*;
+
+
+public class Ident{
+  
+  String title="IDENT";
+  String line1A="MODEL";
+  String line1B="787-9";
+  String line2A="NAVDATA";
+  String line2B="NAVIGRAPH 1801";
+  String line3A"";
+  String line3B="";
+  String line4A="OP PROGRAM";
+  String line4B="OPO2018";
+  String line5A="";
+  String line5B="";
+  String line6="< INDEX";
+  String line7A="ENG RATING";
+  String line7B="GENX 1B-64";
+  String line8A="ACTIVE";
+  String line8B="JAN01FEB01/18";
+  String line9A="";
+  String line9B="";
+  String line10A="";
+  String line10B="";
+  String line11A="DRAG/FF";
+  String line11B="+0.0/0.0";
+  String line12="POS INIT >";
+  
+  
+  
+  
+  
+  
+  
+  
+}

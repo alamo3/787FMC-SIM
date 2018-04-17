@@ -1,0 +1,30 @@
+import nav.*;
+import logic.*;
+import java.util.*;
+import java.io.*;
+
+class testRTE{
+  
+  public static void main(String args[]){ 
+  
+  public static Map<String, Airways> airwaysList=new LinkedHashMap<>();
+  
+  
+        
+        try(FileInputStream fis=new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/airwaysFinal.ser"); ObjectInputStream ois=new ObjectInputStream(fis)){
+          
+          airwaysList=(LinkedHashMap)ois.readObject();
+          ois.close();
+          fis.close();
+          
+        }catch(IOException e){e.printStackTrace();}
+        catch(ClassNotFoundException f){f.printStackTrace();}
+        System.out.println("ATS IMPORTED");
+  
+  }
+  
+  
+  
+  
+  
+}

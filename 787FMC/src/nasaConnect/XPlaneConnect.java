@@ -23,7 +23,7 @@
 //    PRIOR RECIPIENT, TO THE EXTENT PERMITTED BY LAW. RECIPIENT'S SOLE REMEDY FOR ANY SUCH MATTER
 //    SHALL BE THE IMMEDIATE, UNILATERAL TERMINATION OF THIS AGREEMENT.
 
-package nasaConnect;
+package gov.nasa.xpc;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

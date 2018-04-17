@@ -1,0 +1,37 @@
+IF I CREATE A PANELSTATE OBJECT 
+  
+  I WOULD HAVE HAVE MANY OBJECTS INSIDE IT
+  
+  FOR NOW:
+  
+  THERE WOULD BE 
+  -IDENT
+  -POS INIT
+  -POS REF
+  -RTE
+  
+  EACH OBJECT WOULD HAVE THE 10 LABELS
+  
+  SO IF I GET THE COMMAND FROM SIM FOR EXAMPLE:
+  
+  button1Pressed
+  
+  the FMC MAIN CLASS WOULD LOOK AT THE PANELSTATE, THEN PASS ON AN OBJECT TO THE BUTTON 1 CLASS
+  
+  LET'S SAY POS INIT
+  POS INIT IS PASSED INTO THE METHOD 
+  WHICH HAS A PARAMETER FOR A PANELSTATE OBJECT
+  
+  THE BUTTON CLASS TAKES THE OBJECT PASSED TO IT. THEN PASSES ITSELF AS AN OBJECT BACK TO PANELSTATE OBJECT, WHICH WOULD THEN KNOW WHICH BUTTON IS PRESSED.
+  
+  THE BUTTON CLASS WILL HAVE A METHOD CALLED PERFORM ACTION. WHICH WOULD TAKE THE NAME OF THE PANELSTATE, THEN PERFORM THE APPROPRIATE ACTION 
+  SO WHEN LSK1L IS PRESSED ON THE FMC IN THE SIM, IT SETS DATAREF fmcComm to button1L. 
+  
+  The Java program will know by this that button1L is pressed on the FMC and will take the panelstate of the aircraft 
+  
+  So i send it to the button1L class which has a perform action method. 
+  
+  The perform action will then perform methods in the panelstate object 
+  
+  So the panelstate objects need to be shared amongst the classes. 
+  

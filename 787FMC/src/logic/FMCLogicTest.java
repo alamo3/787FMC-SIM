@@ -97,7 +97,7 @@ public Map<Integer,Approaches> getApprRun(String icao){
         transitions.add(temp[3]);
       }
     }
-    System.out.println(transitions);
+   // System.out.println(transitions);
     temp1=transitions.toArray(new String[transitions.size()]);
     
     appr.put(count,new Approaches(name,temp1));
@@ -139,7 +139,7 @@ String icao=x;
    BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt"))));
    
    while((line=br.readLine())!=null){
-     if((line.contains("SID,")&&line.contains(proc))||(line.contains("STAR,")&&line.contains(proc))){
+     if(((line.contains("SID,")&&line.contains(proc))||(line.contains("STAR,")&&line.contains(proc)))&&line.contains("ALL")==false){
       transitions.add(line); 
        
        
@@ -469,91 +469,35 @@ public boolean checkAirport(String x){
   * ********************/
 
 public List<String> getSIDS(String icao){
- String[] sids;
+
  String depSelected=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
  
  
-List<Integer> listSidFound = new ArrayList<Integer>();
- int line=0;
+List<String> SIDFinal= new LinkedList<>();
+
  String buff;
- int listSize;
- int line2;
-  String ph;
-  List<String> Sids=new ArrayList<String>();
- 
- Set<String> duplicates=new HashSet<>();
- String[] Sidident;
- String[] SidsFinal;
+String [] temp;
+
  try{
 
   BufferedReader buf = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
 
  while((buff=buf.readLine()) != null){
-     line++;
-     if(buff.contains("SID,")&&buff.length()<25){
-      listSidFound.add(line);   
-     }
+  temp=splitString(buff,',');
+  if(temp[0].equals("SID")){
+    if(SIDFinal.contains(temp[1])==false){
+     SIDFinal.add(temp[1]); 
+    }
+  }
  }
 
  
- listSize=listSidFound.size();
-  line2=0;
-ph="";
- Sidident=new String[listSize];
- BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(depSelected))));
- int i=0;
- while((ph=br.readLine())!=null){
-  line2++;
-   
-   if(ph.contains("SID,")&&ph.length()<25){
-    Sidident[i]=ph; 
-     i++;
-   }
-   
- }
 
-
-for(int k=0;k<Sidident.length;k++ ){
-  Sids.add(Sidident[k].substring(4,10)); 
-   
- }
  }catch(IOException ex){
   ex.printStackTrace();
  }
  
- 
- 
- 
- 
- 
- duplicates.addAll(Sids);
- Sids.clear();
- Sids.addAll(duplicates);
-  Collections.sort(Sids);
 
-int sizeFinal=Sids.size();
- SidsFinal= new String[sizeFinal];
- for(int i=0; i<SidsFinal.length;i++){
-   
-  SidsFinal[i]=""; 
- }
- 
- for(int j=0;j<SidsFinal.length;j++){
-  SidsFinal[j]=Sids.get(j); 
-   
- }
-  for(int j=0;j<SidsFinal.length;j++){
-  SidsFinal[j]=SidsFinal[j].replaceAll(",","");
-   
- }
-  
-  List<String> SIDFinal=new LinkedList<>();
-  
-  for(int i=0;i<SidsFinal.length;i++){
-   SIDFinal.add(SidsFinal[i]); 
-    
-  }
-  
   return SIDFinal;
 }
     

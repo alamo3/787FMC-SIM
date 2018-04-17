@@ -24,7 +24,7 @@ public class WaypoimtAccess {
   }*/
     
     
-   
+   File file=new File(System.getProperty("user.dir")+"/WaypoimtAccess.java");
     
     //Calculates the distance between 2 waypoints. Requires Lat and Long for Both
   
@@ -39,7 +39,7 @@ public class WaypoimtAccess {
     List<String> altRest=new ArrayList<>();
     this.procTrans=procTrans;
     
-     String directory=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+     String directory=file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/PROC/"+icao+".txt";
         String lineCapture="";
         boolean takeLine=false;
      try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
@@ -185,7 +185,7 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
     List<String> waypoints=new ArrayList<String>();
     String airway=x;
     String exitAirway=y;
-     String directory=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+     String directory=file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/PROC/"+icao+".txt";
         String lineCapture="";
      try(BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))))){
        while((lineCapture=br.readLine())!=null){
@@ -213,7 +213,7 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
     String runwayNumber=y;
     String airport=x;
     
-    String icao=System.getProperty("user.dir")+"/navdata/navdata/Airports.txt";
+    String icao=file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/Airports.txt";
     String line="";
     List<String> runways=new ArrayList<String>();
      try{
@@ -271,7 +271,7 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
         String airport=w;
         String trans=z;
         boolean takeInput=false;
-        icao=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+        icao=file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/PROC/"+icao+".txt";
         
         int number=0;
         try{
@@ -392,7 +392,7 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
             Waypoints.addAll(duplicates);
       //    System.out.println(Waypoints);
           }
-          String directory=System.getProperty("user.dir")+"/navdata/navdata/Airports.txt";
+          String directory=file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/Airports.txt";
           try{
             BufferedReader br=new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(directory))));
             String runwayData="";
@@ -437,7 +437,11 @@ public double calcBearing (double req_lat, double req_lon, double req_lat2, doub
         String icao=w;
         String trans=z;
         boolean takeInput=false;
-        icao=System.getProperty("user.dir")+"/navdata/navdata/PROC/"+icao+".txt";
+        
+        
+       
+        
+        icao= file.getAbsoluteFile().getParent().substring(0,52)+"/navdata/navdata/PROC/"+icao+".txt";
         
         int number=0;;
         try{

@@ -14,7 +14,8 @@ import java.lang.*;
 import com.google.common.collect.*;
 import nav.*;
 import logic.*;
-
+import org.apache.commons.collections4.map.*;
+import org.apache.commons.collections4.keyvalue.*;
 
 import java.util.HashMap;
 @SuppressWarnings("unchecked")
@@ -43,6 +44,7 @@ findGpsPosition getLocation=new findGpsPosition();
 // ALL BOOLEANS
 boolean airportCachedOnceDep=false;
 boolean airportCachedOnceArr=false;
+boolean sidCachedOnce=false;
 
 //ALL LISTS , HASHMAPS and ARRAYS
 public static List<String> sids;
@@ -63,7 +65,9 @@ public static  HashMap<Integer,String[][]> rtePagesStore=new HashMap<>();
 Map<Integer,Approaches> appr=new LinkedHashMap<>();
 public static Map<Integer,Approaches> apprArr=new LinkedHashMap();
 public static List<String> rawStarsArr=new LinkedList<>();
-Map<String,Stars> starsArr=new LinkedHashMap<>();
+public static Map<String,Stars> starsArr=new LinkedHashMap<>();
+public static Map<Integer,Map<Integer,Waypoints>> wptLegs=new LinkedHashMap<>();
+public static List<String> wptLegsATS=new LinkedList<>();
     
 
 // ALL STRING VARIABLES
@@ -82,6 +86,7 @@ String arrivalApprDep="";
 String arrivalApprTransDep="";
 String arrivalApprTransArr="";
 String cacheAirportArrival="";
+String cacheSid="";
 
 //ALL INT VARIABLES
 int listStarDep=0;
@@ -101,6 +106,7 @@ int key=0;
 int listApprDepTrans=0;
 int buttonP=1;
 int listApprArrTrans=0;
+public static int entries=0;
 ////////////////////////////////////END OF VARIABLES LISTED 
 
 
@@ -1949,6 +1955,8 @@ public void performAction(String x, String y, String z){
          
          if(state.equals("rtepage2")){
           String lineCap=jLabel52.getText();
+          
+          
           if(lineCap.equals("----")==true){
             if(activeRtePage>=2){
               temp1=rtePagesStore.get(activeRtePage);
@@ -2009,11 +2017,11 @@ public void performAction(String x, String y, String z){
              
          }
          
-         if(panelSelector.retrieveProperty("panelstate").equals("stararr")||panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar")){
-          if(starSelectedArr==null){
+         if(panelSelector.retrieveProperty("panelstate").equals("stararr")||panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
            starSelectedArr=jLabel52.getText();
            displayStarsandRunways();
-          }else if(starSelectedArr!=null){
+          }else if(starSelectedArr!=null||starSelectedArr.equals("")==false){
            starSelectedArr=null;
            arrivalTransArr="";
            displayStarsandRunways();
@@ -2104,11 +2112,11 @@ public void performAction(String x, String y, String z){
          }
              
              if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
-          if(starSelectedArr==null){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
            starSelectedArr=jLabel50.getText();
            displayStarsandRunways();
           }else{
-            if(state.equals("transSelectArrStar")==false){
+            if(state.equals("transSelectStarArr")==false){
            starSelectedArr=null;
            displayStarsandRunways();
             }
@@ -2126,7 +2134,7 @@ public void performAction(String x, String y, String z){
                displayStarsandRunways();
              }
              
-              if(state.equals("transSelectArrStar")){
+              if(state.equals("transSelectStarArr")){
                
                if(arrivalTransArr==null||arrivalTransArr.equals("")){
                arrivalTransArr=jLabel50.getText();
@@ -2156,46 +2164,21 @@ public void performAction(String x, String y, String z){
              
          }
              if(state.equals("transselect")){
-                 if(TransSelected==null&&(jLabel50.getText().equals("")==false||jLabel50.getText().equals(null))==false){
+                 if(TransSelected==null||TransSelected.equals("")){
+                   if(jLabel50.getText().equals("")==false){
               TransSelected=jLabel50.getText();   
-                 jLabel50.setText(jLabel50.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel50.getText();   
-                 jLabel50.setText(jLabel50.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected!=null){
-                     if(jLabel50.getText().contains("<SEL>")){
-                       String text1=jLabel50.getText().replaceAll("<SEL>","");
-                       jLabel50.setText(text1);
-                       
-                     TransSelected=null;
-                     
-                     }else if((jLabel50.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel50.getText(); 
-                       jLabel50.setText(jLabel50.getText()+"<SEL>");
-                       
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                     }
-                  
-                     
-                     
+                   }
+                 }else{
+                  TransSelected=null;
+                 }
+                  sidAndRunwayDisplayer();   
                  }
                  
-             }
+             
              
              if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
-          
+          if(jTextField1.getText().equals("DELETE")==false){
           if(airwaysList.containsKey(jTextField1.getText())==true){
                  
               temp1[1][0]=jTextField1.getText();
@@ -2205,10 +2188,18 @@ public void performAction(String x, String y, String z){
          
           rtePagesStore.replace(activeRtePage,temp1);
            displayRTE();
-         }
-             
-             
-            
+          }else if(jTextField1.getText().equals("DELETE")&&temp1[1][0].isEmpty()==false){
+            if(temp1[1][0].equals("DIRECT")){
+             temp1[1][1]="----";
+               temp1[1][0]="----";
+            }else{
+              deleteWpts(temp1[1][0]); 
+              temp1[1][1]="----";
+               temp1[1][0]="----";
+            }
+            displayRTE();
+          }
+             } 
             break;
             case "Left3": if(state.equals("posinit")){}
           if(state.equals("rte")){}
@@ -2244,11 +2235,11 @@ public void performAction(String x, String y, String z){
          }
               
                if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
-          if(starSelectedArr==null){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
            starSelectedArr=jLabel53.getText();
            displayStarsandRunways();
           }else{
-            if(state.equals("transSelectArrStar")==false){
+            if(state.equals("transSelectStarArr")==false){
            starSelectedArr=null;
            displayStarsandRunways();
             }
@@ -2260,12 +2251,14 @@ public void performAction(String x, String y, String z){
                   if(arrivalTransDep==null||arrivalTransDep.equals("")){
                arrivalTransDep=jLabel53.getText();
                   }
+                  displayStarsandRunways();
              }
               
-                if(state.equals("transSelectArrStar")){
+                if(state.equals("transSelectStarArr")){
                   if(arrivalTransArr==null||arrivalTransArr.equals("")){
                arrivalTransArr=jLabel53.getText();
                   }
+                  displayStarsandRunways();
              }
                 
                 
@@ -2287,39 +2280,9 @@ public void performAction(String x, String y, String z){
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel53.getText().equals("")==false||jLabel53.getText().equals(null))==false){
               TransSelected=jLabel53.getText();   
-                 jLabel53.setText(jLabel53.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel53.getText();   
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText()+"<SEL>");
-                 }else if(TransSelected!=null){
-                     if(jLabel53.getText().contains("<SEL>")){
-                       String text1=jLabel53.getText().replaceAll("<SEL>","");
-                       jLabel53.setText(text1);
-                       
-                     TransSelected=null;
-                     
-                     }else if((jLabel53.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel53.getText(); 
-                       jLabel53.setText(jLabel53.getText()+"<SEL>");
-                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-             
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                     }
-                  
-                     
-                     
+
                  }
-                 
+                 sidAndRunwayDisplayer();
              }
              
              
@@ -2371,11 +2334,11 @@ public void performAction(String x, String y, String z){
          }
               
                if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
-          if(starSelectedArr==null){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
            starSelectedArr=jLabel56.getText();
            displayStarsandRunways();
           }else{
-            if(state.equals("transSelectArrStar")==false){
+            if(state.equals("transSelectStarArr")==false){
            starSelectedArr=null;
            displayStarsandRunways();
             }
@@ -2387,50 +2350,21 @@ public void performAction(String x, String y, String z){
                   if(arrivalTransDep==null||arrivalTransDep.equals("")){
                arrivalTransDep=jLabel56.getText();
                   }
+                  displayStarsandRunways();
              }
-                if(state.equals("transSelectArrStar")){
+                if(state.equals("transSelectStarArr")){
                   if(arrivalTransArr==null||arrivalTransArr.equals("")){
                arrivalTransArr=jLabel56.getText();
                   }
+                  displayStarsandRunways();
              }
               
             
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel56.getText().equals("")==false||jLabel56.getText().equals(null))==false){
               TransSelected=jLabel56.getText();   
-                 jLabel56.setText(jLabel56.getText()+"<SEL>");
-                 
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel56.getText();   
-                 jLabel56.setText(jLabel56.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected!=null){
-                     if(jLabel56.getText().contains("<SEL>")){
-                       String text1=jLabel56.getText().replaceAll("<SEL>","");
-                       jLabel56.setText(text1);
-                       
-                     TransSelected=null;
-                     
-                     }else if((jLabel56.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel56.getText(); 
-                       jLabel56.setText(jLabel56.getText()+"<SEL>");
-                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                     }
-                  
-                     
-                     
                  }
-                 
+                 sidAndRunwayDisplayer();
              }
              
             break;
@@ -2468,7 +2402,7 @@ public void performAction(String x, String y, String z){
          }
               
               if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
-          if(starSelectedArr==null){
+          if(starSelectedArr==null||starSelectedArr.equals("")){
            starSelectedArr=jLabel59.getText();
            displayStarsandRunways();
           }else{
@@ -2484,48 +2418,21 @@ public void performAction(String x, String y, String z){
                  if(arrivalTransDep==null||arrivalTransDep.equals("")){
                arrivalTransDep=jLabel59.getText();
                  }
+                 displayStarsandRunways();
              }
-              if(state.equals("transSelectArrStar")){
+              if(state.equals("transSelectStarArr")){
                   if(arrivalTransArr==null||arrivalTransArr.equals("")){
                arrivalTransArr=jLabel59.getText();
                   }
+                  displayStarsandRunways();
              }
               
              if(state.equals("transselect")){
                  if(TransSelected==null&&(jLabel59.getText().equals("")==false||jLabel59.getText().equals(null))==false){
               TransSelected=jLabel59.getText();   
-                 jLabel59.setText(jLabel59.getText()+"<SEL>");
-                 jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected==null){
-                 TransSelected=jLabel59.getText();   
-                 jLabel59.setText(jLabel59.getText()+"<SEL>");
-                  jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 jLabel59.setText(jLabel59.getText().replaceAll("<SEL>",""));
-                 }else if(TransSelected!=null){
-                     if(jLabel59.getText().contains("<SEL>")){
-                       String text1=jLabel59.getText().replaceAll("<SEL>","");
-                       jLabel59.setText(text1);
-                       
-                     TransSelected=null;
-                      
-                     }else if((jLabel59.getText().contains("<SEL>"))==false){
-                      TransSelected=jLabel59.getText(); 
-                       jLabel59.setText(jLabel59.getText()+"<SEL>");
-                        jLabel50.setText(jLabel50.getText().replaceAll("<SEL>",""));
-                 jLabel53.setText(jLabel53.getText().replaceAll("<SEL>",""));
-                 jLabel56.setText(jLabel56.getText().replaceAll("<SEL>",""));
-                 
-                     }
-                  
-                     
-                     
+
                  }
-                 
+                 sidAndRunwayDisplayer();
              }
              if(state.equals("rtepage2")){
           temp1=rtePagesStore.get(activeRtePage);
@@ -2715,7 +2622,7 @@ public void performAction(String x, String y, String z){
             }
             
             if(panelSelector.retrieveProperty("column2").equals("selectApprArr")){    //
-              if(arrivalApproachArr.equals("")||arrivalApproachArr==null){
+              if(arrivalApproachArr==null||arrivalApproachArr.equals("")){
                arrivalApproachArr=jLabel64.getText();
               }else{
 //               arrivalApprTransDep=jLabel64.getText();
@@ -3070,6 +2977,8 @@ private void displayDuplicates(String text){
   List<String> wptType=new ArrayList<>();
   
   
+//  navListF.forEach((v) -> {wptsLatLong.add(v.getLatitude()) ; wptsLatLong.add(v.getLongitude());});
+  
   for(int i=0;i<navList.size();i++){
   wptsLatLong.add(navListF.get(i).getLatitude());
   wptsLatLong.add(navListF.get(i).getLongitude());  
@@ -3362,7 +3271,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
  listStarArr-=5;
  listTransStarArr=0;
  
-  if(panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar"))){
+  if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr"))){
  if(listRun-5==listStarArr){
  listRun-=5;
  displayApproaches();
@@ -3372,15 +3281,18 @@ if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
  displayStarsandRunways();
 }
 
-if(panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar")){
+if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
   listTransStarArr-=4;
+  if(listTransStarArr<=0){
+   listTransStarArr=0; 
+  }
  listRun-=5;
     if(listRun<0){
      listRun=0; 
     }
  
  displayApproaches();
-
+displayStarsandRunways();
 }
 
 
@@ -3451,7 +3363,11 @@ if(panelSelector.retrieveProperty("panelstate").equals("posinit")){
 }
 if(panelSelector.retrieveProperty("panelstate").equals("rtepagedep1")||panelSelector.retrieveProperty("panelstate").equals("transselect")){
     listing+=5;
-    
+    if(panelSelector.retrieveProperty("panelstate").equals("transselect")){
+      if(listrun+5<sidsDep.get(sidSelected).getRunways().size()){
+    listrun+=5;
+      }
+    }
     sidAndRunwayDisplayer();
     
 }
@@ -3471,7 +3387,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("stardep")){
 if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
  listStarArr+=5;
  listTransStarArr=0;
- if(panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar"))){
+ if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")||!(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr"))){
  if(listRun<apprArr.size()+5){
  listRun+=5;
  displayApproaches();
@@ -3488,12 +3404,16 @@ if(panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
 }
 }
 
-if(panelSelector.retrieveProperty("panelstate").equals("transSelectArrStar")){
+if(panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
   listTransStarArr+=4;
+  if(listTransStarArr>starsArr.get(starSelectedArr).getTrans().size()){
+   listTransStarArr-=4; 
+  }
   if(listRun<apprArr.size()+5){
  listRun+=5;
  displayApproaches();
 }
+  displayStarsandRunways();
 }
 
 if(panelSelector.retrieveProperty("column2").equals("selectTransApprDep")){
@@ -3540,7 +3460,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
     }
 
     private void deparr1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deparr1MousePressed
-    
+    panelSelector.writeProperty("column2","nulll");
         if(panelSelector.retrieveProperty("origin").equals("----")==false  &&panelSelector.retrieveProperty("dest").equals("----")==false){
         panelSelector.writePanelState("deparr");
         }
@@ -3680,6 +3600,30 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
 
     String [][]tempDisplay;
     private void displayRTE(){
+      
+       if(activeRtePage==1){
+             temp1=rtePagesStore.get(1);
+             if(cacheSid.equals("")||(cacheSid.equals(sidSelected)==false)){
+             try{
+             if(sidSelected!=null||sidSelected.isEmpty()==false){
+               if(TransSelected!=null||TransSelected.isEmpty()==false){
+                temp1[0][0]=sidSelected+"."+TransSelected; 
+                List<String> temp=navDataPull.getSIDWpt(panelSelector.retrieveProperty("origin"),sidSelected,panelSelector.retrieveProperty("runwaydep"),TransSelected);
+                temp1[0][1]=temp.get(temp.size()-1);
+               }else{
+                List<String> temp=navDataPull.getSIDWpt(panelSelector.retrieveProperty("origin"),sidSelected,panelSelector.retrieveProperty("runwaydep"),null);
+                 temp1[0][0]=sidSelected;
+                 temp1[0][1]=temp.get(temp.size()-1);
+               }
+               temp1[1][1]="----";
+               temp1[1][0]="----";
+               
+             }
+             cacheSid=sidSelected;
+             rtePagesStore.replace(1,temp1);
+             }catch(NullPointerException e){}
+             } 
+       }
       panelSelector.writeProperty("panelstate","rtepage2");
       tempDisplay=rtePagesStore.get(activeRtePage);
       try{
@@ -3903,7 +3847,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
           panelSelector.writeProperty("column2","selectApprArr");
         
         
-       if(appr.size()<=5){
+       if(apprArr.size()<=5){
                     jLabel61.setText("APPROACHES");
                     jLabel63.setText("");
                     try{
@@ -3923,7 +3867,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
                     }catch(Exception e){jLabel70.setText("");}
      
                 
-                }else if(appr.size()>5){
+                }else if(apprArr.size()>5){
                     jLabel61.setText("APPROACHES");
                     jLabel63.setText("");
                      try{
@@ -4019,15 +3963,20 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
    */
   
   public void displayStarsandRunways(){
-   
+  
 
       if(listStarDep>=rawDataStars.size()){
        listStarDep-=5;   
       }
+      if(listStarArr>=rawStarsArr.size()){
+       listStarArr-=5;   
+      }
       if(listStarDep<=0){
        listStarDep=0; 
       }
-      
+      if(listStarArr<=0){
+       listStarArr=0; 
+      }
       if(panelSelector.retrieveProperty("panelstate").equals("stardep")||panelSelector.retrieveProperty("panelstate").equals("transSelectDepStar")){
       if(rawDataStars.size()<=5){
           if(starSelectedDep==null){
@@ -4223,7 +4172,7 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
           }
           
       }
-      else if(panelSelector.retrieveProperty("panelstate").equals("stararr")){
+      else if(panelSelector.retrieveProperty("panelstate").equals("stararr")||panelSelector.retrieveProperty("panelstate").equals("transSelectStarArr")){
         if(starSelectedArr==null||starSelectedArr.equals("")){
             panelSelector.writeProperty("panelstate", "stararr");
             jLabel51.setText("STARS");
@@ -4255,21 +4204,21 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
         }else{
           panelSelector.writeProperty("panelstate", "transSelectStarArr");
           jLabel51.setText("STARS");
-          jLabel52.setText(starSelectedArr="<SEL>");
+          jLabel52.setText(starSelectedArr+"<SEL>");
           jLabel49.setText("TRANS");
           if(arrivalTransArr==null||arrivalTransArr.equals("")){
           try{
           jLabel50.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr));
-        }catch(Exception e){}
+        }catch(Exception e){jLabel50.setText("");}
         try{
           jLabel53.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr+1));
-        }catch(Exception e){}
+        }catch(Exception e){jLabel53.setText("");}
         try{
           jLabel56.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr+2));
-        }catch(Exception e){}
+        }catch(Exception e){jLabel56.setText("");}
           try{
           jLabel59.setText(starsArr.get(starSelectedArr).getTrans().get(listTransStarArr+3));
-        }catch(Exception e){}
+        }catch(Exception e){jLabel59.setText("");}
           }else{
           jLabel50.setText(arrivalTransArr+"<SEL>");
           jLabel53.setText("");
@@ -4285,6 +4234,19 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
   
   
 /////////////////////////////////////////////////////////////////////////////////////////
+  
+  
+  /****************
+    * 
+    * METHOD TO DELETE RTE ENTRIES W.I.P
+    * ************************/
+  
+  private static void deleteWpts(String airway){
+    if(wptLegsATS.contains(airway)){
+   int index= wptLegsATS.indexOf(airway);
+   wptLegs.remove(index);
+    }
+  }
   
   /***********
     * 
@@ -4350,8 +4312,11 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
       
     }
     }
-    
-    wptRTE.forEach((k,v) -> System.out.println("Current Airway :"+airway+" Waypoint :" +v.getName()));
+    wptLegs.put(entries,wptRTE);
+    wptLegsATS.add(airway);
+    entries++;
+    wptRTE.clear();
+   // wptRTE.forEach((k,v) -> System.out.println("Current Airway :"+airway+" Waypoint :" +v.getName()));
   
   
   }
@@ -4365,14 +4330,20 @@ if(panelSelector.retrieveProperty("panelstate").equals("rte")){
     * 
     * **********************/
   
-  private void calculateLegs(){
+  private void calculateLegs(String type){
     
     
     
     
   }
   
+  /*********************
+    * 
+    * NEW METHOD TO DISPLAY LEGS W.I.P
+    * 
+    * ************************/
   
+ // private void 
   
   
   
@@ -4937,6 +4908,7 @@ latlongBearing++;
                     
                     
                     if(runwaySelected==null){
+                       jLabel61.setText("RUNWAYS");
                       try{
                        jLabel62.setText(sidsDep.get(sidSelected).getRunways().get(listrun)); 
                       }catch(Exception e){}
@@ -4963,23 +4935,26 @@ latlongBearing++;
                      jLabel70.setText("");
                     }
                     
-                    
+                    if(TransSelected==null){
+                      jLabel52.setText(sidSelected + "<SEL>");
+                        jLabel49.setText("TRANS");
+                        panelSelector.writeProperty("panelstate", "transselect");
                     if (Transitions.size() <= 4) {
-                        jLabel52.setText(sidSelected + "<SEL>");
+                        
                         try {
-                            String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() :sidsDep.get(sidSelected).getTransitions().get(0);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(0);
                             jLabel50.setText(text);
                         } catch (Exception e) {
                             jLabel50.setText("");
                         }
                         try {
-                            String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() :sidsDep.get(sidSelected).getTransitions().get(1);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(1);
                             jLabel53.setText(text);
                         } catch (Exception e) {
                             jLabel53.setText("");
                         }
                         try {
-                            String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : sidsDep.get(sidSelected).getTransitions().get(2);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(2);
                             jLabel56.setText(text);
 
 
@@ -4987,7 +4962,7 @@ latlongBearing++;
                             jLabel56.setText("");
                         }
                         try {
-                            String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : sidsDep.get(sidSelected).getTransitions().get(3);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(3);
                             jLabel59.setText(text);
 
 
@@ -4996,22 +4971,22 @@ latlongBearing++;
                         }
                     }
                     if (Transitions.size() > 4) {
-                        jLabel52.setText(sidSelected + "<SEL>");
-                        panelSelector.writeProperty("panelstate", "transselect");
+                        
+                        
                         try {
-                            String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(listtrans);
                             jLabel50.setText(text);
                         } catch (Exception e) {
                             jLabel50.setText("");
                         }
                         try {
-                            String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans+1);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(listtrans+1);
                             jLabel53.setText(text);
                         } catch (Exception e) {
                             jLabel53.setText("");
                         }
                         try {
-                            String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans+2);
+                            String text =sidsDep.get(sidSelected).getTransitions().get(listtrans+2);
                             jLabel56.setText(text);
 
 
@@ -5019,13 +4994,23 @@ latlongBearing++;
                             jLabel56.setText("");
                         }
                         try {
-                            String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : sidsDep.get(sidSelected).getTransitions().get(listtrans+3);
+                            String text = sidsDep.get(sidSelected).getTransitions().get(listtrans+3);
                             jLabel59.setText(text);
 
 
                         } catch (Exception e) {
                             jLabel59.setText("");
                         }
+                    }
+                    }else{
+                      jLabel51.setText("SIDS");
+                      jLabel52.setText(sidSelected+"<SEL>");
+                      jLabel49.setText("TRANS");
+                      jLabel50.setText(TransSelected+"<SEL>");
+                      jLabel53.setText("");
+                      jLabel56.setText("");
+                      jLabel59.setText("");
+                      
                     }
                 
 
@@ -5077,8 +5062,9 @@ latlongBearing++;
             //    System.out.println("NO SID HERE");
             }
             if (sidSelected != null) {
-              
+              panelSelector.writeProperty("panelstate", "transselect");
               if(runwaySelected==null){
+                jLabel61.setText("RUNWAYS");
                   try{
                        jLabel62.setText(sidsDep.get(sidSelected).getRunways().get(listrun)); 
                       }catch(Exception e){e.printStackTrace();}
@@ -5105,26 +5091,26 @@ latlongBearing++;
                      jLabel70.setText("");
                     }
                     
-            
+              if(TransSelected==null){
                 if (Transitions.size() <= 4) {
                     panelSelector.writeProperty("panelstate", "transselect");
                     jLabel51.setText("SIDS");
                     jLabel52.setText(sidSelected + "<SEL>");
                     jLabel49.setText("TRANS");
                     try {
-                        String text = jLabel50.getText().contains("<SEL>") ? jLabel50.getText() : sidsDep.get(sidSelected).getTransitions().get(0);
+                        String text =  sidsDep.get(sidSelected).getTransitions().get(0);
                         jLabel50.setText(text);
                     } catch (Exception e) {
                         jLabel50.setText("");
                     }
                     try {
-                        String text = jLabel53.getText().contains("<SEL>") ? jLabel53.getText() : sidsDep.get(sidSelected).getTransitions().get(1);
+                        String text =sidsDep.get(sidSelected).getTransitions().get(1);
                         jLabel53.setText(text);
                     } catch (Exception e) {
                         jLabel53.setText("");
                     }
                     try {
-                        String text = jLabel56.getText().contains("<SEL>") ? jLabel56.getText() : sidsDep.get(sidSelected).getTransitions().get(2);
+                        String text =sidsDep.get(sidSelected).getTransitions().get(2);
                         jLabel56.setText(text);
 
 
@@ -5132,7 +5118,7 @@ latlongBearing++;
                         jLabel56.setText("");
                     }
                     try {
-                        String text = jLabel59.getText().contains("<SEL>") ? jLabel59.getText() : sidsDep.get(sidSelected).getTransitions().get(3);
+                        String text =sidsDep.get(sidSelected).getTransitions().get(3);
                         jLabel59.setText(text);
 
 
@@ -5175,7 +5161,18 @@ latlongBearing++;
                         jLabel59.setText("");
                     }
                 }
+            }else{
+                      jLabel51.setText("SIDS");
+                      jLabel52.setText(sidSelected+"<SEL>");
+                      jLabel49.setText("TRANS");
+                      jLabel50.setText(TransSelected+"<SEL>");
+                      jLabel53.setText("");
+                      jLabel56.setText("");
+                      jLabel59.setText("");
+                      
+                    }
             }
+            
 
         }
     }

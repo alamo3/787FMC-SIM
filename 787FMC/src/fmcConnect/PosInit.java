@@ -1,0 +1,72 @@
+package fmcConnect;
+
+import nasaConnect.*;
+import java.io.*;
+
+public class PosInit extends panelState{
+  
+ static String title="POS INIT";
+  static String line1A=" ";
+  static String line1B=" ";
+  static String line2A="REF AIRPORT";
+  static String line2B="----";
+  static String line3A="GATE";
+  static String line3B=" ";
+  static String line4A="UTC";
+  static String line4B=" ";
+  static String line5A=" ";
+  static String line5B=" ";
+  static String line6="<INDEX";
+  static String line7A="LAST POS";
+  static String line7B=" ";
+  static String line8A=" ";
+  static String line8B=" ";
+  static String line9A=" ";
+  static String line9B=" ";
+  static String line10A="GPS POS";
+  static String line10B=" ";
+  static String line11A="SET INERTIAL POS";
+  static String line11B="-----.- ------.-";
+  static String line12="ROUTE>"; 
+  
+  public void display(){
+    
+     try(XPlaneConnect xpc=new XPlaneConnect("127.0.0.1",49009,49012,100)){
+    
+      xpc.sendDREF("jLabel48",super.convert(title));
+      xpc.sendDREF("jLabel51",super.convert(line1A));
+      xpc.sendDREF("jLabel52",super.convert(line1B));
+      xpc.sendDREF("jLabel49",super.convert(line2A));
+      xpc.sendDREF("jLabel50",super.convert(line2B));
+      xpc.sendDREF("jLabel54",super.convert(line3A));
+      xpc.sendDREF("jLabel53",super.convert(line3B));
+      xpc.sendDREF("jLabel55",super.convert(line4A));
+      xpc.sendDREF("jLabel56",super.convert(line4B));
+      xpc.sendDREF("jLabel58",super.convert(line5A));
+      xpc.sendDREF("jLabel59",super.convert(line5B));
+      xpc.sendDREF("Jlabel60",super.convert(line6));
+      xpc.sendDREF("jLabel61",super.convert(line7A));
+      xpc.sendDREF("jLabel62",super.convert(line7B));
+      xpc.sendDREF("jLabel63",super.convert(line8A));
+      xpc.sendDREF("jLabel64",super.convert(line8B));
+      xpc.sendDREF("jLabel65",super.convert(line9A));
+      xpc.sendDREF("jLabel66",super.convert(line9B));
+      xpc.sendDREF("jLabel67",super.convert(line10A));
+      xpc.sendDREF("jLabel68",super.convert(line10B));
+      xpc.sendDREF("jLabel69",super.convert(line11A));
+      xpc.sendDREF("jLabel70",super.convert(line11B));
+      xpc.sendDREF("jLabel57",super.convert(line12));
+      
+      
+    }catch(IOException ex){
+      System.out.println("Error:");
+System.out.println("PosInit :"+ex.getMessage()); 
+    }
+    
+  }
+  
+  
+  
+  
+  
+}
